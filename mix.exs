@@ -4,8 +4,8 @@ defmodule Posa.MixProject do
   def project do
     [
       app: :posa,
-      version: "0.1.0",
-      elixir: "~> 1.7",
+      version: "2.0.0",
+      elixir: "~> 1.10.3",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -36,7 +36,7 @@ defmodule Posa.MixProject do
       {:phoenix, "~> 1.5.3"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
-      {:postgrex, ">= 0.0.0"},
+      # {:postgrex, ">= 0.0.0"},
       {:phoenix_live_view, "~> 0.13.0"},
       {:floki, ">= 0.0.0", only: :test},
       {:phoenix_html, "~> 2.11"},
@@ -46,7 +46,9 @@ defmodule Posa.MixProject do
       {:telemetry_poller, "~> 0.4"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:httpoison, "~> 1.5"},
+      {:poison, "~> 3.1"},
     ]
   end
 
