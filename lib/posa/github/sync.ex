@@ -1,13 +1,12 @@
 defmodule Posa.Github.Sync do
-  alias Posa.Store.{Organizations, Users, Events}
-  alias Posa.GithubData.{Organization, User, Event}
-  alias Posa.Github
   alias Posa.Github.API
+  alias Posa.Github.Storage.{Organizations, Users, Events}
+  alias Posa.Github.Data.{Organization, User, Event}
 
   @orgs ["puzzle"]
 
   def run do
-    Github.API.start
+    API.start
     fetch_organizations()
     fetch_org_members()
     fetch_users()

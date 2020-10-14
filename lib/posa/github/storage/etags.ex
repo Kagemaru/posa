@@ -1,5 +1,5 @@
-defmodule Posa.Store.Etags do
-  use Posa.Store.Base
+defmodule Posa.Github.Storage.Etags do
+  use Posa.Github.Storage.Base
 
   def get_etag(domain),            do: _get(&get_in(&1, [domain]))
   def get_etag(domain, key),       do: _get(&get_in(&1, [domain, key]))

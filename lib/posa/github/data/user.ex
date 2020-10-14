@@ -1,4 +1,4 @@
-defmodule Posa.GithubData.User do
+defmodule Posa.Github.Data.User do
   use Ecto.Schema
   import Ecto.Changeset
 

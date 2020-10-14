@@ -1,19 +1,19 @@
-defmodule Posa.GithubData do
-  alias Posa.Store.{Organizations,Users,Events}
-  alias Posa.GithubData.{Organization,User,Event}
+defmodule Posa.Github.Data do
+  alias Posa.Github.Storage.{Organizations,Users,Events}
+  alias Posa.Github.Data.{Organization,User,Event}
   alias Ecto.Changeset
 
-  def list_orgs,           do: orgs
-  def list_users,          do: users
-  def list_events,         do: events
+  def list_orgs,            do: orgs
+  def list_users,           do: users
+  def list_events,          do: events
 
-  def get_org(id),         do: org(id: id)
-  def get_user(id),        do: user(id: id)
-  def get_event(id),       do: event(id: id)
+  def get_org(id),          do: org(id: id)
+  def get_user(id),         do: user(id: id)
+  def get_event(id),        do: event(id: id)
 
-  def get_org_by(query),   do: org(query)
-  def get_user_by(query),  do: user(query)
-  def get_event_by(query), do: event(query)
+  def get_org_by(params),   do: org(params)
+  def get_user_by(params),  do: user(params)
+  def get_event_by(params), do: event(params)
 
   def sort(list, key \\ :id, fun \\ &>=/2) do
     Users.sort(list, key, fun)

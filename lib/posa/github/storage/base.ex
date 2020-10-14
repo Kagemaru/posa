@@ -1,4 +1,4 @@
-defmodule Posa.Store.Base do
+defmodule Posa.Github.Storage.Base do
   defmacro __using__(_) do
     quote do
       use Agent

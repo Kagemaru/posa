@@ -1,7 +1,7 @@
 defmodule Posa.Github do
   use Supervisor
 
-  alias Posa.Store.{Organizations,Users,Events,Etags}
+  alias Posa.Github.Storage.{Organizations,Users,Events,Etags}
   alias Posa.Sync
 
   @start_storage true
@@ -15,11 +15,9 @@ defmodule Posa.Github do
   def init(:ok) do
     children =
       []
-      |> IO.inspect
       |> add_storage()
-      |> IO.inspect
       |> add_sync()
-      |> IO.inspect
+
     Supervisor.init(children, strategy: :one_for_one, id: __MODULE__)
   end
 

@@ -1,5 +1,5 @@
-defmodule Posa.Store.Events do
-  use Posa.Store.Base
+defmodule Posa.Github.Storage.Events do
+  use Posa.Github.Storage.Base
 
   def add_event(user, id, value) do
     _update(&put_in_p(&1, [user, id], value))

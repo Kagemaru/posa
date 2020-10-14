@@ -7,7 +7,7 @@ defmodule Posa.Application do
 
   def start(_type, _args) do
     children = [
-      # Start storage
+      # Start github stuff
       Posa.Github,
       # Start the Telemetry supervisor
       PosaWeb.Telemetry,

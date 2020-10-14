@@ -1,4 +1,4 @@
-defmodule Posa.GithubData.Event do
+defmodule Posa.Github.Data.Event do
   use Ecto.Schema
   import Ecto.Changeset
 

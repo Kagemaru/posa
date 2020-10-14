@@ -1,6 +1,6 @@
 defmodule Posa.Github.API do
   use HTTPoison.Base
-  alias Posa.Store.{Organizations,Users,Events,Etags}
+  alias Posa.Github.Storage.{Organizations,Users,Events,Etags}
 
   @token "bdd24cb5b43c22f4995a4da476957f0da04d0a95" # Kagemaru
 
