@@ -1,8 +1,10 @@
 defmodule Posa.Sync do
   use GenServer
 
+  @sync_delay 120_000 # once every 2 minutes
+
   def start_link(_arg) do
-    GenServer.start_link(__MODULE__, %{})
+    GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
   end
 
   def init(state) do
@@ -18,7 +20,7 @@ defmodule Posa.Sync do
   end
 
   defp schedule_sync do
-    Process.send_after(self(), :sync, 120_000) # once every 2 minutes
+    Process.send_after(self(), :sync, @sync_delay)
   end
 
   defp execute_sync, do: Posa.Github.Sync.run

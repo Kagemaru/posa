@@ -8,11 +8,7 @@ defmodule Posa.Application do
   def start(_type, _args) do
     children = [
       # Start storage
-      Posa.Store.Organizations,
-      Posa.Store.Users,
-      Posa.Store.Events,
-      Posa.Store.Etags,
-      Posa.Sync,
+      Posa.Github,
       # Start the Telemetry supervisor
       PosaWeb.Telemetry,
       # Start the PubSub system
