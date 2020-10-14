@@ -39,3 +39,4 @@ config :posa, PosaWeb.Endpoint,
 #
 # Then you can assemble a release by calling `mix release`.
 # See `mix help release` for more information.
+config :posa, PosaWeb.Endpoint, server: true
