@@ -1,0 +1,802 @@
+[
+    {
+        "created_at": "2020-10-12T17:12:35",
+        "github_id": "13817183597",
+        "payload": {
+            "before": "0a49dda77ab4b041f4ecf24a9ad25801e2f1c8a8",
+            "commits": [
+                {
+                    "author": {
+                        "email": "burkhalter@puzzle.ch",
+                        "name": "Thomas Burkhalter"
+                    },
+                    "distinct": true,
+                    "message": "Fix search button background, change gemset name",
+                    "sha": "fa34364530b8bd98742e33d6a3bb31b11446dc18",
+                    "url": "https://api.github.com/repos/puzzle/decidim-ocl/commits/fa34364530b8bd98742e33d6a3bb31b11446dc18"
+                }
+            ],
+            "distinct_size": 1,
+            "head": "fa34364530b8bd98742e33d6a3bb31b11446dc18",
+            "push_id": 5840665233,
+            "ref": "refs/heads/master",
+            "size": 1
+        },
+        "public": true,
+        "repo": {
+            "id": 286972911,
+            "name": "puzzle/decidim-ocl",
+            "url": "https://api.github.com/repos/puzzle/decidim-ocl"
+        },
+        "type": "PushEvent"
+    },
+    {
+        "created_at": "2020-10-15T09:10:49",
+        "github_id": "13854188636",
+        "payload": {
+            "action": "closed",
+            "number": 17,
+            "pull_request": {
+                "statuses_url": "https://api.github.com/repos/puzzle/ccli/statuses/fa533c768542efc7fab3b917eb87890933143dbe",
+                "diff_url": "https://github.com/puzzle/ccli/pull/17.diff",
+                "number": 17,
+                "title": "Adjust ssl connection",
+                "merge_commit_sha": "04a02464d5b2482a6ca56eee0f4a7a4b50f7cec0",
+                "locked": false,
+                "base": {
+                    "label": "puzzle:master",
+                    "ref": "master",
+                    "repo": {
+                        "statuses_url": "https://api.github.com/repos/puzzle/ccli/statuses/{sha}",
+                        "git_refs_url": "https://api.github.com/repos/puzzle/ccli/git/refs{/sha}",
+                        "issue_comment_url": "https://api.github.com/repos/puzzle/ccli/issues/comments{/number}",
+                        "watchers": 2,
+                        "disabled": false,
+                        "mirror_url": null,
+                        "languages_url": "https://api.github.com/repos/puzzle/ccli/languages",
+                        "stargazers_count": 2,
+                        "license": null,
+                        "forks": 2,
+                        "default_branch": "master",
+                        "comments_url": "https://api.github.com/repos/puzzle/ccli/comments{/number}",
+                        "commits_url": "https://api.github.com/repos/puzzle/ccli/commits{/sha}",
+                        "id": 282879559,
+                        "clone_url": "https://github.com/puzzle/ccli.git",
+                        "homepage": null,
+                        "stargazers_url": "https://api.github.com/repos/puzzle/ccli/stargazers",
+                        "events_url": "https://api.github.com/repos/puzzle/ccli/events",
+                        "blobs_url": "https://api.github.com/repos/puzzle/ccli/git/blobs{/sha}",
+                        "forks_count": 4,
+                        "pushed_at": "2020-10-15T09:10:48Z",
+                        "git_url": "git://github.com/puzzle/ccli.git",
+                        "hooks_url": "https://api.github.com/repos/puzzle/ccli/hooks",
+                        "owner": {
+                            "avatar_url": "https://avatars0.githubusercontent.com/u/10757?v=4",
+                            "events_url": "https://api.github.com/users/puzzle/events{/privacy}",
+                            "followers_url": "https://api.github.com/users/puzzle/followers",
+                            "following_url": "https://api.github.com/users/puzzle/following{/other_user}",
+                            "gists_url": "https://api.github.com/users/puzzle/gists{/gist_id}",
+                            "gravatar_id": "",
+                            "html_url": "https://github.com/puzzle",
+                            "id": 10757,
+                            "login": "puzzle",
+                            "node_id": "MDEyOk9yZ2FuaXphdGlvbjEwNzU3",
+                            "organizations_url": "https://api.github.com/users/puzzle/orgs",
+                            "received_events_url": "https://api.github.com/users/puzzle/received_events",
+                            "repos_url": "https://api.github.com/users/puzzle/repos",
+                            "site_admin": false,
+                            "starred_url": "https://api.github.com/users/puzzle/starred{/owner}{/repo}",
+                            "subscriptions_url": "https://api.github.com/users/puzzle/subscriptions",
+                            "type": "Organization",
+                            "url": "https://api.github.com/users/puzzle"
+                        },
+                        "trees_url": "https://api.github.com/repos/puzzle/ccli/git/trees{/sha}",
+                        "git_commits_url": "https://api.github.com/repos/puzzle/ccli/git/commits{/sha}",
+                        "collaborators_url": "https://api.github.com/repos/puzzle/ccli/collaborators{/collaborator}",
+                        "watchers_count": 2,
+                        "archived": false,
+                        "tags_url": "https://api.github.com/repos/puzzle/ccli/tags",
+                        "merges_url": "https://api.github.com/repos/puzzle/ccli/merges",
+                        "releases_url": "https://api.github.com/repos/puzzle/ccli/releases{/id}",
+                        "subscribers_url": "https://api.github.com/repos/puzzle/ccli/subscribers",
+                        "ssh_url": "git@github.com:puzzle/ccli.git",
+                        "created_at": "2020-07-27T11:36:15Z",
+                        "name": "ccli",
+                        "has_issues": true,
+                        "private": false,
+                        "git_tags_url": "https://api.github.com/repos/puzzle/ccli/git/tags{/sha}",
+                        "has_projects": true,
+                        "archive_url": "https://api.github.com/repos/puzzle/ccli/{archive_format}{/ref}",
+                        "has_wiki": true,
+                        "open_issues_count": 0,
+                        "milestones_url": "https://api.github.com/repos/puzzle/ccli/milestones{/number}",
+                        "forks_url": "https://api.github.com/repos/puzzle/ccli/forks",
+                        "url": "https://api.github.com/repos/puzzle/ccli",
+                        "downloads_url": "https://api.github.com/repos/puzzle/ccli/downloads",
+                        "open_issues": 0,
+                        "keys_url": "https://api.github.com/repos/puzzle/ccli/keys{/key_id}",
+                        "description": "Cryptopus Command Line Client",
+                        "contents_url": "https://api.github.com/repos/puzzle/ccli/contents/{+path}",
+                        "language": "Ruby",
+                        "contributors_url": "https://api.github.com/repos/puzzle/ccli/contributors",
+                        "deployments_url": "https://api.github.com/repos/puzzle/ccli/deployments",
+                        "pulls_url": "https://api.github.com/repos/puzzle/ccli/pulls{/number}",
+                        "labels_url": "https://api.github.com/repos/puzzle/ccli/labels{/name}",
+                        "html_url": "https://github.com/puzzle/ccli",
+                        "svn_url": "https://github.com/puzzle/ccli",
+                        "issue_events_url": "https://api.github.com/repos/puzzle/ccli/issues/events{/number}",
+                        "notifications_url": "https://api.github.com/repos/puzzle/ccli/notifications{?since,all,participating}",
+                        "has_downloads": true,
+                        "node_id": "MDEwOlJlcG9zaXRvcnkyODI4Nzk1NTk=",
+                        "compare_url": "https://api.github.com/repos/puzzle/ccli/compare/{base}...{head}",
+                        "full_name": "puzzle/ccli",
+                        "subscription_url": "https://api.github.com/repos/puzzle/ccli/subscription",
+                        "assignees_url": "https://api.github.com/repos/puzzle/ccli/assignees{/user}",
+                        "issues_url": "https://api.github.com/repos/puzzle/ccli/issues{/number}",
+                        "size": 84,
+                        "has_pages": false,
+                        "fork": false,
+                        "updated_at": "2020-10-15T07:29:07Z",
+                        "branches_url": "https://api.github.com/repos/puzzle/ccli/branches{/branch}",
+                        "teams_url": "https://api.github.com/repos/puzzle/ccli/teams"
+                    },
+                    "sha": "3d0693bd56a52509a1b6bca5bcaf0a9978eeb3de",
+                    "user": {
+                        "avatar_url": "https://avatars0.githubusercontent.com/u/10757?v=4",
+                        "events_url": "https://api.github.com/users/puzzle/events{/privacy}",
+                        "followers_url": "https://api.github.com/users/puzzle/followers",
+                        "following_url": "https://api.github.com/users/puzzle/following{/other_user}",
+                        "gists_url": "https://api.github.com/users/puzzle/gists{/gist_id}",
+                        "gravatar_id": "",
+                        "html_url": "https://github.com/puzzle",
+                        "id": 10757,
+                        "login": "puzzle",
+                        "node_id": "MDEyOk9yZ2FuaXphdGlvbjEwNzU3",
+                        "organizations_url": "https://api.github.com/users/puzzle/orgs",
+                        "received_events_url": "https://api.github.com/users/puzzle/received_events",
+                        "repos_url": "https://api.github.com/users/puzzle/repos",
+                        "site_admin": false,
+                        "starred_url": "https://api.github.com/users/puzzle/starred{/owner}{/repo}",
+                        "subscriptions_url": "https://api.github.com/users/puzzle/subscriptions",
+                        "type": "Organization",
+                        "url": "https://api.github.com/users/puzzle"
+                    }
+                },
+                "labels": [],
+                "commits": 1,
+                "review_comment_url": "https://api.github.com/repos/puzzle/ccli/pulls/comments{/number}",
+                "comments_url": "https://api.github.com/repos/puzzle/ccli/issues/17/comments",
+                "commits_url": "https://api.github.com/repos/puzzle/ccli/pulls/17/commits",
+                "id": 503918659,
+                "merged_by": {
+                    "avatar_url": "https://avatars2.githubusercontent.com/u/36076343?v=4",
+                    "events_url": "https://api.github.com/users/TheWalkingLeek/events{/privacy}",
+                    "followers_url": "https://api.github.com/users/TheWalkingLeek/followers",
+                    "following_url": "https://api.github.com/users/TheWalkingLeek/following{/other_user}",
+                    "gists_url": "https://api.github.com/users/TheWalkingLeek/gists{/gist_id}",
+                    "gravatar_id": "",
+                    "html_url": "https://github.com/TheWalkingLeek",
+                    "id": 36076343,
+                    "login": "TheWalkingLeek",
+                    "node_id": "MDQ6VXNlcjM2MDc2MzQz",
+                    "organizations_url": "https://api.github.com/users/TheWalkingLeek/orgs",
+                    "received_events_url": "https://api.github.com/users/TheWalkingLeek/received_events",
+                    "repos_url": "https://api.github.com/users/TheWalkingLeek/repos",
+                    "site_admin": false,
+                    "starred_url": "https://api.github.com/users/TheWalkingLeek/starred{/owner}{/repo}",
+                    "subscriptions_url": "https://api.github.com/users/TheWalkingLeek/subscriptions",
+                    "type": "User",
+                    "url": "https://api.github.com/users/TheWalkingLeek"
+                },
+                "issue_url": "https://api.github.com/repos/puzzle/ccli/issues/17",
+                "changed_files": 5,
+                "body": "",
+                "assignees": [],
+                "closed_at": "2020-10-15T09:10:48Z",
+                "user": {
+                    "avatar_url": "https://avatars2.githubusercontent.com/u/36076343?v=4",
+                    "events_url": "https://api.github.com/users/TheWalkingLeek/events{/privacy}",
+                    "followers_url": "https://api.github.com/users/TheWalkingLeek/followers",
+                    "following_url": "https://api.github.com/users/TheWalkingLeek/following{/other_user}",
+                    "gists_url": "https://api.github.com/users/TheWalkingLeek/gists{/gist_id}",
+                    "gravatar_id": "",
+                    "html_url": "https://github.com/TheWalkingLeek",
+                    "id": 36076343,
+                    "login": "TheWalkingLeek",
+                    "node_id": "MDQ6VXNlcjM2MDc2MzQz",
+                    "organizations_url": "https://api.github.com/users/TheWalkingLeek/orgs",
+                    "received_events_url": "https://api.github.com/users/TheWalkingLeek/received_events",
+                    "repos_url": "https://api.github.com/users/TheWalkingLeek/repos",
+                    "site_admin": false,
+                    "starred_url": "https://api.github.com/users/TheWalkingLeek/starred{/owner}{/repo}",
+                    "subscriptions_url": "https://api.github.com/users/TheWalkingLeek/subscriptions",
+                    "type": "User",
+                    "url": "https://api.github.com/users/TheWalkingLeek"
+                },
+                "rebaseable": null,
+                "patch_url": "https://github.com/puzzle/ccli/pull/17.patch",
+                "requested_teams": [],
+                "merged_at": "2020-10-15T09:10:48Z",
+                "additions": 25,
+                "mergeable": null,
+                "head": {
+                    "label": "puzzle:feature-55606-use-ssl",
+                    "ref": "feature-55606-use-ssl",
+                    "repo": {
+                        "statuses_url": "https://api.github.com/repos/puzzle/ccli/statuses/{sha}",
+                        "git_refs_url": "https://api.github.com/repos/puzzle/ccli/git/refs{/sha}",
+                        "issue_comment_url": "https://api.github.com/repos/puzzle/ccli/issues/comments{/number}",
+                        "watchers": 2,
+                        "disabled": false,
+                        "mirror_url": null,
+                        "languages_url": "https://api.github.com/repos/puzzle/ccli/languages",
+                        "stargazers_count": 2,
+                        "license": null,
+                        "forks": 2,
+                        "default_branch": "master",
+                        "comments_url": "https://api.github.com/repos/puzzle/ccli/comments{/number}",
+                        "commits_url": "https://api.github.com/repos/puzzle/ccli/commits{/sha}",
+                        "id": 282879559,
+                        "clone_url": "https://github.com/puzzle/ccli.git",
+                        "homepage": null,
+                        "stargazers_url": "https://api.github.com/repos/puzzle/ccli/stargazers",
+                        "events_url": "https://api.github.com/repos/puzzle/ccli/events",
+                        "blobs_url": "https://api.github.com/repos/puzzle/ccli/git/blobs{/sha}",
+                        "forks_count": 2,
+                        "pushed_at": "2020-10-15T09:10:48Z",
+                        "git_url": "git://github.com/puzzle/ccli.git",
+                        "hooks_url": "https://api.github.com/repos/puzzle/ccli/hooks",
+                        "owner": {
+                            "avatar_url": "https://avatars0.githubusercontent.com/u/10757?v=4",
+                            "events_url": "https://api.github.com/users/puzzle/events{/privacy}",
+                            "followers_url": "https://api.github.com/users/puzzle/followers",
+                            "following_url": "https://api.github.com/users/puzzle/following{/other_user}",
+                            "gists_url": "https://api.github.com/users/puzzle/gists{/gist_id}",
+                            "gravatar_id": "",
+                            "html_url": "https://github.com/puzzle",
+                            "id": 10757,
+                            "login": "puzzle",
+                            "node_id": "MDEyOk9yZ2FuaXphdGlvbjEwNzU3",
+                            "organizations_url": "https://api.github.com/users/puzzle/orgs",
+                            "received_events_url": "https://api.github.com/users/puzzle/received_events",
+                            "repos_url": "https://api.github.com/users/puzzle/repos",
+                            "site_admin": false,
+                            "starred_url": "https://api.github.com/users/puzzle/starred{/owner}{/repo}",
+                            "subscriptions_url": "https://api.github.com/users/puzzle/subscriptions",
+                            "type": "Organization",
+                            "url": "https://api.github.com/users/puzzle"
+                        },
+                        "trees_url": "https://api.github.com/repos/puzzle/ccli/git/trees{/sha}",
+                        "git_commits_url": "https://api.github.com/repos/puzzle/ccli/git/commits{/sha}",
+                        "collaborators_url": "https://api.github.com/repos/puzzle/ccli/collaborators{/collaborator}",
+                        "watchers_count": 2,
+                        "archived": false,
+                        "tags_url": "https://api.github.com/repos/puzzle/ccli/tags",
+                        "merges_url": "https://api.github.com/repos/puzzle/ccli/merges",
+                        "releases_url": "https://api.github.com/repos/puzzle/ccli/releases{/id}",
+                        "subscribers_url": "https://api.github.com/repos/puzzle/ccli/subscribers",
+                        "ssh_url": "git@github.com:puzzle/ccli.git",
+                        "created_at": "2020-07-27T11:36:15Z",
+                        "name": "ccli",
+                        "has_issues": true,
+                        "private": false,
+                        "git_tags_url": "https://api.github.com/repos/puzzle/ccli/git/tags{/sha}",
+                        "has_projects": true,
+                        "archive_url": "https://api.github.com/repos/puzzle/ccli/{archive_format}{/ref}",
+                        "has_wiki": true,
+                        "open_issues_count": 0,
+                        "milestones_url": "https://api.github.com/repos/puzzle/ccli/milestones{/number}",
+                        "forks_url": "https://api.github.com/repos/puzzle/ccli/forks",
+                        "url": "https://api.github.com/repos/puzzle/ccli",
+                        "downloads_url": "https://api.github.com/repos/puzzle/ccli/downloads",
+                        "open_issues": 0,
+                        "keys_url": "https://api.github.com/repos/puzzle/ccli/keys{/key_id}",
+                        "description": "Cryptopus Command Line Client",
+                        "contents_url": "https://api.github.com/repos/puzzle/ccli/contents/{+path}",
+                        "language": "Ruby",
+                        "contributors_url": "https://api.github.com/repos/puzzle/ccli/contributors",
+                        "deployments_url": "https://api.github.com/repos/puzzle/ccli/deployments",
+                        "pulls_url": "https://api.github.com/repos/puzzle/ccli/pulls{/number}",
+                        "labels_url": "https://api.github.com/repos/puzzle/ccli/labels{/name}",
+                        "html_url": "https://github.com/puzzle/ccli",
+                        "svn_url": "https://github.com/puzzle/ccli",
+                        "issue_events_url": "https://api.github.com/repos/puzzle/ccli/issues/events{/number}",
+                        "notifications_url": "https://api.github.com/repos/puzzle/ccli/notifications{?since,all,participating}",
+                        "has_downloads": true,
+                        "node_id": "MDEwOlJlcG9zaXRvcnkyODI4Nzk1NTk=",
+                        "compare_url": "https://api.github.com/repos/puzzle/ccli/compare/{base}...{head}",
+                        "full_name": "puzzle/ccli",
+                        "subscription_url": "https://api.github.com/repos/puzzle/ccli/subscription",
+                        "assignees_url": "https://api.github.com/repos/puzzle/ccli/assignees{/user}",
+                        "issues_url": "https://api.github.com/repos/puzzle/ccli/issues{/number}",
+                        "size": 84,
+                        "has_pages": false,
+                        "fork": false,
+                        "updated_at": "2020-10-15T07:29:07Z",
+                        "branches_url": "https://api.github.com/repos/puzzle/ccli/branches{/branch}",
+                        "teams_url": "https://api.github.com/repos/puzzle/ccli/teams"
+                    },
+                    "sha": "fa533c768542efc7fab3b917eb87890933143dbe",
+                    "user": {
+                        "avatar_url": "https://avatars0.githubusercontent.com/u/10757?v=4",
+                        "events_url": "https://api.github.com/users/puzzle/events{/privacy}",
+                        "followers_url": "https://api.github.com/users/puzzle/followers",
+                        "following_url": "https://api.github.com/users/puzzle/following{/other_user}",
+                        "gists_url": "https://api.github.com/users/puzzle/gists{/gist_id}",
+                        "gravatar_id": "",
+                        "html_url": "https://github.com/puzzle",
+                        "id": 10757,
+                        "login": "puzzle",
+                        "node_id": "MDEyOk9yZ2FuaXphdGlvbjEwNzU3",
+                        "organizations_url": "https://api.github.com/users/puzzle/orgs",
+                        "received_events_url": "https://api.github.com/users/puzzle/received_events",
+                        "repos_url": "https://api.github.com/users/puzzle/repos",
+                        "site_admin": false,
+                        "starred_url": "https://api.github.com/users/puzzle/starred{/owner}{/repo}",
+                        "subscriptions_url": "https://api.github.com/users/puzzle/subscriptions",
+                        "type": "Organization",
+                        "url": "https://api.github.com/users/puzzle"
+                    }
+                },
+                "comments": 0,
+                "state": "closed",
+                "created_at": "2020-10-15T08:19:07Z",
+                "requested_reviewers": [],
+                "active_lock_reason": null,
+                "maintainer_can_modify": false,
+                "mergeable_state": "unknown",
+                "url": "https://api.github.com/repos/puzzle/ccli/pulls/17",
+                "deletions": 18,
+                "review_comments_url": "https://api.github.com/repos/puzzle/ccli/pulls/17/comments",
+                "draft": false,
+                "_links": {
+                    "comments": {
+                        "href": "https://api.github.com/repos/puzzle/ccli/issues/17/comments"
+                    },
+                    "commits": {
+                        "href": "https://api.github.com/repos/puzzle/ccli/pulls/17/commits"
+                    },
+                    "html": {
+                        "href": "https://github.com/puzzle/ccli/pull/17"
+                    },
+                    "issue": {
+                        "href": "https://api.github.com/repos/puzzle/ccli/issues/17"
+                    },
+                    "review_comment": {
+                        "href": "https://api.github.com/repos/puzzle/ccli/pulls/comments{/number}"
+                    },
+                    "review_comments": {
+                        "href": "https://api.github.com/repos/puzzle/ccli/pulls/17/comments"
+                    },
+                    "self": {
+                        "href": "https://api.github.com/repos/puzzle/ccli/pulls/17"
+                    },
+                    "statuses": {
+                        "href": "https://api.github.com/repos/puzzle/ccli/statuses/fa533c768542efc7fab3b917eb87890933143dbe"
+                    }
+                },
+                "html_url": "https://github.com/puzzle/ccli/pull/17",
+                "node_id": "MDExOlB1bGxSZXF1ZXN0NTAzOTE4NjU5",
+                "assignee": null,
+                "milestone": null,
+                "author_association": "MEMBER",
+                "review_comments": 0,
+                "merged": true,
+                "updated_at": "2020-10-15T09:10:48Z"
+            }
+        },
+        "public": true,
+        "repo": {
+            "id": 282879559,
+            "name": "puzzle/ccli",
+            "url": "https://api.github.com/repos/puzzle/ccli"
+        },
+        "type": "PullRequestEvent"
+    },
+    {
+        "created_at": "2020-10-13T15:00:12",
+        "github_id": "13829670317",
+        "payload": {
+            "before": "dbed190978bd278ad327f2a0983dbf5119f3ea82",
+            "commits": [
+                {
+                    "author": {
+                        "email": "tschan@puzzle.ch",
+                        "name": "Daniel Tschan"
+                    },
+                    "distinct": true,
+                    "message": "Change URL format to match Prometheus federation",
+                    "sha": "2b654d6b85c3fe98c6a41ebb02001bbe478357b8",
+                    "url": "https://api.github.com/repos/appuio/openshift-prometheus-proxy/commits/2b654d6b85c3fe98c6a41ebb02001bbe478357b8"
+                }
+            ],
+            "distinct_size": 1,
+            "head": "2b654d6b85c3fe98c6a41ebb02001bbe478357b8",
+            "push_id": 5846969343,
+            "ref": "refs/heads/master",
+            "size": 1
+        },
+        "public": true,
+        "repo": {
+            "id": 190032156,
+            "name": "appuio/openshift-prometheus-proxy",
+            "url": "https://api.github.com/repos/appuio/openshift-prometheus-proxy"
+        },
+        "type": "PushEvent"
+    },
+    {
+        "created_at": "2020-10-08T13:37:08",
+        "github_id": "13779316467",
+        "payload": {
+            "action": "created",
+            "comment": {
+                "author_association": "MEMBER",
+                "body": "In der Tat sind noch einige Strings nicht übersetzt. Aktuell sind folgende Strings nicht auf Französisch und Italienisch übersetzt. \r\n\r\n\r\nDE | FR | IT\r\n-- | -- | --\r\naktive Mitgliedschaft |   |  \r\nsekundäre Zugehörigkeit |   |  \r\nweitere Zugehörigkeit |   |  \r\nE-Mailadresse Kontaktperson |   |  \r\ngespielt |   |  \r\nSpielgemeinschaft |   |  \r\nnicht spielfähig in diesem Jahr |   |  \r\nSUISA über Dritte abgerechnet |   |  \r\nEs müssen zwei Tage gewählt werden |   |  \r\n  |   |  \r\nnicht spielfähig in diesem Jahr |   |  \r\nSUISA über Dritte abgerechnet |   |  \r\nAnmeldungen Export |   |  \r\nUm die SUISA-Meldeliste einzureichen müssen Sie mindestens eine Aufführung hinzufügen oder eine alternative Erledigung wählen: |   |  \r\nMusikfest erstellen |   |  \r\nHerzlichen Dank für die Anmeldung. |   |  \r\n\r\nMöchtest du dies direkt in dieser Tabelle machen oder soll ich dir, oder dem SBV ein Login auf Transifex.com (unserem Übersetzungstool) geben?",
+                "created_at": "2020-10-08T13:37:08Z",
+                "html_url": "https://github.com/hitobito/hitobito_sbv/issues/76#issuecomment-705573805",
+                "id": 705573805,
+                "issue_url": "https://api.github.com/repos/hitobito/hitobito_sbv/issues/76",
+                "node_id": "MDEyOklzc3VlQ29tbWVudDcwNTU3MzgwNQ==",
+                "performed_via_github_app": null,
+                "updated_at": "2020-10-08T13:37:08Z",
+                "url": "https://api.github.com/repos/hitobito/hitobito_sbv/issues/comments/705573805",
+                "user": {
+                    "avatar_url": "https://avatars3.githubusercontent.com/u/9592347?v=4",
+                    "events_url": "https://api.github.com/users/olibrian/events{/privacy}",
+                    "followers_url": "https://api.github.com/users/olibrian/followers",
+                    "following_url": "https://api.github.com/users/olibrian/following{/other_user}",
+                    "gists_url": "https://api.github.com/users/olibrian/gists{/gist_id}",
+                    "gravatar_id": "",
+                    "html_url": "https://github.com/olibrian",
+                    "id": 9592347,
+                    "login": "olibrian",
+                    "node_id": "MDQ6VXNlcjk1OTIzNDc=",
+                    "organizations_url": "https://api.github.com/users/olibrian/orgs",
+                    "received_events_url": "https://api.github.com/users/olibrian/received_events",
+                    "repos_url": "https://api.github.com/users/olibrian/repos",
+                    "site_admin": false,
+                    "starred_url": "https://api.github.com/users/olibrian/starred{/owner}{/repo}",
+                    "subscriptions_url": "https://api.github.com/users/olibrian/subscriptions",
+                    "type": "User",
+                    "url": "https://api.github.com/users/olibrian"
+                }
+            },
+            "issue": {
+                "active_lock_reason": null,
+                "assignee": null,
+                "assignees": [],
+                "author_association": "NONE",
+                "body": "Die drei Strings: `Spielgemeinschaft, nicht spielfähig in diesem Jahr, SUISA über Dritte abgerechnet` im SUISA-Modul sind in den Sprachen französisch und italienisch leer. Wenn keine Übersetzung vorliegt, muss die deutsche Version angezeigt werden.\r\n\r\n<img width=\"470\" alt=\"Bildschirmfoto 2020-10-07 um 09 36 48\" src=\"https://user-images.githubusercontent.com/1453303/95301438-e6720400-0880-11eb-90f8-2f1d546e173a.png\">\r\n",
+                "closed_at": null,
+                "comments": 1,
+                "comments_url": "https://api.github.com/repos/hitobito/hitobito_sbv/issues/76/comments",
+                "created_at": "2020-10-07T07:45:55Z",
+                "events_url": "https://api.github.com/repos/hitobito/hitobito_sbv/issues/76/events",
+                "html_url": "https://github.com/hitobito/hitobito_sbv/issues/76",
+                "id": 716285953,
+                "labels": [],
+                "labels_url": "https://api.github.com/repos/hitobito/hitobito_sbv/issues/76/labels{/name}",
+                "locked": false,
+                "milestone": null,
+                "node_id": "MDU6SXNzdWU3MTYyODU5NTM=",
+                "number": 76,
+                "performed_via_github_app": null,
+                "repository_url": "https://api.github.com/repos/hitobito/hitobito_sbv",
+                "state": "open",
+                "title": "SUISA-Modul: fehlende/leere Übersetzung",
+                "updated_at": "2020-10-08T13:37:08Z",
+                "url": "https://api.github.com/repos/hitobito/hitobito_sbv/issues/76",
+                "user": {
+                    "avatar_url": "https://avatars0.githubusercontent.com/u/1453303?v=4",
+                    "events_url": "https://api.github.com/users/betsim/events{/privacy}",
+                    "followers_url": "https://api.github.com/users/betsim/followers",
+                    "following_url": "https://api.github.com/users/betsim/following{/other_user}",
+                    "gists_url": "https://api.github.com/users/betsim/gists{/gist_id}",
+                    "gravatar_id": "",
+                    "html_url": "https://github.com/betsim",
+                    "id": 1453303,
+                    "login": "betsim",
+                    "node_id": "MDQ6VXNlcjE0NTMzMDM=",
+                    "organizations_url": "https://api.github.com/users/betsim/orgs",
+                    "received_events_url": "https://api.github.com/users/betsim/received_events",
+                    "repos_url": "https://api.github.com/users/betsim/repos",
+                    "site_admin": false,
+                    "starred_url": "https://api.github.com/users/betsim/starred{/owner}{/repo}",
+                    "subscriptions_url": "https://api.github.com/users/betsim/subscriptions",
+                    "type": "User",
+                    "url": "https://api.github.com/users/betsim"
+                }
+            }
+        },
+        "public": true,
+        "repo": {
+            "id": 129432109,
+            "name": "hitobito/hitobito_sbv",
+            "url": "https://api.github.com/repos/hitobito/hitobito_sbv"
+        },
+        "type": "IssueCommentEvent"
+    },
+    {
+        "created_at": "2020-10-14T14:16:40",
+        "github_id": "13843925197",
+        "payload": {
+            "before": "f7cf1771595da5bb66046dcf9d99a51b52a8b7e1",
+            "commits": [
+                {
+                    "author": {
+                        "email": "lorenzbischof@gmail.com",
+                        "name": "Lorenz Bischof"
+                    },
+                    "distinct": true,
+                    "message": "Update",
+                    "sha": "9a001d7343c90ef744438e4d8a0cea7edd645389",
+                    "url": "https://api.github.com/repos/lbischof/image-importer/commits/9a001d7343c90ef744438e4d8a0cea7edd645389"
+                }
+            ],
+            "distinct_size": 1,
+            "head": "9a001d7343c90ef744438e4d8a0cea7edd645389",
+            "push_id": 5853889392,
+            "ref": "refs/heads/master",
+            "size": 1
+        },
+        "public": true,
+        "repo": {
+            "id": 302908562,
+            "name": "lbischof/image-importer",
+            "url": "https://api.github.com/repos/lbischof/image-importer"
+        },
+        "type": "PushEvent"
+    },
+    {
+        "created_at": "2020-10-01T13:57:31",
+        "github_id": "13703877952",
+        "payload": {
+            "before": "8f8d9472709486c934d6431a963b6cea4678c440",
+            "commits": [
+                {
+                    "author": {
+                        "email": "buehlmann@puzzle.ch",
+                        "name": "Benjamin Bühlmann"
+                    },
+                    "distinct": true,
+                    "message": "Using paragraph as wrapper",
+                    "sha": "50d54c2b958c25609497345258e493a16b77ed6f",
+                    "url": "https://api.github.com/repos/puzzle/jenkins-pipeline-shared-libraries/commits/50d54c2b958c25609497345258e493a16b77ed6f"
+                }
+            ],
+            "distinct_size": 1,
+            "head": "50d54c2b958c25609497345258e493a16b77ed6f",
+            "push_id": 5782358242,
+            "ref": "refs/heads/resource-management",
+            "size": 1
+        },
+        "public": true,
+        "repo": {
+            "id": 115025166,
+            "name": "puzzle/jenkins-pipeline-shared-libraries",
+            "url": "https://api.github.com/repos/puzzle/jenkins-pipeline-shared-libraries"
+        },
+        "type": "PushEvent"
+    },
+    {
+        "created_at": "2020-08-06T09:25:37",
+        "github_id": "13126927153",
+        "payload": {
+            "forkee": {
+                "statuses_url": "https://api.github.com/repos/Robin481/ccli/statuses/{sha}",
+                "git_refs_url": "https://api.github.com/repos/Robin481/ccli/git/refs{/sha}",
+                "issue_comment_url": "https://api.github.com/repos/Robin481/ccli/issues/comments{/number}",
+                "watchers": 0,
+                "disabled": false,
+                "mirror_url": null,
+                "languages_url": "https://api.github.com/repos/Robin481/ccli/languages",
+                "stargazers_count": 0,
+                "license": null,
+                "forks": 0,
+                "default_branch": "master",
+                "comments_url": "https://api.github.com/repos/Robin481/ccli/comments{/number}",
+                "commits_url": "https://api.github.com/repos/Robin481/ccli/commits{/sha}",
+                "id": 285528692,
+                "clone_url": "https://github.com/Robin481/ccli.git",
+                "homepage": null,
+                "stargazers_url": "https://api.github.com/repos/Robin481/ccli/stargazers",
+                "events_url": "https://api.github.com/repos/Robin481/ccli/events",
+                "blobs_url": "https://api.github.com/repos/Robin481/ccli/git/blobs{/sha}",
+                "forks_count": 0,
+                "pushed_at": "2020-07-27T11:36:17Z",
+                "public": true,
+                "git_url": "git://github.com/Robin481/ccli.git",
+                "hooks_url": "https://api.github.com/repos/Robin481/ccli/hooks",
+                "owner": {
+                    "avatar_url": "https://avatars3.githubusercontent.com/u/32168247?v=4",
+                    "events_url": "https://api.github.com/users/Robin481/events{/privacy}",
+                    "followers_url": "https://api.github.com/users/Robin481/followers",
+                    "following_url": "https://api.github.com/users/Robin481/following{/other_user}",
+                    "gists_url": "https://api.github.com/users/Robin481/gists{/gist_id}",
+                    "gravatar_id": "",
+                    "html_url": "https://github.com/Robin481",
+                    "id": 32168247,
+                    "login": "Robin481",
+                    "node_id": "MDQ6VXNlcjMyMTY4MjQ3",
+                    "organizations_url": "https://api.github.com/users/Robin481/orgs",
+                    "received_events_url": "https://api.github.com/users/Robin481/received_events",
+                    "repos_url": "https://api.github.com/users/Robin481/repos",
+                    "site_admin": false,
+                    "starred_url": "https://api.github.com/users/Robin481/starred{/owner}{/repo}",
+                    "subscriptions_url": "https://api.github.com/users/Robin481/subscriptions",
+                    "type": "User",
+                    "url": "https://api.github.com/users/Robin481"
+                },
+                "trees_url": "https://api.github.com/repos/Robin481/ccli/git/trees{/sha}",
+                "git_commits_url": "https://api.github.com/repos/Robin481/ccli/git/commits{/sha}",
+                "collaborators_url": "https://api.github.com/repos/Robin481/ccli/collaborators{/collaborator}",
+                "watchers_count": 0,
+                "archived": false,
+                "tags_url": "https://api.github.com/repos/Robin481/ccli/tags",
+                "merges_url": "https://api.github.com/repos/Robin481/ccli/merges",
+                "releases_url": "https://api.github.com/repos/Robin481/ccli/releases{/id}",
+                "subscribers_url": "https://api.github.com/repos/Robin481/ccli/subscribers",
+                "ssh_url": "git@github.com:Robin481/ccli.git",
+                "created_at": "2020-08-06T09:25:36Z",
+                "name": "ccli",
+                "has_issues": false,
+                "private": false,
+                "git_tags_url": "https://api.github.com/repos/Robin481/ccli/git/tags{/sha}",
+                "has_projects": true,
+                "archive_url": "https://api.github.com/repos/Robin481/ccli/{archive_format}{/ref}",
+                "has_wiki": true,
+                "open_issues_count": 0,
+                "milestones_url": "https://api.github.com/repos/Robin481/ccli/milestones{/number}",
+                "forks_url": "https://api.github.com/repos/Robin481/ccli/forks",
+                "url": "https://api.github.com/repos/Robin481/ccli",
+                "downloads_url": "https://api.github.com/repos/Robin481/ccli/downloads",
+                "open_issues": 0,
+                "keys_url": "https://api.github.com/repos/Robin481/ccli/keys{/key_id}",
+                "description": "Cryptopus Command Line Client",
+                "contents_url": "https://api.github.com/repos/Robin481/ccli/contents/{+path}",
+                "language": null,
+                "contributors_url": "https://api.github.com/repos/Robin481/ccli/contributors",
+                "deployments_url": "https://api.github.com/repos/Robin481/ccli/deployments",
+                "pulls_url": "https://api.github.com/repos/Robin481/ccli/pulls{/number}",
+                "labels_url": "https://api.github.com/repos/Robin481/ccli/labels{/name}",
+                "html_url": "https://github.com/Robin481/ccli",
+                "svn_url": "https://github.com/Robin481/ccli",
+                "issue_events_url": "https://api.github.com/repos/Robin481/ccli/issues/events{/number}",
+                "notifications_url": "https://api.github.com/repos/Robin481/ccli/notifications{?since,all,participating}",
+                "has_downloads": true,
+                "node_id": "MDEwOlJlcG9zaXRvcnkyODU1Mjg2OTI=",
+                "compare_url": "https://api.github.com/repos/Robin481/ccli/compare/{base}...{head}",
+                "full_name": "Robin481/ccli",
+                "subscription_url": "https://api.github.com/repos/Robin481/ccli/subscription",
+                "assignees_url": "https://api.github.com/repos/Robin481/ccli/assignees{/user}",
+                "issues_url": "https://api.github.com/repos/Robin481/ccli/issues{/number}",
+                "size": 0,
+                "has_pages": false,
+                "fork": true,
+                "updated_at": "2020-07-27T11:36:20Z",
+                "branches_url": "https://api.github.com/repos/Robin481/ccli/branches{/branch}",
+                "teams_url": "https://api.github.com/repos/Robin481/ccli/teams"
+            }
+        },
+        "public": true,
+        "repo": {
+            "id": 282879559,
+            "name": "puzzle/ccli",
+            "url": "https://api.github.com/repos/puzzle/ccli"
+        },
+        "type": "ForkEvent"
+    },
+    {
+        "created_at": "2020-10-15T06:13:41",
+        "github_id": "13852295172",
+        "payload": {
+            "before": "f8e71b76f88bbe6634f9b3a1e9b0fe80bd798c4d",
+            "commits": [
+                {
+                    "author": {
+                        "email": "buehlmann@users.noreply.github.com",
+                        "name": "benjamin"
+                    },
+                    "distinct": true,
+                    "message": "Fixed minor issues in Kafka lab (#57)\n\n* Fixed minor issues in Kafka lab",
+                    "sha": "c245f3599f9178571f4b9cf3ccc73df837107472",
+                    "url": "https://api.github.com/repos/puzzle/amm-techlab/commits/c245f3599f9178571f4b9cf3ccc73df837107472"
+                }
+            ],
+            "distinct_size": 1,
+            "head": "c245f3599f9178571f4b9cf3ccc73df837107472",
+            "push_id": 5858082272,
+            "ref": "refs/heads/master",
+            "size": 1
+        },
+        "public": true,
+        "repo": {
+            "id": 271077175,
+            "name": "puzzle/amm-techlab",
+            "url": "https://api.github.com/repos/puzzle/amm-techlab"
+        },
+        "type": "PushEvent"
+    },
+    {
+        "created_at": "2020-08-18T12:02:29",
+        "github_id": "13231638553",
+        "payload": {
+            "before": "f820fa572fe1397ca2e470e239c21b36318f35f0",
+            "commits": [
+                {
+                    "author": {
+                        "email": "gilgen@puzzle.ch",
+                        "name": "Sylvain Gilgen"
+                    },
+                    "distinct": false,
+                    "message": "Add spock framework for testing, add gradlew, write tests for global variables and groovy files",
+                    "sha": "f1fba919ad8f050b093b6724eb97eca2c78b953b",
+                    "url": "https://api.github.com/repos/SylivanKenobi/jenkins-pipeline-shared-libraries/commits/f1fba919ad8f050b093b6724eb97eca2c78b953b"
+                },
+                {
+                    "author": {
+                        "email": "raaflaub@puzzle.ch",
+                        "name": "Christoph Raaflaub"
+                    },
+                    "distinct": true,
+                    "message": "Merge pull request #7 from SylivanKenobi/jenkins-spock\n\nAdd spock framework for testing, add gradlew, write tests for global …",
+                    "sha": "11b034c12e1ce9c2027afa4bf817093ab622668e",
+                    "url": "https://api.github.com/repos/SylivanKenobi/jenkins-pipeline-shared-libraries/commits/11b034c12e1ce9c2027afa4bf817093ab622668e"
+                },
+                {
+                    "author": {
+                        "email": "gilgen@puzzle.ch",
+                        "name": "Sylvain Gilgen"
+                    },
+                    "distinct": true,
+                    "message": "Fix task order",
+                    "sha": "53c2f2dffe740268712fd9b9698af4d9d23af90d",
+                    "url": "https://api.github.com/repos/SylivanKenobi/jenkins-pipeline-shared-libraries/commits/53c2f2dffe740268712fd9b9698af4d9d23af90d"
+                }
+            ],
+            "distinct_size": 2,
+            "head": "53c2f2dffe740268712fd9b9698af4d9d23af90d",
+            "push_id": 5546273181,
+            "ref": "refs/heads/master",
+            "size": 3
+        },
+        "public": true,
+        "repo": {
+            "id": 286741628,
+            "name": "SylivanKenobi/jenkins-pipeline-shared-libraries",
+            "url": "https://api.github.com/repos/SylivanKenobi/jenkins-pipeline-shared-libraries"
+        },
+        "type": "PushEvent"
+    },
+    {
+        "created_at": "2020-10-13T10:56:52",
+        "github_id": "13826241628",
+        "payload": {
+            "before": "1dfdc7271ae760a455ccb2a553a64a250b878fc4",
+            "commits": [
+                {
+                    "author": {
+                        "email": "lorenzbischof@gmail.com",
+                        "name": "Lorenz Bischof"
+                    },
+                    "distinct": true,
+                    "message": "Add face recognition",
+                    "sha": "f7cf1771595da5bb66046dcf9d99a51b52a8b7e1",
+                    "url": "https://api.github.com/repos/lbischof/image-importer/commits/f7cf1771595da5bb66046dcf9d99a51b52a8b7e1"
+                }
+            ],
+            "distinct_size": 1,
+            "head": "f7cf1771595da5bb66046dcf9d99a51b52a8b7e1",
+            "push_id": 5845315618,
+            "ref": "refs/heads/master",
+            "size": 1
+        },
+        "public": true,
+        "repo": {
+            "id": 302908562,
+            "name": "lbischof/image-importer",
+            "url": "https://api.github.com/repos/lbischof/image-importer"
+        },
+        "type": "PushEvent"
+    }
+]

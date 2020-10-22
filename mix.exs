@@ -5,7 +5,7 @@ defmodule Posa.MixProject do
     [
       app: :posa,
       version: "2.0.0",
-      elixir: "~> 1.10.3",
+      elixir: "~> 1.11.0",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -49,6 +49,7 @@ defmodule Posa.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.5"},
       {:poison, "~> 3.1"},
+      {:phoenix_slime, "~> 0.13.1"}
     ]
   end
 
