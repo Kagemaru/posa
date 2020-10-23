@@ -2,36 +2,8 @@ h1 OSA List
 
 .container
   .timeline
-    = for {month_group, events_by_month} <- group_by_month(@events) do
-      .timeline-month
-        a data-toggle="collapse" data-target=".#{month_class(month_group)}" href="#"
-          = month_tag(month_group)
-        span = Enum.count(events_by_month)
-      .month-container
-        = for {day_group, events_by_day} <- group_by_day(events_by_month) do
-          .timeline-section.collapse.show class="#{month_class(month_group)}"
-            .timeline-date
-              a data-toggle="collapse" data-target=".#{day_class(day_group)}" href="#"
-                = day_tag(day_group)
-              span = Enum.count(events_by_day)
-            .row.collapse.show class="#{day_class(day_group)}"
-              = for event <- events_by_day do
-                .col-lg-6.my-2
-                  .timeline-box
-                    .box-title
-                      i.fas.fa-arrow-up.text-success aria-hidden="true"
-                      = event.type
-                      span.float-right = time(event.created_at)
-                    .box-content
-                      a.btn.btn-xs.btn-default.float-right href="#{url(event)}"
-                        | Details
-                      .box-item
-                        strong> Author:
-                        = author(event)
-                    .box-footer
-                      | Repo:
-                      a< href="#" = repo(event)
-
+    = for {group, events} <- group_by_month(@events) do
+      = render "_month_group.html", group: group, events: events
 / ul.osa_list
 /   = for {event, count} <- Enum.with_index(@events) do
 /     li style="border-bottom: 2px solid;"

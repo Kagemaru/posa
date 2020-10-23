@@ -1,0 +1,11 @@
+elixir:
+  data = with commits <- @event.payload,
+              commit <- List.first(commits),
+
+  do %{content: [{"Author", commit.author.name}, {}]}
+
+= render "_base.html",
+         event: @event,
+         icon: "fa-arrow-up",
+         title: "Commit gepusht",
+         content: content

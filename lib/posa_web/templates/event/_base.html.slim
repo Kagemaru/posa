@@ -1,0 +1,23 @@
+- icon = assigns[:icon] || "fa-asterisk"
+- title = assigns[:title] || @event.type
+- time = assigns[:time] || time(@event.created_at)
+- detail_url = assigns[:detail_url] || url(@event)
+- {repo_name, repo_url} = assigns[:repo] || repo(@event)
+- content = assigns[:content] || []
+
+.col-lg-6.my-2
+  .timeline-box
+    .box-title
+      i.fas.text-success class=icon aria-hidden="true"
+      = title
+      span.float-right = time
+    = if [] != content do
+      .box-content
+        a.btn.btn-xs.btn-default.float-right href=detail_url Details
+        = for {key, value} <- content do
+          .box-item
+            strong>= key
+            = value
+    .box-footer
+      | Repo:
+      a< href=repo_url = repo_name
