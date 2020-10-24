@@ -1,1 +1,17 @@
-= render "_base.html", event: @event
+elixir:
+  data =
+    with payload <- @event.payload
+    do
+      %{
+        content: [
+          {"Beschreibung", payload["description"]},
+          {"Master Branch", payload["master_branch"]}
+        ]
+      }
+    end
+
+= render "_base.html",
+         event: @event,
+         icon: "fa-plus",
+         title: "Repository erstellt",
+         content: data.content 

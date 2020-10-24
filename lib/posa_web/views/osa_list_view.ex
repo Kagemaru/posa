@@ -3,8 +3,17 @@ defmodule PosaWeb.OSAListView do
 
   import PosaWeb.DateTimeHelper
 
-  def group_by_month(list), do: Enum.group_by(list, &month_group/1)
-  def group_by_day(list), do: Enum.group_by(list, &day_group/1)
+  def group_by_month(list) do
+    list
+    |> Enum.group_by(&month_group/1)
+    |> Enum.sort(&(elem(&1, 0) >= elem(&2, 0)))
+  end
+
+  def group_by_day(list) do
+    list
+    |> Enum.group_by(&day_group/1)
+    |> Enum.sort(&(elem(&1, 0) >= elem(&2, 0)))
+  end
 
   def month_tag(date), do: "#{month(date)}.#{year(date)}"
   def day_tag(date), do: "#{day(date)}.#{month(date)}.#{year(date)}"

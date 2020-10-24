@@ -4,7 +4,7 @@ defmodule PosaWeb.OSAListController do
   alias Posa.Github.Data
 
   def index(conn, _params) do
-    events = Data.list_events
+    events = Data.list_events()
     render(conn, events: events)
   end
 

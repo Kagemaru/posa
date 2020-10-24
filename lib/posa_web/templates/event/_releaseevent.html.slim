@@ -1,1 +1,19 @@
-= render "_base.html", event: @event
+elixir:
+  data =
+    with release <- @event.payload["release"]
+    do
+      %{
+        content: [
+          {"Author", release["author"]["login"]},
+          {"Beschreibung", release["body"]}
+        ],
+        detail_url: release["html_url"]
+      }
+    end
+
+= render "_base.html",
+         event: @event,
+         icon: "fa-archive",
+         title: "Release erstellt",
+         content: data.content,
+         detail_url: data.detail_url

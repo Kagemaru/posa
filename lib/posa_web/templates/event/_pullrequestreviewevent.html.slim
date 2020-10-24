@@ -1,1 +1,21 @@
-= render "_base.html", event: @event
+elixir:
+  data =
+    with pull_request <- @event.payload["pull_request"],
+         review <- @event.payload["review"],
+         author <- link(review["user"]["login"], to: review["user"]["html_url"])
+    do
+      %{
+        content: [
+          {"Author", author},
+          {"Review", review["body"]}
+        ],
+        detail_url: review["html_url"]
+      }
+    end
+
+= render "_base.html",
+         event: @event,
+         icon: "fa-sticky-note",
+         title: "Review erstellt",
+         content: data.content,
+         detail_url: data.detail_url

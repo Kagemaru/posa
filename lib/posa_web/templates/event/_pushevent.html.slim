@@ -1,11 +1,18 @@
 elixir:
-  data = with commits <- @event.payload,
-              commit <- List.first(commits),
-
-  do %{content: [{"Author", commit.author.name}, {}]}
+  data = with commits <- @event.payload["commits"],
+              commit <- List.first(commits)
+  do %{
+       content: [
+         {"Author", commit["author"]["name"]},
+         {"Message", commit["message"]}
+       ],
+       detail_url: commit["url"]
+     }
+  end
 
 = render "_base.html",
          event: @event,
          icon: "fa-arrow-up",
          title: "Commit gepusht",
-         content: content
+         content: data.content,
+         detail_url: data.detail_url

@@ -1,1 +1,22 @@
-= render "_base.html", event: @event
+elixir:
+  data = with pr <- @event.payload["pull_request"]
+  do %{
+       content: [
+         {"Author", pr["user"]["login"]},
+         {"Message", pr["title"]},
+         {"Additions", pr["additions"]},
+         {"Deletions", pr["deletions"]},
+         {"Commits", pr["commits"]},
+         {"Base", pr["base"]["label"]},
+         {"Head", pr["head"]["label"]}
+       ],
+       detail_url: pr["html_url"],
+     }
+  end
+
+= render "_base.html",
+         event: @event,
+         icon: "fa-arrow-down",
+         title: "Pull Request erstellt",
+         detail_url: data.detail_url,
+         content: data.content
