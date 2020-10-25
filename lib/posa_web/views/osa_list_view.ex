@@ -1,5 +1,6 @@
 defmodule PosaWeb.OSAListView do
   use PosaWeb, :view
+  use Timex
 
   import PosaWeb.DateTimeHelper
 
@@ -15,8 +16,8 @@ defmodule PosaWeb.OSAListView do
     |> Enum.sort(&(elem(&1, 0) >= elem(&2, 0)))
   end
 
-  def month_tag(date), do: "#{month(date)}.#{year(date)}"
-  def day_tag(date), do: "#{day(date)}.#{month(date)}.#{year(date)}"
+  def month_tag(date), do: Timex.lformat!(date, "{Mfull} {YYYY}", "de")
+  def day_tag(date), do: Timex.lformat!(date, "{WDfull} der {0D}.{0M}.{YYYY}", "de")
 
   def month_class(date), do: "month-#{year(date)}-#{month(date)}"
   def day_class(date), do: "day-#{year(date)}-#{month(date)}-#{day(date)}"

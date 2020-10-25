@@ -49,7 +49,8 @@ defmodule Posa.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.5"},
       {:poison, "~> 3.1"},
-      {:phoenix_slime, "~> 0.13.1"}
+      {:phoenix_slime, "~> 0.13.1"},
+      {:timex, "~> 3.6.2"}
     ]
   end
 
