@@ -1,17 +1,5 @@
-h1 OSA List
-
 .container
   .timeline
-    = for {group, events} <- group_by_month(@events) do
-      = render "_month_group.html", group: group, events: events
-/ ul.osa_list
-/   = for {event, count} <- Enum.with_index(@events) do
-/     li style="border-bottom: 2px solid;"
-/       h1 = "Event ##{count + 1}"
-/       ul
-/         li = "type: #{event.type}"
-/         li = "created_at: #{event.created_at}"
-/         li = "github_id: #{event.github_id}"
-/         li = "payload: #{make_it_json(event.payload)}"
-/         li = "public: #{event.public}"
-/         li = "repo: #{make_it_json(event.repo)}"
+    = for {{group, events}, count} <- Enum.with_index(group_by_month(@events)) do
+      - show = if count == 0, do: "show", else: ""
+      = render "_month_group.html", group: group, events: events, show_month: show
