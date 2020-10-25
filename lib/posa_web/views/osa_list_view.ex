@@ -17,7 +17,7 @@ defmodule PosaWeb.OSAListView do
   end
 
   def month_tag(date), do: Timex.lformat!(date, "{Mfull} {YYYY}", "de")
-  def day_tag(date), do: Timex.lformat!(date, "{WDfull} der {0D}.{0M}.{YYYY}", "de")
+  def day_tag(date), do: Timex.lformat!(date, "{WDfull} {0D}.{0M}.{YYYY}", "de")
 
   def month_class(date), do: "month-#{year(date)}-#{month(date)}"
   def day_class(date), do: "day-#{year(date)}-#{month(date)}-#{day(date)}"
