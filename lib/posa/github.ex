@@ -1,9 +1,10 @@
 defmodule Posa.Github do
   use Supervisor
 
-  alias Posa.Github.Storage.{Organizations,Users,Events,Etags}
+  alias Posa.Github.Storage.{Organizations, Users, Events, Etags}
   alias Posa.Sync
 
+  # Extract to config
   @start_storage true
   @start_sync true
 
@@ -24,14 +25,14 @@ defmodule Posa.Github do
   defp add_storage(list) do
     case @start_storage do
       true -> list ++ [Organizations, Users, Events, Etags]
-         _ -> list
+      _ -> list
     end
   end
 
   defp add_sync(list) do
     case @start_sync do
       true -> list ++ [Sync]
-         _ -> list
+      _ -> list
     end
   end
 end

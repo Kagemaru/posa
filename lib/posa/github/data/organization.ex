@@ -7,31 +7,31 @@ defmodule Posa.Github.Data.Organization do
 
   @primary_key false
   embedded_schema do
-    field :login,              :string
-    field :github_id,          :integer
-    field :url,                :string
-    field :repos_url,          :string
-    field :events_url,         :string
-    field :hooks_url,          :string
-    field :issues_url,         :string
-    field :members_url,        :string
+    field :login, :string
+    field :github_id, :integer
+    field :url, :string
+    field :repos_url, :string
+    field :events_url, :string
+    field :hooks_url, :string
+    field :issues_url, :string
+    field :members_url, :string
     field :public_members_url, :string
-    field :avatar_url,         :string
-    field :description,        :string
-    field :name,               :string
-    field :blog,               :string
-    field :location,           :string
-    field :email,              :string
-    field :public_repos,       :integer
-    field :public_gists,       :integer
-    field :followers,          :integer
-    field :following,          :integer
-    field :html_url,           :string
-    field :created_at,         :naive_datetime
-    field :type,               :string
+    field :avatar_url, :string
+    field :description, :string
+    field :name, :string
+    field :blog, :string
+    field :location, :string
+    field :email, :string
+    field :public_repos, :integer
+    field :public_gists, :integer
+    field :followers, :integer
+    field :following, :integer
+    field :html_url, :string
+    field :created_at, :naive_datetime
+    field :type, :string
   end
 
-  def changeset(schema, params \\ :empty) do
+  def changeset(schema, params \\ %{}) do
     schema
     |> cast(params, @required_fields, @optional_fields)
   end

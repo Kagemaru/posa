@@ -5,7 +5,6 @@ defmodule Posa.Github.Data.User do
   @required_fields ~w(login github_id avatar_url gravatar_id url html_url followers_url following_url gists_url starred_url subscriptions_url organizations_url repos_url events_url received_events_url type site_admin)a
   @optional_fields ~w()a
 
-
   @primary_key false
   embedded_schema do
     field :login, :string
@@ -27,7 +26,7 @@ defmodule Posa.Github.Data.User do
     field :site_admin, :boolean, default: false
   end
 
-  def changeset(schema, params \\ :empty) do
+  def changeset(schema, params \\ %{}) do
     schema
     |> cast(params, @required_fields, @optional_fields)
   end
