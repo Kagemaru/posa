@@ -3,7 +3,8 @@ elixir:
               commit <- List.first(commits)
   do %{
        content: [
-         {"Author", commit["author"]["name"]},
+         {"User", @event.actor["login"]},
+         {"Commits", @event.payload["size"]},
          {"Message", commit["message"]}
        ],
        detail_url: commit["url"]
@@ -13,6 +14,6 @@ elixir:
 = render "_base.html",
          event: @event,
          icon: "fa-arrow-up",
-         title: "Commit gepusht",
+         title: "Commits gepusht",
          content: data.content,
          detail_url: data.detail_url
