@@ -5,6 +5,7 @@ elixir:
       %{
         content: [
           {"Author", issue["user"]["login"]},
+          {"Titel", issue["title"]},
           {"Kommentar", issue["body"]}
         ],
         detail_url: issue["html_url"]
