@@ -11,9 +11,19 @@ defmodule PosaWeb.OSAListView do
   end
 
   def group_by_day(list) do
-    list
-    |> Enum.group_by(&day_group/1)
-    |> Enum.sort(&(elem(&1, 0) >= elem(&2, 0)))
+    grouping =
+      list
+      |> Enum.group_by(&day_group/1)
+      |> Enum.sort(&(elem(&1, 0) >= elem(&2, 0)))
+
+    grouping
+    |> Enum.map(fn {group, events} ->
+      events =
+        events
+        |> Enum.sort(&>=/2)
+
+      {group, events}
+    end)
   end
 
   def month_tag(date), do: Timex.lformat!(date, "{Mfull} {YYYY}", "de")
