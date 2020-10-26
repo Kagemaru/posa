@@ -1,7 +1,6 @@
 elixir:
   data =
     with comment <- @event.payload["comment"],
-         issue <- @event.payload["issue"],
          author <- link(comment["user"]["login"], to: comment["user"]["html_url"])
     do
       %{

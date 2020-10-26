@@ -1,7 +1,6 @@
 elixir:
   data =
-    with pull_request <- @event.payload["pull_request"],
-         review <- @event.payload["review"],
+    with review <- @event.payload["review"],
          author <- link(review["user"]["login"], to: review["user"]["html_url"])
     do
       %{
