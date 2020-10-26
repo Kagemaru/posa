@@ -7,23 +7,14 @@ defmodule PosaWeb.OSAListView do
   def group_by_month(list) do
     list
     |> Enum.group_by(&month_group/1)
-    |> Enum.sort(&(elem(&1, 0) >= elem(&2, 0)))
+    |> Enum.sort(&group_sorter/2)
   end
 
   def group_by_day(list) do
-    grouping =
-      list
-      |> Enum.group_by(&day_group/1)
-      |> Enum.sort(&(elem(&1, 0) >= elem(&2, 0)))
-
-    grouping
-    |> Enum.map(fn {group, events} ->
-      events =
-        events
-        |> Enum.sort(&>=/2)
-
-      {group, events}
-    end)
+    list
+    |> Enum.group_by(&day_group/1)
+    |> Enum.sort(&group_sorter/2)
+    |> Enum.map(&event_sorter/1)
   end
 
   def month_tag(date), do: Timex.lformat!(date, "{Mfull} {YYYY}", "de")
@@ -42,4 +33,6 @@ defmodule PosaWeb.OSAListView do
 
   defp month_group(%{created_at: date}), do: Date.beginning_of_month(date)
   defp day_group(%{created_at: date}), do: NaiveDateTime.to_date(date)
+  defp group_sorter({group, _}, {group2, _}), do: group >= group2
+  defp event_sorter({group, events}), do: {group, Enum.sort(events, &>=/2)}
 end
