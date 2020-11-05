@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Applies a config to an OpenShift project.
+
+set -e
+
+if (( $# != 1 )); then
+    echo "USAGE: apply_config OPENSHIFT_PROJECT"
+fi
+
+project="$1"
+
+overlay="overlays/$project"
+
+if [[ ! -d $overlay ]]; then
+    echo "No overlay found at $overlay."
+    exit 1
+fi
+
+project_found=$(oc projects -q | grep -E "^$project$" | wc -l)
+if (( $project_found != 1)); then
+    echo "No openshift project '$project' found."
+    echo "Check the output of 'oc projects'."
+    exit 1
+fi
+
+current_project=$(oc project -q)
+if [[ $current_project != $project ]]; then
+  echo "WARNING: You are logged into $current_project and applying $project."
+  echo -n "Continue (y/n): "
+  read prompt
+  if [[ $prompt != y* ]]; then
+    echo "Aborted."
+    exit 1
+  fi
+fi
+
+echo "Applying $overlay to $project"
+echo ""
+
+function indent2 {
+    sed -u 's/^/  /'
+}
+
+function red {
+    # From http://www.andrewnoske.com/wiki/Bash_-_adding_color#Sed_-_used_to_add_color_through_string_substitution
+    sed -ure "s/.*/\x1b[31m\0\x1b[0m/g"
+}
+
+function highlight_changes {
+    # From http://www.andrewnoske.com/wiki/Bash_-_adding_color#Sed_-_used_to_add_color_through_string_substitution
+    sed -ure "s/unchanged/\x1b[33m\0\x1b[0m/g; s/configured/\x1b[32m\0\x1b[0m/g; s/created/\x1b[34m\0\x1b[0m/g"
+}
+
+
+kustomize build "$overlay" | \
+    oc apply --namespace "$project" -f - \
+        2> >( indent2 | red ) > >( indent2 | highlight_changes )

@@ -1,0 +1,8 @@
+bases:
+- ../../base
+
+patches:
+- ./environment-variables.yaml
+- ./resource-requests-and-limits.yaml
+- ./source.yaml
+- ./ingress.yaml

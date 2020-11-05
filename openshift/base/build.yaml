@@ -1,0 +1,63 @@
+---
+apiVersion: v1
+kind: ImageStream
+metadata:
+  name: elixir-upstream
+  annotations:
+    puzzle.ch/purpose: Upstream image change trigger
+spec:
+  dockerImageRepository: docker.io/hexpm/elixir
+  tags:
+  - from:
+      kind: DockerImage
+      name: docker.io/hexpm/elixir:1.11.1-erlang-22.3.4.12-alpine-3.12.0
+    importPolicy:
+      scheduled: true
+    name: latest
+  lookupPolicy:
+    local: true
+---
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: posa
+  name: posa
+spec:
+  successfulBuildsHistoryLimit: 3
+  output:
+    to:
+      kind: ImageStreamTag
+      name: posa:latest
+  resources:
+    limits:
+      cpu: 1
+      memory: 2Gi
+    requests:
+      cpu: 10m
+      memory: 128Mi
+  source:
+    git:
+      ref: master
+      uri: https://github.com/Kagemaru/posa.git
+    type: Git
+    contextDir: images/s2i
+  strategy:
+    dockerStrategy:
+      from:
+        kind: "ImageStreamTag"
+        name: "elixir-upstream:1.11.1-erlang-22.3.4.12-alpine-3.12.0"
+  triggers:
+  - imageChange:
+      from:
+        kind: ImageStreamTag
+        name: elixir-upstream:1.11.1-erlang-22.3.4.12-alpine-3.12.0
+    type: ImageChange
+---
+apiVersion: v1
+kind: ImageStream
+metadata:
+  name: posa
+spec:
+  lookupPolicy:
+    local: true
