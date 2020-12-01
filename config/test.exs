@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Configure your database
 #
@@ -20,3 +20,4 @@ config :posa, PosaWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+

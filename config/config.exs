@@ -5,7 +5,7 @@
 # is restricted to this project.
 
 # General application configuration
-use Mix.Config
+import Config
 
 # config :posa,
 #   ecto_repos: [Posa.Repo]
@@ -33,6 +33,16 @@ config :phoenix, :template_engines,
   slim: PhoenixSlime.Engine,
   slime: PhoenixSlime.Engine,
   slimleex: PhoenixSlime.LiveViewEngine
+
+# Set Runtime Config
+organizations = System.get_env("PHX_ORGANIZATIONS", "puzzle") |> String.split(",")
+github_token = System.get_env("PHX_GITHUB_TOKEN", "bdd24cb5b43c22f4995a4da476957f0da04d0a95")
+sync_delay_ms = System.get_env("PHX_SYNC_DELAY_MS", "120000") |> String.to_integer
+
+config :posa,
+  organizations: organizations,
+  github_token: github_token,
+  sync_delay_ms: sync_delay_ms
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
