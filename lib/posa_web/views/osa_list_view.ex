@@ -24,12 +24,28 @@ defmodule PosaWeb.OSAListView do
   def day_class(date), do: "day-#{year(date)}-#{month(date)}-#{day(date)}"
 
   def render_event(event) do
-    render(
+    event
+    |> render_custom
+    |> render_default(event)
+  end
+
+  defp render_custom(event) do
+    render_existing(
       PosaWeb.EventView,
       "_#{String.downcase(event.type)}.html",
       event: event
     )
   end
+
+  defp render_default(nil, event) do
+    render(
+      PosaWeb.EventView,
+      "_base.html",
+      event: event
+    )
+  end
+
+  defp render_default(output, _), do: output
 
   defp month_group(%{created_at: date}), do: Date.beginning_of_month(date)
   defp day_group(%{created_at: date}), do: NaiveDateTime.to_date(date)
