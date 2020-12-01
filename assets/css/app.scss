@@ -271,12 +271,17 @@ text-shadow:1px 1px 1px rgba(0,0,0,0.3);
   margin-bottom:5px;
 }
 
-.box-footer{
-  padding:5px 15px;
-  border-top: 1px solid #17191B;
-  background-color:#444950;
-  text-align:right;
-  font-style:italic;
+.box-footer {
+  padding: 5px 15px;
+  background-color: #444950;
+  .left {
+    display: inline-block;
+    width: 50%;
+  }
+  .right {
+    display: inline-block;
+    width: 50%;
+  }
 }
 
 ul.osa_list {

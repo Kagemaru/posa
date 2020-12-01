@@ -4,6 +4,8 @@
 - detail_url = assigns[:detail_url] || url(@event)
 - {repo_name, repo_url} = assigns[:repo] || repo(@event)
 - content = assigns[:content] || []
+- login = assigns[:login] || @event.actor["login"]
+- login_url = assigns[:login_url] || @event.actor["url"]
 
 .col-lg-6.my-2
   .timeline-box
@@ -18,6 +20,13 @@
           .box-item
             strong>= key
             = value
-    .box-footer
-      | Repo:
-      a< href=repo_url = repo_name
+    .box-footer.row
+      .left.col-6
+        | User:
+        br
+        a.link< href=login_url = login
+
+      .right.col-6
+        | Repo:
+        br
+        a< href=repo_url = repo_name
