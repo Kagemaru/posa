@@ -66,7 +66,6 @@ defmodule Posa.Github.API do
 
   defp github_token, do: Application.get_env(:posa, :github_token)
 
-
   defp store(:organization), do: Organizations
   defp store(:member), do: Organizations
   defp store(:user), do: Users

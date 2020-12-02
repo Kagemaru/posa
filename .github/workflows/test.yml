@@ -38,5 +38,6 @@ jobs:
           mix local.rebar --force
           mix local.hex --force
           mix deps.get
+          mix deps.compile
       - name: Run tests
         run: mix test

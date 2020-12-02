@@ -73,7 +73,6 @@ defmodule Posa.Github.Sync do
 
   defp orgs, do: Application.get_env(:posa, :organizations)
 
-
   defp changeset(:organization, response), do: Organization.changeset(%Organization{}, response)
   defp changeset(:user, response), do: User.changeset(%User{}, response)
   defp changeset(:event, response), do: Event.changeset(%Event{}, response)

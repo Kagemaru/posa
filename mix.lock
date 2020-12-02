@@ -49,3 +49,4 @@
   "tzdata": {:hex, :tzdata, "1.0.4", "a3baa4709ea8dba552dca165af6ae97c624a2d6ac14bd265165eaa8e8af94af6", [:mix], [{:hackney, "~> 1.0", [hex: :hackney, repo: "hexpm", optional: false]}], "hexpm", "b02637db3df1fd66dd2d3c4f194a81633d0e4b44308d36c1b2fdfd1e4e6f169b"},
   "unicode_util_compat": {:hex, :unicode_util_compat, "0.5.0", "8516502659002cec19e244ebd90d312183064be95025a319a6c7e89f4bccd65b", [:rebar3], [], "hexpm", "d48d002e15f5cc105a696cf2f1bbb3fc72b4b770a184d8420c8db20da2674b38"},
 }
+
