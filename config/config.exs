@@ -7,8 +7,7 @@
 # General application configuration
 import Config
 
-# config :posa,
-#   ecto_repos: [Posa.Repo]
+config :posa, ecto_repos: []
 
 # Configures the endpoint
 config :posa, PosaWeb.Endpoint,

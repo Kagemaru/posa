@@ -37,6 +37,11 @@ spec:
         env:
         - name: TZ
           value: Europe/Berlin
+        - name: PHX_GITHUB_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: phx-github-token
+              key: token
         # - name: SECRET_KEY_BASE
         #   valueFrom:
         #     secretKeyRef:
