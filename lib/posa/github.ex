@@ -7,6 +7,7 @@ defmodule Posa.Github do
   alias Posa.Sync
 
   # Extract to config
+  @dialyzer {:nowarn_function, init: 1, add_storage: 1, add_sync: 1}
   @start_storage true
   @start_sync true
 
