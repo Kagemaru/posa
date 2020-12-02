@@ -1,4 +1,6 @@
 defmodule Posa.Github.Storage.Etags do
+  @moduledoc "Etag storage"
+
   use Posa.Github.Storage.Base
 
   def get_etag(domain), do: _get(&get_in(&1, [domain]))

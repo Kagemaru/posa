@@ -1,4 +1,6 @@
 defmodule Posa.Github.Storage.Base do
+  @moduledoc "Based Module for storage"
+
   defmacro __using__(_) do
     quote do
       use Agent

@@ -1,4 +1,6 @@
 defmodule PosaWeb.Telemetry do
+  @moduledoc "Adds telemetry data for dashboard"
+
   use Supervisor
   import Telemetry.Metrics
 

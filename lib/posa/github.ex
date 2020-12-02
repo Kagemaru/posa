@@ -1,7 +1,9 @@
 defmodule Posa.Github do
+  @moduledoc "Github Supervisor"
+
   use Supervisor
 
-  alias Posa.Github.Storage.{Organizations, Users, Events, Etags}
+  alias Posa.Github.Storage.{Etags, Events, Organizations, Users}
   alias Posa.Sync
 
   # Extract to config

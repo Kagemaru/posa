@@ -1,8 +1,14 @@
 defmodule Posa.Github.Data.Organization do
+  @moduledoc "Organization model"
+
   use Ecto.Schema
   import Ecto.Changeset
 
-  @required_fields ~w(login github_id url repos_url events_url hooks_url issues_url members_url public_members_url avatar_url description name blog location email public_repos public_gists followers following html_url created_at type)a
+  @required_fields ~w(login github_id url repos_url events_url
+                      hooks_url issues_url members_url public_members_url
+                      avatar_url description name blog location email
+                      public_repos public_gists followers following
+                      html_url created_at type)a
   @optional_fields ~w()a
 
   @primary_key false
