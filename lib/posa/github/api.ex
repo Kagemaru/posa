@@ -11,7 +11,7 @@ defmodule Posa.Github.API do
           x when x in 1..3 -> 1_000
           x when x in 4..6 -> 10_000
           x when x in 7..9 -> 100_000
-          _ -> raise e
+          _ -> reraise(e, __STACKTRACE__)
         end
         |> :timer.sleep()
 
