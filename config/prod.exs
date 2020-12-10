@@ -16,7 +16,6 @@ config :posa, PosaWeb.Endpoint,
   code_reloader: false,
   http: [port: {:system, "PORT"}],
   url: [scheme: "https", host: "localhost", port: 443],
-  force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
