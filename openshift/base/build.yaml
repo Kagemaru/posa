@@ -8,12 +8,12 @@ metadata:
 spec:
   dockerImageRepository: docker.io/hexpm/elixir
   tags:
-  - from:
-      kind: DockerImage
-      name: docker.io/hexpm/elixir:1.11.1-erlang-22.3.4.12-alpine-3.12.0
-    importPolicy:
-      scheduled: true
-    name: latest
+    - from:
+        kind: DockerImage
+        name: docker.io/hexpm/elixir:1.11.1-erlang-22.3.4.12-alpine-3.12.0
+      importPolicy:
+        scheduled: true
+      name: latest
   lookupPolicy:
     local: true
 ---
@@ -38,21 +38,23 @@ spec:
       memory: 128Mi
   source:
     git:
-      ref: master
+      ref: containerize  # master
       uri: https://github.com/Kagemaru/posa.git
     type: Git
-    contextDir: images/s2i
   strategy:
+    type: Docker
     dockerStrategy:
+      dockerfilePath: Dockerfile
       from:
         kind: "ImageStreamTag"
         name: "elixir-upstream:1.11.1-erlang-22.3.4.12-alpine-3.12.0"
   triggers:
-  - imageChange:
-      from:
-        kind: ImageStreamTag
-        name: elixir-upstream:1.11.1-erlang-22.3.4.12-alpine-3.12.0
-    type: ImageChange
+    - imageChange:
+        from:
+          kind: ImageStreamTag
+          name: elixir-upstream:1.11.1-erlang-22.3.4.12-alpine-3.12.0
+      type: ImageChange
+...
 ---
 apiVersion: v1
 kind: ImageStream
@@ -61,3 +63,4 @@ metadata:
 spec:
   lookupPolicy:
     local: true
+...

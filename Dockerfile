@@ -5,7 +5,7 @@ FROM hexpm/elixir:1.11.1-erlang-22.3.4.12-alpine-3.12.0 AS build
 
 # install build dependencies
 # RUN apk add --no-cache build-base npm git python
-RUN apk add --no-cache build-base npm git
+RUN apk update && apk add --no-cache build-base npm git
 
 # prepare build dir
 WORKDIR /app
@@ -42,16 +42,25 @@ RUN mix do compile, release
 # ===================================================================================
 # prepare release image
 FROM alpine:3.12 AS app
-RUN apk add --no-cache openssl ncurses-libs
+
+# Add User
+RUN adduser -D posa
+
+RUN apk update && apk add --no-cache openssl ncurses-libs bash
 
 WORKDIR /app
 
-RUN chown nobody:nobody /app
+# Copy release to running image
+COPY --from=build /app/_build/prod/rel/posa ./
 
-USER nobody:nobody
+RUN chgrp -R 0 /app && \
+    chmod -R g=u /app
 
-COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/posa ./
+# USER nobody:nobody
+USER posa
 
 ENV HOME=/app
 
-CMD ["bin/posa", "start"]
+# Starts Posa
+# CMD ["bin/posa", "start"]
+ENTRYPOINT ["bin/posa", "start"]
