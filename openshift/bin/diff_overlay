@@ -1,0 +1,100 @@
+#!/bin/bash
+
+# Compares the results of rendering an overlay at different git refs.
+#
+# Set the env var DIFFTOOL if you want to use e.g. meld instead of
+# diff.
+
+set -e
+
+function main {
+    if (( $# < 1 || $# > 3 )); then
+        usage
+        exit 1
+    fi
+
+    overlay="$1"
+
+    if (( $# == 1 )); then
+        from_working_copy=1
+        to_ref=HEAD
+    elif (( $# == 2 )); then
+        from_working_copy=1
+        to_ref="$2"
+    else
+        from_working_copy=0
+        from_ref="$2"
+        to_ref="$3"
+    fi
+
+    if [[ ! -d "$overlay" ]]; then
+        echo "Overlay '$overlay' not found"
+        exit 1
+    fi
+
+    workdir=$(mktemp -d)
+
+    if (( from_working_copy == 1 )); then
+        from=working-copy
+        from_file=$workdir/$from
+        render_overlay "$overlay" > "$from_file"
+    else
+        from="$from_ref"
+        from_file="$workdir/${from}.yaml"
+        render_overlay_at "$overlay" $from_ref > "$from_file"
+    fi
+
+    to="$to_ref"
+    to_file="$workdir/${to}.yaml"
+
+    render_overlay_at "$overlay" $to_ref > "$to_file"
+
+    echo "Showing changes in '$overlay' from '$from' to '$to'"
+
+    difftool="${DIFFTOOL:-diff}"
+    "$difftool" "$from_file" "$to_file"
+}
+
+function render_overlay_at {
+    overlay="$1"
+    ref="$2"
+
+    render_workdir=$(mktemp -d)
+    cp .tool-versions $render_workdir
+
+    git archive --format=tar "$ref" | (cd $render_workdir && tar xf -)
+
+    cd $render_workdir
+    if [[ ! -d "$overlay" ]]; then
+        echo "Overlay '$overlay' not found at git ref '$ref'"
+        exit 1
+    fi
+
+    render_overlay "$overlay"
+
+    cd - >/dev/null
+    rm -rf $render_workdir
+}
+
+function render_overlay {
+    overlay="$1"
+
+    kustomize build $overlay
+}
+
+function usage {
+    cat <<USAGE
+USAGE: diff_overlay PATH_TO_OVERLAY [FROM_REF] [TO_REF]
+
+E.g.
+
+  diff_overlay overlays/puzzle-project-int
+  diff_overlay overlays/puzzle-project-int master
+  diff_overlay overlays/puzzle-project-int some-branch master
+
+Try setting \$DIFFTOOL to e.g. meld if you want to use another tool to analyze the diffs.
+
+USAGE
+}
+
+main $@

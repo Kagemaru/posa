@@ -18,3 +18,14 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+## Build and Run via Docker
+
+The secret_key_base needs to be changed. It would compile, but it would break
+upon running. This is intentional, set your own, secret, secret_key_base and
+keep it basically secret.
+
+Other than that, here you go:
+
+	docker build . --build-arg secret_key_base=AtLeast64BytesOfRandomCharacters -t posa:latest
+	docker run -p 4000:4000 posa:latest

@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# Checks which of the deployment overlays changed.
+set -e
+
+function main {
+    if (( $# > 2 )); then
+        usage
+        exit 1
+    fi
+
+    arg1=$1
+    arg2=$2
+
+    cd $(dirname $0)/..
+
+    count=0;
+    changed_count=0
+    for overlay in $(deployment_overlays); do
+        command="bin/diff_overlay $overlay $arg1 $arg2"
+
+        if [[ $($command | wc -l) -ne "1" ]]; then
+            echo "$overlay has changes."
+            echo "  $command"
+            echo
+
+            let "changed_count = changed_count + 1"
+        fi
+
+        let "count = count + 1"
+    done
+
+    echo "Diffed $count projects with $changed_count changed"
+}
+
+function deployment_overlays {
+    find overlays -mindepth 1 -maxdepth 1 -type d
+}
+
+function usage {
+    cat <<USAGE
+USAGE: diff_deployment_overlays [FROM_REF] [TO_REF]
+
+E.g.
+
+  diff_deployment_overlays
+  diff_deployment_overlays master
+  diff_deployment_overlays some-branch master
+
+USAGE
+}
+
+main $@

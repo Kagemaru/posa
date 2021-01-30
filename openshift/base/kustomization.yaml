@@ -1,0 +1,4 @@
+resources:
+- ./build.yaml
+- ./run.yaml
+- ./ingress.yaml

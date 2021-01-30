@@ -1,0 +1,89 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: posa-web
+    uses-database: "true"
+  name: posa-web
+  annotations:
+    image.openshift.io/triggers: |-
+      [
+        {
+          "from": { "kind":"ImageStreamTag", "name": "posa:release" },
+          "fieldPath": "spec.template.spec.containers[?(@.name==\"posa\")].image"
+        }
+      ]
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posa-web
+    name: posa-web
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: posa-web
+    spec:
+      containers:
+      - name: posa-web
+        image: posa:release
+        command:
+          - bash
+          - -c
+          - bin/posa start
+        env:
+        - name: TZ
+          value: Europe/Berlin
+        # - name: SECRET_KEY_BASE
+        #   valueFrom:
+        #     secretKeyRef:
+        #       key: key
+        #       name: posa-secret-key-base
+        # - name: PHOENIX_ENV
+        #   value: production
+        # - name: SENTRY_DSN
+        #   valueFrom:
+        #     secretKeyRef:
+        #       key: dsn
+        #       name: sentry-dsn
+        # - name: LIVENESS_IP_ADDRESS
+        #   valueFrom:
+        #     fieldRef:
+        #       fieldPath: status.podIP
+        # livenessProbe:
+        #   failureThreshold: 10
+        #   httpGet:
+        #     path: /healthz
+        #     port: 3000
+        #   initialDelaySeconds: 20
+        #   periodSeconds: 30
+        #   timeoutSeconds: 30
+        resources:
+          requests:
+            cpu: 10m
+            memory: 256Mi
+          limits:
+            cpu: 1
+            memory: 2Gi
+      restartPolicy: Always
+      # volumes: []
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: posa-web
+  name: posa-web
+spec:
+  ports:
+  - name: 4000-tcp
+    port: 4000
+    protocol: TCP
+    targetPort: 4000
+  selector:
+    app: posa-web
+  type: ClusterIP
+
