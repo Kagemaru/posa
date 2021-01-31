@@ -18,7 +18,7 @@ defmodule Posa.DataCase do
 
   using do
     quote do
-      alias Posa.Repo
+      # alias Posa.Repo
 
       import Ecto
       import Ecto.Changeset

@@ -3,7 +3,7 @@ defmodule Posa.Github.Sync do
   alias Posa.Github.Storage.{Organizations, Users, Events}
   alias Posa.Github.Data.{Organization, User, Event}
 
-  @orgs ["puzzle"]
+  @orgs Application.fetch_env!(:posa, :organizations)
 
   def run do
     API.start()

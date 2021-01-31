@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # For production, don't forget to configure the url host
 # to something meaningful, Phoenix uses this information
@@ -14,8 +14,7 @@ use Mix.Config
 #   cache_static_manifest: "priv/static/cache_manifest.json"
 config :posa, PosaWeb.Endpoint,
   code_reloader: false,
-  http: [port: {:system, "PORT"}],
-  url: [scheme: "https", host: "localhost", port: 443],
+  force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
@@ -57,4 +56,5 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs which loads secrets
 # and configuration from environment variables.
-import_config "prod.secret.exs"
+# Not used, because we use releases
+# import_config "prod.secret.exs"

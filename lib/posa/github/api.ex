@@ -2,8 +2,7 @@ defmodule Posa.Github.API do
   use HTTPoison.Base
   alias Posa.Github.Storage.{Organizations, Users, Events, Etags}
 
-  # Kagemaru
-  @token "bdd24cb5b43c22f4995a4da476957f0da04d0a95"
+  @token Application.fetch_env!(:posa, :github_token)
 
   def get_or_retry(url, count \\ 1) do
     try do

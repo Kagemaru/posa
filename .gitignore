@@ -35,3 +35,6 @@ npm-debug.log
 
 # Language Server files
 /.elixir_ls
+
+# local env variables set by direnv
+.envrc

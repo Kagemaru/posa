@@ -1,7 +1,7 @@
 # ===================================================================================
 # FROM elixir:1.9.0-alpine AS build
-FROM hexpm/elixir:1.11.1-erlang-22.3.4.12-alpine-3.12.0 AS build
 # FROM hexpm/elixir:1.10.3-erlang-22.3.4.12-alpine-3.12.0 AS build
+FROM hexpm/elixir:1.11.1-erlang-22.3.4.12-alpine-3.12.0 AS build
 
 # install build dependencies
 # RUN apk add --no-cache build-base npm git python
@@ -15,9 +15,7 @@ RUN mix local.hex --force && \
     mix local.rebar --force
 
 # set build ENV
-ARG secret_key_base
 ENV MIX_ENV=prod
-ENV SECRET_KEY_BASE=$secret_key_base
 
 # install mix dependencies
 COPY mix.exs mix.lock ./
