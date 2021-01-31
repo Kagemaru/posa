@@ -38,7 +38,7 @@ spec:
       memory: 128Mi
   source:
     git:
-      ref: containerize  # master
+      ref: master
       uri: https://github.com/Kagemaru/posa.git
     type: Git
   strategy:
