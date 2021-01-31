@@ -6,7 +6,9 @@ defmodule Posa.Application do
   use Application
 
   def start(_type, _args) do
+    startup_checks()
     children = [
+
       # Start github stuff
       Posa.Github,
       # Start the Telemetry supervisor
@@ -31,4 +33,24 @@ defmodule Posa.Application do
     PosaWeb.Endpoint.config_change(changed, removed)
     :ok
   end
+
+  defp startup_checks() do
+    IO.puts "Checking ENV vars:"
+    check_env :organizations, "Organizations"
+    check_env :sync_delay_ms, "Sync Delay (ms)"
+    check_env :github_token, "Github Token"
+    IO.puts "All ENV vars correclty set"
+  end
+
+  defp check_env(key, label) do
+    IO.write "Testing #{label} => "
+
+    value = Application.fetch_env(:posa, key) |> check_value
+
+    IO.write value
+    IO.puts " => OK"
+  end
+
+  defp check_value(nil), do: exit(:env_var_empty)
+  defp check_value(value), do: value
 end

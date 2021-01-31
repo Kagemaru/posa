@@ -35,7 +35,7 @@ config :phoenix, :template_engines,
 
 # Set Runtime Config
 organizations = System.get_env("PHX_ORGANIZATIONS", "puzzle") |> String.split(",")
-github_token = System.get_env("PHX_GITHUB_TOKEN", "bdd24cb5b43c22f4995a4da476957f0da04d0a95")
+github_token = System.get_env("PHX_GITHUB_TOKEN")
 sync_delay_ms = System.get_env("PHX_SYNC_DELAY_MS", "120000") |> String.to_integer
 
 config :posa,
