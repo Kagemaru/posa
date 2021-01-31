@@ -35,37 +35,37 @@ spec:
           - -c
           - bin/posa start
         env:
-        - name: TZ
-          value: Europe/Berlin
-        - name: PHX_GITHUB_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: phx-github-token
-              key: token
-        # - name: SECRET_KEY_BASE
-        #   valueFrom:
-        #     secretKeyRef:
-        #       key: key
-        #       name: posa-secret-key-base
-        # - name: PHOENIX_ENV
-        #   value: production
-        # - name: SENTRY_DSN
-        #   valueFrom:
-        #     secretKeyRef:
-        #       key: dsn
-        #       name: sentry-dsn
-        # - name: LIVENESS_IP_ADDRESS
-        #   valueFrom:
-        #     fieldRef:
-        #       fieldPath: status.podIP
-        # livenessProbe:
-        #   failureThreshold: 10
-        #   httpGet:
-        #     path: /healthz
-        #     port: 3000
-        #   initialDelaySeconds: 20
-        #   periodSeconds: 30
-        #   timeoutSeconds: 30
+          - name: TZ
+            value: Europe/Berlin
+          - name: PHX_GITHUB_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: phx-github-token
+                key: token
+          - name: SECRET_KEY_BASE
+            valueFrom:
+              secretKeyRef:
+                name: posa-secret-key-base
+                key: key
+          # - name: PHOENIX_ENV
+          #   value: production
+          # - name: SENTRY_DSN
+          #   valueFrom:
+          #     secretKeyRef:
+          #       key: dsn
+          #       name: sentry-dsn
+          # - name: LIVENESS_IP_ADDRESS
+          #   valueFrom:
+          #     fieldRef:
+          #       fieldPath: status.podIP
+          # livenessProbe:
+          #   failureThreshold: 10
+          #   httpGet:
+          #     path: /healthz
+          #     port: 3000
+          #   initialDelaySeconds: 20
+          #   periodSeconds: 30
+          #   timeoutSeconds: 30
         resources:
           requests:
             cpu: 10m

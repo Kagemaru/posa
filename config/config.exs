@@ -33,16 +33,6 @@ config :phoenix, :template_engines,
   slime: PhoenixSlime.Engine,
   slimleex: PhoenixSlime.LiveViewEngine
 
-# Set Runtime Config
-organizations = System.get_env("PHX_ORGANIZATIONS", "puzzle") |> String.split(",")
-github_token = System.get_env("PHX_GITHUB_TOKEN")
-sync_delay_ms = System.get_env("PHX_SYNC_DELAY_MS", "120000") |> String.to_integer
-
-config :posa,
-  organizations: organizations,
-  github_token: github_token,
-  sync_delay_ms: sync_delay_ms
-
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
