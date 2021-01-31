@@ -2,8 +2,6 @@ defmodule Posa.Github.API do
   use HTTPoison.Base
   alias Posa.Github.Storage.{Organizations, Users, Events, Etags}
 
-  @token Application.fetch_env!(:posa, :github_token)
-
   def get_or_retry(url, count \\ 1) do
     try do
       get!(url)
@@ -49,7 +47,7 @@ defmodule Posa.Github.API do
   def process_request_headers(headers) do
     headers
     |> Enum.concat([{"User-Agent", "posa"}])
-    |> Enum.concat([{"Authorization", "token #{@token}"}])
+    |> Enum.concat([{"Authorization", "token #{github_token()}"}])
     |> Enum.concat([{"If-None-Match", Etags.get(:current) || ""}])
   end
 
@@ -65,6 +63,9 @@ defmodule Posa.Github.API do
       x -> Poison.decode!(x)
     end
   end
+
+  defp github_token, do: Application.get_env(:posa, :github_token)
+
 
   defp store(:organization), do: Organizations
   defp store(:member), do: Organizations

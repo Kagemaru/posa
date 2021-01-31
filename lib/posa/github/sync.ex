@@ -3,8 +3,6 @@ defmodule Posa.Github.Sync do
   alias Posa.Github.Storage.{Organizations, Users, Events}
   alias Posa.Github.Data.{Organization, User, Event}
 
-  @orgs Application.fetch_env!(:posa, :organizations)
-
   def run do
     API.start()
     fetch_organizations()
@@ -14,7 +12,7 @@ defmodule Posa.Github.Sync do
   end
 
   def fetch_organizations do
-    for name <- @orgs, do: fetch_resource(:organization, name)
+    for name <- orgs(), do: fetch_resource(:organization, name)
   end
 
   def fetch_org_members do
@@ -70,6 +68,9 @@ defmodule Posa.Github.Sync do
              do: id
     end
   end
+
+  defp orgs, do: Application.get_env(:posa, :organizations)
+
 
   defp changeset(:organization, response), do: Organization.changeset(%Organization{}, response)
   defp changeset(:user, response), do: User.changeset(%User{}, response)

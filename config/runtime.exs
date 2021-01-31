@@ -27,24 +27,25 @@ import Config
 # See `mix help release` for more information.
 # config :posa, PosaWeb.Endpoint, server: true
 
-# Runtime Config
+# Config
 secret_key_base =
   System.get_env("SECRET_KEY_BASE") ||
   raise """
-  environment variable SECRET_KEY_BASE is missing.
+  Environment variable SECRET_KEY_BASE is missing.
   You can generate one by calling: mix phx.gen.secret
+  """
+github_token =
+  System.get_env("PHX_GITHUB_TOKEN") ||
+  raise """
+  Environment variable PHX_GITHUB_TOKEN is missing.
+  You need a github token to continue.
   """
 
 organizations = System.get_env("PHX_ORGANIZATIONS", "puzzle") |> String.split(",")
-github_token = System.get_env("PHX_GITHUB_TOKEN")
 sync_delay_ms = System.get_env("PHX_SYNC_DELAY_MS", "120000") |> String.to_integer
 
 url_host = System.get_env("PHX_HOST", "localhost")
 http_port = System.get_env("PHX_HTTP_PORT", "4000") |> String.to_integer
-https_port = System.get_env("PHX_HTTPS_PORT", "4001") |> String.to_integer
-https_keyfile = System.get_env("PHX_SSL_KEYFILE")
-https_certfile = System.get_env("PHX_SSL_CERTFILE")
-https_cacertfile = System.get_env("PHX_SSL_CA_CERTFILE")
 
 config :posa,
   organizations: organizations,
@@ -55,12 +56,7 @@ config :posa, PosaWeb.Endpoint,
   server: true,
   url: [host: url_host],
   http: [port: http_port],
-  https: [
-    port: https_port,
-    keyfile: https_keyfile,
-    certfile: https_certfile,
-    cacertfile: https_cacertfile
-  ]
+  secret_key_base: secret_key_base
 
 # config :posa, PosaWeb.Endpoint,
 #   server: true,

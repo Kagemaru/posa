@@ -48,6 +48,19 @@ spec:
       from:
         kind: "ImageStreamTag"
         name: "elixir-upstream:1.11.1-erlang-22.3.4.12-alpine-3.12.0"
+      env:
+        - name: TZ
+          value: Europe/Berlin
+        - name: PHX_GITHUB_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: phx-github-token
+              key: token
+        - name: SECRET_KEY_BASE
+          valueFrom:
+            secretKeyRef:
+              name: posa-secret-key-base
+              key: key
   triggers:
     - imageChange:
         from:
