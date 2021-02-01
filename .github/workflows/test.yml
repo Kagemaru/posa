@@ -9,6 +9,7 @@ name: Elixir Tests
 
 env:
   MIX_ENV: test
+  SECRET_KEY_BASE: "kNdLk1/ffDLY4T1sKLmBffS0SpG7hzpq6/rRD7yM6W25l2Q9BwXlOGumdJWvZygA"
 
 jobs:
   build:
