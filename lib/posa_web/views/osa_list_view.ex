@@ -49,6 +49,11 @@ defmodule PosaWeb.OSAListView do
 
   defp month_group(%{created_at: date}), do: Date.beginning_of_month(date)
   defp day_group(%{created_at: date}), do: NaiveDateTime.to_date(date)
-  defp group_sorter({group, _}, {group2, _}), do: group >= group2
   defp event_sorter({group, events}), do: {group, Enum.sort(events, &>=/2)}
+  defp group_sorter({group, _}, {group2, _}) do
+    case Date.compare(group, group2) do
+      :gt -> true
+      _ -> false
+    end
+  end
 end
