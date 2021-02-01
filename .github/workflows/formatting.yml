@@ -12,8 +12,8 @@ env:
   SECRET_KEY_BASE: "kNdLk1/ffDLY4T1sKLmBffS0SpG7hzpq6/rRD7yM6W25l2Q9BwXlOGumdJWvZygA"
 
 jobs:
-  build:
-    name: Check Formatting & Code Quality
+  setup:
+    name: Setup Elixir & Caching
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -39,14 +39,26 @@ jobs:
           mix local.rebar --force
           mix local.hex --force
           mix deps.get
-      - name: Check Formatting
-        if: ${{ always() }}
-        run: mix format --check-formatted
-      - name: Run Credo
-        if: ${{ always() }}
-        run: mix credo --strict
+
+  formatter:
+    name: Check Formatting
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - run: mix format --check-formatted
+  credo:
+    name: Check Code Quality
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
+      - run: mix credo --strict
+
+  dialyzer:
+    name: Check static analysis
+    runs-on: ubuntu-latest
+    needs: setup
+    steps:
       - name: Retrieve PLT Cache
-        if: ${{ always() }}
         uses: actions/cache@v1
         id: plt-cache
         with:
@@ -58,5 +70,4 @@ jobs:
           mkdir -p priv/plts
           mix dialyzer --plt
       - name: Run dialyzer
-        if: ${{ always() }}
         run: mix dialyzer --no-check --halt-exit-status
