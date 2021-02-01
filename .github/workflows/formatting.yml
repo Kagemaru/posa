@@ -44,21 +44,63 @@ jobs:
   formatter:
     name: Check Formatting
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        elixir: [1.11.0]
+        otp: [22.2.8]
     needs: setup
     steps:
+      - name: Set up Elixir
+        uses: actions/setup-elixir@v1
+        with:
+          elixir-version: ${{ matrix.elixir }} # Define the elixir version [required]
+          otp-version: ${{ matrix.otp }} # Define the OTP version [required]
+      - uses: actions/cache@v2
+        with:
+          path: deps
+          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-
       - run: mix format --check-formatted
   credo:
     name: Check Code Quality
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        elixir: [1.11.0]
+        otp: [22.2.8]
     needs: setup
     steps:
+      - name: Set up Elixir
+        uses: actions/setup-elixir@v1
+        with:
+          elixir-version: ${{ matrix.elixir }} # Define the elixir version [required]
+          otp-version: ${{ matrix.otp }} # Define the OTP version [required]
+      - uses: actions/cache@v2
+        with:
+          path: deps
+          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-
       - run: mix credo --strict
 
   dialyzer:
     name: Check static analysis
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        elixir: [1.11.0]
+        otp: [22.2.8]
     needs: setup
     steps:
+      - name: Set up Elixir
+        uses: actions/setup-elixir@v1
+        with:
+          elixir-version: ${{ matrix.elixir }} # Define the elixir version [required]
+          otp-version: ${{ matrix.otp }} # Define the OTP version [required]
+      - uses: actions/cache@v2
+        with:
+          path: deps
+          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-
       - name: Retrieve PLT Cache
         uses: actions/cache@v1
         id: plt-cache
