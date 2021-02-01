@@ -1,10 +1,13 @@
 defmodule Posa.Github do
+  @moduledoc "Github Supervisor"
+
   use Supervisor
 
-  alias Posa.Github.Storage.{Organizations, Users, Events, Etags}
+  alias Posa.Github.Storage.{Etags, Events, Organizations, Users}
   alias Posa.Sync
 
   # Extract to config
+  @dialyzer {:nowarn_function, init: 1, add_storage: 1, add_sync: 1}
   @start_storage true
   @start_sync true
 

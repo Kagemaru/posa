@@ -1,4 +1,6 @@
 defmodule Posa.Github.Storage.Events do
+  @moduledoc "Event storage"
+
   use Posa.Github.Storage.Base
 
   def add_event(user, id, value) do

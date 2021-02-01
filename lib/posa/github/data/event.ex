@@ -1,4 +1,6 @@
 defmodule Posa.Github.Data.Event do
+  @moduledoc "Event model"
+
   use Ecto.Schema
   import Ecto.Changeset
 

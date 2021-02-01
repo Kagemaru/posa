@@ -1,5 +1,7 @@
 defmodule Posa.Github.Data do
-  alias Posa.Github.Storage.{Organizations, Users, Events}
+  @moduledoc "Data interface for Github"
+
+  alias Posa.Github.Storage.{Events, Organizations, Users}
 
   def list_orgs, do: orgs()
   def list_users, do: users()

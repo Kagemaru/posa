@@ -1,22 +1,22 @@
 defmodule Posa.Github.API do
+  @moduledoc "Github API Interface"
+
   use HTTPoison.Base
-  alias Posa.Github.Storage.{Organizations, Users, Events, Etags}
+  alias Posa.Github.Storage.{Etags, Events, Organizations, Users}
 
   def get_or_retry(url, count \\ 1) do
-    try do
-      get!(url)
-    rescue
-      e in HTTPoison.Error ->
-        case count do
-          x when x in 1..3 -> 1_000
-          x when x in 4..6 -> 10_000
-          x when x in 7..9 -> 100_000
-          _ -> raise e
-        end
-        |> :timer.sleep()
+    get!(url)
+  rescue
+    e in HTTPoison.Error ->
+      case count do
+        x when x in 1..3 -> 1_000
+        x when x in 4..6 -> 10_000
+        x when x in 7..9 -> 100_000
+        _ -> reraise(e, __STACKTRACE__)
+      end
+      |> :timer.sleep()
 
-        get_or_retry(url, count + 1)
-    end
+      get_or_retry(url, count + 1)
   end
 
   def get_resource(type, id) do
@@ -53,7 +53,7 @@ defmodule Posa.Github.API do
 
   def process_request_options(options) do
     options
-    |> Keyword.put(:recv_timeout, 10000)
+    |> Keyword.put(:recv_timeout, 10_000)
     |> Keyword.put(:ssl, [{:ciphers, :ssl.cipher_suites(:all)}])
   end
 
@@ -65,7 +65,6 @@ defmodule Posa.Github.API do
   end
 
   defp github_token, do: Application.get_env(:posa, :github_token)
-
 
   defp store(:organization), do: Organizations
   defp store(:member), do: Organizations

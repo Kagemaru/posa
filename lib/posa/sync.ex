@@ -1,4 +1,8 @@
 defmodule Posa.Sync do
+  @moduledoc "Handles the recurring sync"
+
+  alias Posa.Github.Sync
+
   use GenServer
 
   def start_link(_arg) do
@@ -23,5 +27,5 @@ defmodule Posa.Sync do
     Process.send_after(self(), :sync, sync_delay())
   end
 
-  defp execute_sync, do: Posa.Github.Sync.run()
+  defp execute_sync, do: Sync.run()
 end

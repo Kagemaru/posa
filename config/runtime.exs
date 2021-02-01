@@ -30,22 +30,23 @@ import Config
 # Config
 secret_key_base =
   System.get_env("SECRET_KEY_BASE") ||
-  raise """
-  Environment variable SECRET_KEY_BASE is missing.
-  You can generate one by calling: mix phx.gen.secret
-  """
+    raise """
+    Environment variable SECRET_KEY_BASE is missing.
+    You can generate one by calling: mix phx.gen.secret
+    """
+
 github_token =
   System.get_env("PHX_GITHUB_TOKEN") ||
-  raise """
-  Environment variable PHX_GITHUB_TOKEN is missing.
-  You need a github token to continue.
-  """
+    raise """
+    Environment variable PHX_GITHUB_TOKEN is missing.
+    You need a github token to continue.
+    """
 
 organizations = System.get_env("PHX_ORGANIZATIONS", "puzzle") |> String.split(",")
-sync_delay_ms = System.get_env("PHX_SYNC_DELAY_MS", "120000") |> String.to_integer
+sync_delay_ms = System.get_env("PHX_SYNC_DELAY_MS", "120000") |> String.to_integer()
 
 url_host = System.get_env("PHX_HOST", "localhost")
-http_port = System.get_env("PHX_HTTP_PORT", "4000") |> String.to_integer
+http_port = System.get_env("PHX_HTTP_PORT", "4000") |> String.to_integer()
 
 config :posa,
   organizations: organizations,

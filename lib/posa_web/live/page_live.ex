@@ -1,4 +1,6 @@
 defmodule PosaWeb.PageLive do
+  @moduledoc false
+
   use PosaWeb, :live_view
 
   @impl true

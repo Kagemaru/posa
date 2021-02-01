@@ -1,4 +1,6 @@
 defmodule PosaWeb.DateTimeHelper do
+  @moduledoc "Helpers for formatting date and time"
+
   def year(date), do: pad_date(date.year)
   def month(date), do: pad_date(date.month)
   def day(date), do: pad_date(date.day)
