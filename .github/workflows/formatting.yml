@@ -8,7 +8,7 @@ name: Elixir Style Checks
     branches: [master]
 
 env:
-  MIX_ENV: test
+  MIX_ENV: dev
   SECRET_KEY_BASE: "kNdLk1/ffDLY4T1sKLmBffS0SpG7hzpq6/rRD7yM6W25l2Q9BwXlOGumdJWvZygA"
   PHX_GITHUB_TOKEN: fake
 
@@ -32,8 +32,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: deps
-          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-
+          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-dev-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-dev-mix-
       - name: Install dependencies
         if: steps.mix-cache.outputs.cache-hit != 'true'
         run: |
