@@ -39,10 +39,13 @@ jobs:
           mix local.hex --force
           mix deps.get
       - name: Check Formatting
+        if: ${{ always() }}
         run: mix format --check-formatted
       - name: Run Credo
+        if: ${{ always() }}
         run: mix credo --strict
       - name: Retrieve PLT Cache
+        if: ${{ always() }}
         uses: actions/cache@v1
         id: plt-cache
         with:
@@ -54,4 +57,5 @@ jobs:
           mkdir -p priv/plts
           mix dialyzer --plt
       - name: Run dialyzer
+        if: ${{ always() }}
         run: mix dialyzer --no-check --halt-exit-status
