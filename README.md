@@ -1,3 +1,6 @@
+![Tests](https://github.com/Kagemaru/posa/workflows/Elixir%20Tests/badge.svg?branch=master)
+![Style Checks](https://github.com/Kagemaru/posa/workflows/Elixir%20Style%20Checks/badge.svg?branch=master)
+
 # Posa
 
 To start your Phoenix server:
