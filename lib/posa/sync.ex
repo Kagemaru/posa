@@ -1,6 +1,8 @@
 defmodule Posa.Sync do
   @moduledoc "Handles the recurring sync"
 
+  alias Posa.Github.Sync
+
   use GenServer
 
   def start_link(_arg) do
