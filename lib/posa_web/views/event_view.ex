@@ -35,7 +35,10 @@ defmodule PosaWeb.EventView do
   def repo(event) do
     with {:ok, url} <- Map.fetch(event.repo, "url"),
          {:ok, name} <- Map.fetch(event.repo, "name") do
-      {name, url}
+      {
+        name,
+        url |> String.replace("api.github.com/repos", "github.com")
+      }
     else
       _ -> {"N/A", "#"}
     end
