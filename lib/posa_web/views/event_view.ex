@@ -37,10 +37,15 @@ defmodule PosaWeb.EventView do
          {:ok, name} <- Map.fetch(event.repo, "name") do
       {
         name,
-        url |> String.replace("api.github.com/repos", "github.com")
+        remove_api(url)
       }
     else
       _ -> {"N/A", "#"}
     end
+  end
+
+  def remove_api(url) do
+    url |> String.replace("api.github.com", "github.com")
+        |> String.replace(["users/", "repos/"], "")
   end
 end
