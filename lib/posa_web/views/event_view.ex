@@ -45,7 +45,8 @@ defmodule PosaWeb.EventView do
   end
 
   def remove_api(url) do
-    url |> String.replace("api.github.com", "github.com")
-        |> String.replace(["users/", "repos/"], "")
+    url
+    |> String.replace("api.github.com", "github.com")
+    |> String.replace(["users/", "repos/"], "")
   end
 end
