@@ -5,7 +5,7 @@
 - {repo_name, repo_url} = assigns[:repo] || repo(@event)
 - content = assigns[:content] || []
 - login = assigns[:login] || @event.actor["login"]
-- login_url = assigns[:login_url] || @event.actor["url"]
+- login_url = assigns[:login_url] || remove_api(@event.actor["url"])
 
 .col-lg-6.my-2
   .timeline-box
