@@ -42,3 +42,6 @@ npm-debug.log
 # Ignore dialyzer plts files
 priv/plts/*.plt
 priv/plts/*.plt.hash
+
+# Ignore VSCode files
+/.vscode
