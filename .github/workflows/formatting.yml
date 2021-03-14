@@ -18,16 +18,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elixir: [1.11.0]
-        otp: [22.2.8]
+        elixir: [1.11.3]
+        otp: [23.2.6]
     steps:
       - uses: actions/checkout@v2
 
       - name: Set up Elixir
         uses: actions/setup-elixir@v1
         with:
-          elixir-version: ${{ matrix.elixir }} # Define the elixir version [required]
-          otp-version: ${{ matrix.otp }} # Define the OTP version [required]
+          elixir-version: ${{ matrix.elixir }}  # Define the elixir version [required]
+          otp-version: ${{ matrix.otp }}  # Define the OTP version [required]
+          experimental-otp: true
       - name: Restore dependencies cache
         uses: actions/cache@v2
         with:
