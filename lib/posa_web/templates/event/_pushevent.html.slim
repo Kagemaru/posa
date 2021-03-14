@@ -5,7 +5,10 @@ elixir:
        content: [
          {"User", @event.actor["login"]},
          {"Commits", @event.payload["size"]},
-         {"Message", commit["message"]}
+         {
+           "Message",
+           commit["message"] |> make_it_markdown
+         }
        ],
        detail_url: commit["url"]
      }

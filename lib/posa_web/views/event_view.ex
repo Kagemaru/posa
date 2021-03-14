@@ -12,6 +12,14 @@ defmodule PosaWeb.EventView do
     end
   end
 
+  def make_it_markdown(nil), do: nil
+
+  def make_it_markdown(input) do
+    input
+    |> Earmark.as_html!()
+    |> raw
+  end
+
   def url(event) do
     case event.payload do
       %{"commits" => [%{"url" => url}]} -> url
