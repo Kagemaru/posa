@@ -4,7 +4,10 @@ elixir:
     do
       %{
         content: [
-          {"Beschreibung", payload["description"]},
+          {
+            "Beschreibung",
+            payload["description"] |> make_it_markdown
+          },
           {"Master Branch", payload["master_branch"]}
         ]
       }
@@ -14,4 +17,4 @@ elixir:
          event: @event,
          icon: "fa-plus",
          title: "Repository erstellt",
-         content: data.content 
+         content: data.content

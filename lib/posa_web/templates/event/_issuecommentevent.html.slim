@@ -6,7 +6,10 @@ elixir:
       %{
         content: [
           {"Author", author},
-          {"Kommentar", comment["body"]}
+          {
+            "Kommentar",
+            comment["body"] |> make_it_markdown
+          }
         ],
         detail_url: comment["html_url"]
       }

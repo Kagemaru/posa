@@ -5,7 +5,10 @@ elixir:
       %{
         content: [
           {"Author", release["author"]["login"]},
-          {"Beschreibung", release["body"]}
+          {
+            "Beschreibung",
+            release["body"] |> make_it_markdown
+          }
         ],
         detail_url: release["html_url"]
       }

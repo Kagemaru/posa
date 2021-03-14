@@ -60,7 +60,8 @@ defmodule Posa.MixProject do
       {:phoenix_slime, "~> 0.13.1"},
       {:timex, "~> 3.6.2"},
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false}
+      {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
+      {:earmark, "~> 1.4"}
     ]
   end
 

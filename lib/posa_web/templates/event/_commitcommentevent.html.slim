@@ -5,7 +5,10 @@ elixir:
       %{
         content: [
           {"Author", comment["user"]["login"]},
-          {"Kommentar", comment["body"]}
+          {
+            "Kommentar",
+            comment["body"] |> make_it_markdown
+          }
         ],
         detail_url: comment["html_url"]
       }
