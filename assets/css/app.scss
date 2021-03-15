@@ -1,5 +1,9 @@
 /* This file is for your main application css. */
 //@import "./phoenix.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../node_modules/nprogress/nprogress.css";
 
@@ -107,43 +111,19 @@ a:hover {
 }
 
 .timeline {
-  margin-top: 20px;
-  position: relative;
+  @apply relative mt-5 ;
 }
 
 .timeline:before {
-  position: absolute;
+  @apply absolute w-1 bg-gray-300 left-4 top-1 rounded;
+
   content: "";
-  width: 4px;
   height: calc(100% + 50px);
-  background: rgb(138, 145, 150);
-  background: -moz-linear-gradient(
-    left,
-    rgba(138, 145, 150, 1) 0%,
-    rgba(122, 130, 136, 1) 60%,
-    rgba(98, 105, 109, 1) 100%
-  );
-  background: -webkit-linear-gradient(
-    left,
-    rgba(138, 145, 150, 1) 0%,
-    rgba(122, 130, 136, 1) 60%,
-    rgba(98, 105, 109, 1) 100%
-  );
-  background: linear-gradient(
-    to right,
-    rgba(138, 145, 150, 1) 0%,
-    rgba(122, 130, 136, 1) 60%,
-    rgba(98, 105, 109, 1) 100%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8a9196', endColorstr='#62696d',GradientType=1 );
-  left: 14px;
-  top: 5px;
-  border-radius: 4px;
 }
 
 .timeline-month {
-  position: relative;
-  padding: 4px 15px 4px 35px;
+  @apply relative py-1 pr-4 pl-8;
+  // padding: 4px 15px 4px 35px;
   background-color: #444950;
   display: inline-block;
   width: auto;
