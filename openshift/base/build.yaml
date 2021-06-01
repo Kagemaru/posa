@@ -25,7 +25,7 @@ metadata:
   annotations:
     puzzle.ch/purpose: Upstream run image
 spec:
-  dockerImageRepository: docker.io/hexpm/elixir
+  dockerImageRepository: docker.io/alpine
   tags:
     - from:
         kind: DockerImage
