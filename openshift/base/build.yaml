@@ -10,7 +10,7 @@ spec:
   tags:
     - from:
         kind: DockerImage
-        name: docker.io/hexpm/elixir:1.11.1-erlang-22.3.4.12-alpine-3.12.0
+        name: docker.io/hexpm/elixir:1.11.3-erlang-23.2.6-alpine-3.13.2
       importPolicy:
         scheduled: true
       name: latest
@@ -47,7 +47,7 @@ spec:
       dockerfilePath: Dockerfile
       from:
         kind: "ImageStreamTag"
-        name: "elixir-upstream:1.11.1-erlang-22.3.4.12-alpine-3.12.0"
+        name: "elixir-upstream:1.11.3-erlang-23.2.6-alpine-3.13.2"
       env:
         - name: TZ
           value: Europe/Berlin
@@ -65,7 +65,7 @@ spec:
     - imageChange:
         from:
           kind: ImageStreamTag
-          name: elixir-upstream:1.11.1-erlang-22.3.4.12-alpine-3.12.0
+          name: elixir-upstream:1.11.3-erlang-23.2.6-alpine-3.13.2
       type: ImageChange
 ...
 ---
