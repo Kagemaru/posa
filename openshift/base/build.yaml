@@ -16,6 +16,26 @@ spec:
       name: latest
   lookupPolicy:
     local: true
+...
+---
+apiVersion: v1
+kind: ImageStream
+metadata:
+  name: alpine-upstream
+  annotations:
+    puzzle.ch/purpose: Upstream run image
+spec:
+  dockerImageRepository: docker.io/hexpm/elixir
+  tags:
+    - from:
+        kind: DockerImage
+        name: docker.io/alpine:3.13
+      importPolicy:
+        scheduled: true
+      name: latest
+  lookupPolicy:
+    local: true
+...
 ---
 apiVersion: v1
 kind: BuildConfig
@@ -66,6 +86,11 @@ spec:
         from:
           kind: ImageStreamTag
           name: elixir-upstream:1.11.3-erlang-23.2.6-alpine-3.13.2
+      type: ImageChange
+    - imageChange:
+        from:
+          kind: ImageStreamTag
+          name: alpine:3.13
       type: ImageChange
 ...
 ---
