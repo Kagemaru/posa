@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+IFS=$'\n\t'
+
+echo "check project"
+
+# oc start-build bc/posa --follow=true
+echo "wait if a build is running"
+
+echo "ask to retag image to release"
+# oc tag posa:latest posa:release
+
+echo "open the website"
+# posa_hostname=$(oc get route -o name | head -n 1 | xargs oc get -o json | jq -r '.spec.host')
+# xdg-open $posa_hostname
