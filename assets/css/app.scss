@@ -4,7 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-//@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../node_modules/nprogress/nprogress.css";
 
 /* LiveView specific classes for your customizations */
@@ -95,13 +94,16 @@
   display: none;
 }
 
-// html, body, body > div, main {
-//   margin: 0;
-//   padding: 0;
-//   height: 100%;
-//   width: 100%;
-//   overflow: auto;
-// }
+html,
+body,
+body > div,
+main {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
 
 // #timeline::before {
 //   /* absolute top-4 left-4 bottom-4 w-2 bg-gray-400 border border-gray-500 rounded z-0 */

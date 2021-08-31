@@ -7,7 +7,6 @@
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
-    "bootstrap": "^4.5.3",
     "jquery": "^3.5.1",
     "nprogress": "^0.2.0",
     "phoenix": "file:../deps/phoenix",
