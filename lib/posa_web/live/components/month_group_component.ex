@@ -4,7 +4,7 @@ defmodule PosaWeb.MonthGroupComponent do
   def render(assigns) do
     ~L"""
     <details class="flex flex-col mb-8 month-group" <%= if @open, do: "open" %>>
-      <summary class="flex flex-row items-center mb-8 bg-gray-700 rounded-full shadow-xl w-min">
+      <summary class="flex flex-row items-center mb-8 bg-gray-700 rounded-full shadow-xl cursor-pointer w-min">
         <div class="flex flex-row items-center bg-gray-300 text-gray-800 font-bold w-min px-3 py-2 rounded-full -ml-3.5 z-10 whitespace-nowrap h-10">
           <div class="w-4 h-4 mr-2 bg-gray-200 border-gray-200 rounded-full">&nbsp;</div>
           <div>

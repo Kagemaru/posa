@@ -2,19 +2,76 @@ defmodule PosaWeb.EventsComponent do
   use PosaWeb, :live_component
 
   def render(assigns) do
-    ~L"""
-    <%= live_component @socket,
-                       PosaWeb.EventComponent,
-                       event(@data)
-
-    %>
-    """
+    ~L"<%= live_component @socket, PosaWeb.EventComponent, event(@data) %>"
   end
 
   defp event(event) do
-    parameters = type(event) || %{}
+    Map.merge(type(event), %{event: event})
+  end
 
-    Map.merge(parameters, %{event: event})
+  defp type(%{type: "PublicEvent"} = _event) do
+    %{
+      icon: "fa-lock-open",
+      title: "Repo publiziert"
+    }
+  end
+
+  defp type(%{type: "PullRequestReviewCommentEvent"} = event) do
+    comment = event.payload.comment
+
+    %{
+      icon: "fa-comments",
+      title: "Review kommentiert",
+      content: [
+        %{title: "Author", text: comment.user.login},
+        %{title: "Kommentar", text: comment.body}
+      ],
+      button: %{text: "Details", link: url(comment.html_url)}
+    }
+  end
+
+  defp type(%{type: "PullRequestReviewEvent"} = event) do
+    review = event.payload.review
+
+    %{
+      icon: "fa-arrow-down",
+      title: "Pull Request erstellt",
+      content: [
+        %{title: "Author", text: review.user.login},
+        %{title: "State", text: review.state},
+        %{title: "Review", text: review.body}
+      ],
+      button: %{text: "Details", link: url(review.html_url)}
+    }
+  end
+
+  defp type(%{type: "ReleaseEvent"} = event) do
+    release = event.payload.release
+
+    %{
+      icon: "fa-archive",
+      title: "Release erstellt",
+      content: [
+        %{title: "Author", text: release.author.login},
+        %{title: "Beschreibung", text: release.body}
+      ],
+      button: %{text: "Details", link: url(release.html_url)}
+    }
+  end
+
+  defp type(%{type: "ForkEvent"} = event) do
+    forkee = event.payload.forkee
+    owner = forkee.owner.login
+
+    %{
+      icon: "fa-code-branch",
+      title: "Fork erstellt",
+      content: [
+        %{title: "Besitzer", text: owner},
+        %{title: "Neues Repo", text: forkee.name}
+      ],
+      button: %{text: "Details", link: url(forkee.git_url)}
+    }
   end
 
   defp type(%{type: "WatchEvent"} = _event) do
@@ -46,6 +103,8 @@ defmodule PosaWeb.EventsComponent do
     pr = event.payload.pull_request
 
     %{
+      icon: "fa-arrow-down",
+      title: "Pull Request erstellt",
       content: [
         %{title: "Author", text: pr.user.login},
         %{title: "Message", text: pr.title},
@@ -108,16 +167,7 @@ defmodule PosaWeb.EventsComponent do
     }
   end
 
-  defp type(%{type: type} = event) do
-    IO.inspect(type, label: 'type')
-    %{
-      icon: "fa-asterisk",
-      title: type,
-      content: [],
-      user: %{text: event.actor.display_login, link: url(event.actor.url)},
-      repo: %{text: event.repo.name, link: url(event.repo.url)}
-    }
-  end
+  defp type(_), do: %{}
 
   # HACK: Duplication
   defp url(url) do

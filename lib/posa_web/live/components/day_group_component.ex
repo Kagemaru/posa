@@ -17,7 +17,7 @@ defmodule PosaWeb.DayGroupComponent do
       -->
     </style>
     <details class="mb-2 day-group" <%= if @open, do: "open" %>>
-      <summary class="flex flex-row items-center">
+      <summary class="flex flex-row items-center cursor-pointer">
         <div class="z-10 w-3 h-3 ml-1 bg-gray-300 border border-gray-600 rounded-full">&nbsp;</div>
         <div class="w-7 h-1 -ml-0.5 rounded-full bg-gray-300 border border-gray-600 shadow-md">&nbsp;</div>
         <time datetime="<%= datetime(@data) %>" class="z-20 px-4 py-1 font-semibold text-white bg-blue-300 rounded-full shadow-md" >
@@ -32,21 +32,9 @@ defmodule PosaWeb.DayGroupComponent do
           <%= for event <- get_events(@data) do %>
             <%= live_component @socket, PosaWeb.EventsComponent, data: event %>
           <% end %>
-
-          <%= for i <- 1..10 do %>
-            <%# live_component @socket,
-                               PosaWeb.EventComponent,
-                               icon: :question,
-                               button: %{text: "Details", link: "https://www.google.com"},
-                               title: "Title #{i}",
-                               content: [%{title: "Author", text: "Johnny #{i}"}, %{title: "Test", text: "Lorem Ipsum"}],
-                               user: %{text: "olibrian", link: "https://www.google.com"},
-                               repo: %{text: "hitobito/hitobito_die_mitte", link: "https://www.google.com"}
-            %>
-          <% end %>
         </div>
       </section>
-    </details
+    </details>
     """
   end
 

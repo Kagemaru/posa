@@ -10,15 +10,33 @@ defmodule PosaWeb.EventComponent do
        icon: "fa-asterisk",
        button: nil,
        title: nil,
-       content: [],
-       user: %{text: nil, link: nil},
-       repo: %{text: nil, link: nil},
-       event: %{
-         actor: %{display_login: "", url: ""},
-         repo: %{url: "", name: ""},
-         type: ""
-       }
+       content: []
+       #  user: %{text: nil, link: nil},
+       #  repo: %{text: nil, link: nil}
+       #  event: %{
+       #    actor: %{display_login: "", url: ""},
+       #    repo: %{url: "", name: ""},
+       #    type: ""
+       #  }
      )}
+  end
+
+  def update(assigns, socket) do
+    socket = assign(socket, assigns)
+
+    actor = assigns.event.actor
+    erepo = assigns.event.repo
+    user = Map.get(assigns, :user, %{text: actor.display_login, link: url(actor.url)})
+    repo = Map.get(assigns, :repo, %{text: erepo.name, link: url(erepo.url)})
+
+    socket =
+      assign(
+        socket,
+        user: user,
+        repo: repo
+      )
+
+    {:ok, socket}
   end
 
   # HACK: Duplication
@@ -27,7 +45,6 @@ defmodule PosaWeb.EventComponent do
     |> String.replace("api.github.com", "github.com")
     |> String.replace(["users/", "repos/"], "")
   end
-
 
   def render(assigns) do
     ~L"""
