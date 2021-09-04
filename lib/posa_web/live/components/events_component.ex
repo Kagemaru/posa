@@ -120,17 +120,18 @@ defmodule PosaWeb.EventsComponent do
 
   defp type(%{type: "PushEvent"} = event) do
     commits = event.payload.commits
-    commit = List.first(commits)
+    commit_messages = commits |> Enum.map(fn c -> "- #{c.message}" end) |> Enum.join("\n")
+    commit_url = commits |> Enum.map(fn c -> c.url end) |> Enum.reject(fn c -> is_nil(c) end) |>List.first
 
     message =
-      if commit do
-        commit.message
+      if List.first(commit) do
+        markdown(commit_messages)
       else
         "Keine Commits"
       end
 
     button =
-      if commit do
+      if List.first(commit) do
         %{text: "Details", link: url(commit.url)}
       else
         nil
@@ -142,7 +143,8 @@ defmodule PosaWeb.EventsComponent do
       content: [
         %{title: "User", text: event.actor.login},
         %{title: "Commits", text: event.payload.size},
-        %{title: "Message", text: message}
+        %{title: "Range", text: "#{sha(event.payload.before)}...#{sha(event.payload.head)}"},
+        %{title: "Message", text:  message)}
       ],
       button: button
     }
@@ -204,4 +206,6 @@ defmodule PosaWeb.EventsComponent do
   end
 
   defp markdown(text), do: text
+
+  defp sha(commit_sha), do: commit_sha |> String.slice(0, 6)
 end
