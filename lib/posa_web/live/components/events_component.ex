@@ -24,7 +24,7 @@ defmodule PosaWeb.EventsComponent do
       title: "Review kommentiert",
       content: [
         %{title: "Author", text: comment.user.login},
-        %{title: "Kommentar", text: comment.body}
+        %{title: "Kommentar", text: markdown(comment.body)}
       ],
       button: %{text: "Details", link: url(comment.html_url)}
     }
@@ -39,7 +39,7 @@ defmodule PosaWeb.EventsComponent do
       content: [
         %{title: "Author", text: review.user.login},
         %{title: "State", text: review.state},
-        %{title: "Review", text: review.body}
+        %{title: "Review", text: markdown(review.body)}
       ],
       button: %{text: "Details", link: url(review.html_url)}
     }
@@ -53,7 +53,7 @@ defmodule PosaWeb.EventsComponent do
       title: "Release erstellt",
       content: [
         %{title: "Author", text: release.author.login},
-        %{title: "Beschreibung", text: release.body}
+        %{title: "Beschreibung", text: markdown(release.body)}
       ],
       button: %{text: "Details", link: url(release.html_url)}
     }
@@ -158,7 +158,7 @@ defmodule PosaWeb.EventsComponent do
       title: "Issue kommentiert",
       content: [
         %{title: "Author", text: comment.user.login},
-        %{title: "Kommentar", text: comment.body}
+        %{title: "Kommentar", text: markdown(comment.body)}
       ],
       button: %{text: "Details", link: url(comment.html_url)},
       user: %{text: event.actor.display_login, link: url(event.actor.url)},
