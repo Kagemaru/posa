@@ -185,6 +185,10 @@ defmodule PosaWeb.EventsComponent do
 
   defp type(_), do: %{}
 
+  defp sha(commit_sha), do: commit_sha |> String.slice(0, 6)
+
+  defp url(nil), do: ""
+
   # HACK: Duplication
   defp url(url) do
     url
@@ -206,6 +210,4 @@ defmodule PosaWeb.EventsComponent do
   end
 
   defp markdown(text), do: text
-
-  defp sha(commit_sha), do: commit_sha |> String.slice(0, 6)
 end
