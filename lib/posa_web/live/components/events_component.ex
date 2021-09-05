@@ -102,15 +102,30 @@ defmodule PosaWeb.EventsComponent do
   defp type(%{type: "PullRequestEvent"} = event) do
     pr = event.payload.pull_request
 
+    # changes-info
+    # extract and create colored markdown
+    display_limit = 20
+
+    factor = (pr.additions + pr.deletions) / display_limit
+    actual_factor = Enum.max([factor, 1.0])
+
+    additions = (pr.additions / actual_factor) |> Float.ceil |> Kernel.trunc
+    adds = String.duplicate("+", additions)
+
+    deletions = (pr.deletions / actual_factor) |> Float.ceil |> Kernel.trunc
+    dels = String.duplicate("-", deletions)
+    # changes-info end
+
     %{
       icon: "fa-arrow-down",
       title: "Pull Request erstellt",
       content: [
         %{title: "Author", text: pr.user.login},
         %{title: "Message", text: pr.title},
-        %{title: "Additions", text: pr.additions},
-        %{title: "Deletions", text: pr.deletions},
-        %{title: "Commits", text: pr.commits},
+        # %{title: "Additions", text: pr.additions},
+        # %{title: "Deletions", text: pr.deletions},
+        # %{title: "Commits", text: pr.commits},
+        %{title: "Changes", text: "#{adds}#{dels} #{pr.commits} Commits, #{pr.additions} Additions, #{pr.deletions} Deletions"},
         %{title: "Base", text: pr.base.label},
         %{title: "Head", text: pr.head.label}
       ],
