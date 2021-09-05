@@ -35,11 +35,11 @@ defmodule PosaWeb.EventsComponent do
 
     %{
       icon: "fa-arrow-down",
-      title: "Pull Request erstellt",
+      title: "Pull Request durchgesehen",
       content: [
-        %{title: "Author", text: review.user.login},
-        %{title: "State", text: review.state},
-        %{title: "Review", text: markdown(review.body)}
+        %{title: "Reviewer", text: review.user.login},
+        %{title: "Bewertung", text: review.state},
+        %{title: "Kommentar", text: markdown(review.body)}
       ],
       button: %{text: "Details", link: url(review.html_url)}
     }
@@ -87,7 +87,7 @@ defmodule PosaWeb.EventsComponent do
       title: "Repository erstellt",
       content: [
         %{title: "Beschreibung", text: event.payload.description},
-        %{title: "Master Branch", text: event.payload.master_branch}
+        %{title: "Default Branch", text: event.payload.master_branch}
       ]
     }
   end
@@ -144,7 +144,7 @@ defmodule PosaWeb.EventsComponent do
         %{title: "User", text: event.actor.login},
         %{title: "Commits", text: event.payload.size},
         %{title: "Range", text: "#{sha(event.payload.before)}...#{sha(event.payload.head)}"},
-        %{title: "Message", text:  message)}
+        %{title: "Messages", text:  message)}
       ],
       button: button
     }
