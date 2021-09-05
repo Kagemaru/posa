@@ -48,20 +48,20 @@ defmodule PosaWeb.EventComponent do
 
   def render(assigns) do
     ~L"""
-      <section class="flex flex-col bg-blue-50">
-        <header class="flex flex-row items-center flex-none h-12 px-3 py-1 font-semibold bg-blue-300 rounded-tr-2xl">
+      <section class="flex flex-col">
+        <header class="flex flex-row items-center flex-none h-12 px-3 py-1 font-semibold bg-blue-300 border-b-2 rounded-tr-2xl border-blue-50">
           <%= if @icon != nil do %>
             <div class="flex-grow-0 w-6 h-6 mr-2 text-lg flex-shrink-1 fas <%= @icon %>"></div>
           <% end %>
           <div class="flex-shrink-0 text-lg flex-grow-1"><%= @title || @event.type %></div>
           <%= if @button != nil do %>
             <div class="flex-grow-0 flex-shrink-1">
-              <button class="px-2 mr-2 font-bold bg-blue-200 rounded-lg cursor-pointer"><%= @button.text %></button>
+              <a href="<%= @button.link %>" class="px-2 mr-2 font-bold bg-blue-200 rounded-lg cursor-pointer"><%= @button.text %></a>
             </div>
           <% end %>
         </header>
-        <%= if @content != nil do %>
-          <dl class="p-2">
+        <%= if @content != nil && @content != [] do %>
+          <dl class="p-2 overflow-x-scroll bg-blue-50">
             <%= for item <- @content do %>
               <dt class="inline font-semibold text-light-blue-500"><%= item.title %></dt>
               <dd class="inline"><%= item.text %></dd>
@@ -69,7 +69,7 @@ defmodule PosaWeb.EventComponent do
             <% end %>
           </dl>
         <% end %>
-        <footer class="flex flex-row items-center h-12 px-3 py-1 bg-blue-300 rounded-bl-2xl">
+        <footer class="flex flex-row items-center h-12 px-3 py-1 bg-blue-300 border-t-2 rounded-bl-2xl border-blue-50">
           <%= if @user != nil do %>
             <div class="flex-1">
               <span class="font-semibold text-gray-100">User:</span>

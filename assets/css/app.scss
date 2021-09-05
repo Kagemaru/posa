@@ -21,3 +21,27 @@ main {
 body {
   font-family: 'Roboto Slab', serif;
 }
+
+*::-webkit-scrollbar,
+*::-webkit-scrollbar-thumb {
+  width: 26px;
+  border-radius: 13px;
+  background-clip: padding-box;
+  border: 10px solid transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 0 10px;
+
+}
+
+.card-body:hover {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.card-body {
+    color: rgba(0, 0, 0, 0);
+  text-shadow: 0 0 black;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+  transition: color .3s ease;
+}

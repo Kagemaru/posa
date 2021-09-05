@@ -122,15 +122,29 @@ defmodule PosaWeb.EventsComponent do
     commits = event.payload.commits
     commit = List.first(commits)
 
+    message =
+      if commit do
+        commit.message
+      else
+        "Keine Commits"
+      end
+
+    button =
+      if commit do
+        %{text: "Details", link: url(commit.url)}
+      else
+        nil
+      end
+
     %{
       icon: "fa-arrow-up",
       title: "Commits gepusht",
       content: [
         %{title: "User", text: event.actor.login},
         %{title: "Commits", text: event.payload.size},
-        %{title: "Message", text: commit.message}
+        %{title: "Message", text: message}
       ],
-      button: %{text: "Details", link: url(commit.url)}
+      button: button
     }
   end
 
@@ -179,10 +193,15 @@ defmodule PosaWeb.EventsComponent do
   defp markdown(nil), do: ""
 
   defp markdown(text) when is_binary(text) do
-    {:ok, html, _} = Earmark.as_html(text, compact_output: true)
+    {:ok, html, _} =
+      Earmark.as_html(text, %Earmark.Options{
+        code_class_prefix: "language-",
+        compact_output: true,
+        gfm_tables: true
+      })
 
     raw(html)
   end
 
-  defp markdown(text), do: text |> IO.inspect(label: 'No markdown')
+  defp markdown(text), do: text
 end
