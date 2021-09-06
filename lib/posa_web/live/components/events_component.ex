@@ -135,19 +135,22 @@ defmodule PosaWeb.EventsComponent do
 
   defp type(%{type: "PushEvent"} = event) do
     commits = event.payload.commits
+    # require IEx
+    # IEx.pry
+    # commit_messages = commits |> IO.inspect(label: "Commits") |> Enum.map(fn c -> "- #{c.message}" end) |> Enum.join("\n")
     commit_messages = commits |> Enum.map(fn c -> "- #{c.message}" end) |> Enum.join("\n")
-    commit_url = commits |> Enum.map(fn c -> c.url end) |> Enum.reject(fn c -> is_nil(c) end) |>List.first
+    commit_url = commits |> Enum.map(fn c -> c.url end) |> Enum.reject(fn c -> is_nil(c) end) |> List.first
 
     message =
-      if List.first(commit) do
+      if List.first(commits) do
         markdown(commit_messages)
       else
         "Keine Commits"
       end
 
     button =
-      if List.first(commit) do
-        %{text: "Details", link: url(commit.url)}
+      if commit_url do
+        %{text: "Details", link: url(commit_url)}
       else
         nil
       end
@@ -159,7 +162,8 @@ defmodule PosaWeb.EventsComponent do
         %{title: "User", text: event.actor.login},
         %{title: "Commits", text: event.payload.size},
         %{title: "Range", text: "#{sha(event.payload.before)}...#{sha(event.payload.head)}"},
-        %{title: "Messages", text:  message)}
+        # %{title: "RAW Messages", text: commit_messages},
+        %{title: "Messages", text: message}
       ],
       button: button
     }
