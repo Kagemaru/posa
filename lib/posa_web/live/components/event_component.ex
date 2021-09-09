@@ -61,7 +61,7 @@ defmodule PosaWeb.EventComponent do
           <% end %>
         </header>
         <%= if @content != nil && @content != [] do %>
-          <dl class="p-2 overflow-x-scroll bg-blue-50">
+          <dl class="p-2 bg-blue-50">
             <%= for item <- @content do %>
               <dt class="inline font-semibold text-light-blue-500"><%= item.title %></dt>
               <dd class="inline"><%= item.text %></dd>
