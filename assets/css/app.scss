@@ -20,6 +20,10 @@ main {
 
 body {
   font-family: 'Roboto Slab', serif;
+  background-image: url(/images/bg-top-left.svg), url(/images/bg-top-right.svg);
+  background-position: left top, right top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 *::-webkit-scrollbar,
