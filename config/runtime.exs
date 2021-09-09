@@ -39,7 +39,8 @@ github_token =
   System.get_env("PHX_GITHUB_TOKEN") ||
     raise """
     Environment variable PHX_GITHUB_TOKEN is missing.
-    You need a github token to continue.
+    You need a github token (Personal Access Token) to continue.
+    See https://github.com/settings/tokens
     """
 
 organizations = System.get_env("PHX_ORGANIZATIONS", "puzzle") |> String.split(",")
