@@ -4,31 +4,17 @@ defmodule PosaWeb.DayGroupComponent do
 
   def render(assigns) do
     ~L"""
-    <style>
-      <!--
-      details.day-group[open] summary ~ * {
-        animation: sweep .5s ease-in-out;
-      }
-
-      @keyframes sweep {
-        0%    {opacity: 0; transform: translateX(-10px)}
-        100%  {opacity: 1; transform: translateX(0)}
-      }
-      -->
-    </style>
-    <details class="mb-2 day-group" <%= if @open, do: "open" %>>
-      <summary class="flex flex-row items-center cursor-pointer">
-        <div class="z-10 w-3 h-3 ml-1 bg-gray-300 border border-gray-600 rounded-full">&nbsp;</div>
-        <div class="w-7 h-1 -ml-0.5 rounded-full bg-gray-300 border border-gray-600 shadow-md">&nbsp;</div>
-        <time datetime="<%= datetime(@data) %>" class="z-20 px-4 py-1 font-semibold text-white bg-blue-300 rounded-full shadow-md" >
+    <details class="day-group" <%= if @open, do: "open" %>>
+      <summary class="day-group__header">
+        <time datetime="<%= datetime(@data) %>" class="day-group__left-container" >
           <%= caption(@data) %>
         </time>
-        <div class="z-10 px-6 py-1 pl-12 -ml-10 font-semibold text-white bg-gray-700 rounded-full shadow-md">
+        <div class="day-group__right-container">
           <%= count(@data) %>
         </div>
       </summary>
-      <section class="mt-4 ml-5 w-30" >
-        <div class="grid grid-flow-row gap-4 lg:grid-cols-2">
+      <section class="day-group__body" >
+        <div class="day-group__events">
           <%= for event <- get_events(@data) do %>
             <%= live_component @socket, PosaWeb.EventsComponent, data: event %>
           <% end %>

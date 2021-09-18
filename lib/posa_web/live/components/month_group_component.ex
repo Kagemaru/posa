@@ -3,17 +3,14 @@ defmodule PosaWeb.MonthGroupComponent do
 
   def render(assigns) do
     ~L"""
-    <details class="flex flex-col mb-8 month-group" <%= if @open, do: "open" %>>
-      <summary class="flex flex-row items-center mb-8 bg-gray-700 rounded-full shadow-xl cursor-pointer w-min">
-        <div class="flex flex-row items-center bg-gray-300 text-gray-800 font-bold w-min px-3 py-2 rounded-full -ml-3.5 z-10 whitespace-nowrap h-10">
-          <div class="w-4 h-4 mr-2 bg-gray-200 border-gray-200 rounded-full">&nbsp;</div>
-          <div>
-            <time datetime="<%= datetime(@data) %>"><%= caption(@data) %></time>
-          </div>
+    <details class="month-group" <%= if @open, do: "open" %>>
+      <summary class="month-group__header">
+        <div class="month-group__left-container">
+          <time class="month-group__date" datetime="<%= datetime(@data) %>"><%= caption(@data) %></time>
         </div>
-        <div class="pl-2 pr-4 font-semibold text-gray-200 whitespace-nowrap"><%= count(@data) %></div>
+        <div class="month-group__right-container"><%= count(@data) %></div>
       </summary>
-      <section class="z-10" >
+      <section class="month-group__body" >
         <%= for group <- Enum.with_index(day_groups(@data)) do %>
           <%= live_component @socket, PosaWeb.DayGroupComponent, data: elem(group, 0), open: elem(group, 1) == 0 %>
         <% end %>

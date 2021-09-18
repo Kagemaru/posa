@@ -11,13 +11,6 @@ defmodule PosaWeb.EventComponent do
        button: nil,
        title: nil,
        content: []
-       #  user: %{text: nil, link: nil},
-       #  repo: %{text: nil, link: nil}
-       #  event: %{
-       #    actor: %{display_login: "", url: ""},
-       #    repo: %{url: "", name: ""},
-       #    type: ""
-       #  }
      )}
   end
 
@@ -48,38 +41,42 @@ defmodule PosaWeb.EventComponent do
 
   def render(assigns) do
     ~L"""
-      <section class="flex flex-col">
-        <header class="flex flex-row items-center flex-none h-12 px-3 py-1 font-semibold bg-blue-300 border-b-2 rounded-tr-2xl border-blue-50">
+      <section class="event">
+        <header class="event__header">
           <%= if @icon != nil do %>
-            <div class="flex-grow-0 w-6 h-6 mr-2 text-lg flex-shrink-1 fas <%= @icon %>"></div>
+            <i class="event__icon fas <%= @icon %>"></i>
           <% end %>
-          <div class="flex-shrink-0 text-lg flex-grow-1"><%= @title || @event.type %></div>
+          <div class="event__title"><%= @title || @event.type %></div>
           <%= if @button != nil do %>
-            <div class="flex-grow-0 flex-shrink-1">
-              <a href="<%= @button.link %>" class="px-2 mr-2 font-bold bg-blue-200 rounded-lg cursor-pointer"><%= @button.text %></a>
+            <div class="event__button">
+              <a href="<%= @button.link %>" class="event__button-link"><%= @button.text %></a>
             </div>
           <% end %>
         </header>
         <%= if @content != nil && @content != [] do %>
-          <dl class="p-2 bg-blue-50">
+          <dl class="event__content">
             <%= for item <- @content do %>
-              <dt class="inline font-semibold text-light-blue-500"><%= item.title %></dt>
-              <dd class="inline"><%= item.text %></dd>
+              <dt class="event__topic"><%= item.title %></dt>
+              <dd class="event__detail"><%= item.text %></dd>
               <br />
             <% end %>
           </dl>
         <% end %>
-        <footer class="flex flex-row items-center h-12 px-3 py-1 bg-blue-300 border-t-2 rounded-bl-2xl border-blue-50">
+        <footer class="event__footer">
           <%= if @user != nil do %>
-            <div class="flex-1">
-              <span class="font-semibold text-gray-100">User:</span>
-              <a href="<%= @user.link || url(@event.actor.url) %>" class="text-white underline"><%= @user.text || @event.actor.display_login %></a>
+            <div class="event__footer-container">
+              <span class="event__footer-title">User:</span>
+              <a href="<%= @user.link || url(@event.actor.url) %>" class="event__footer-value">
+                <%= @user.text || @event.actor.display_login %>
+              </a>
             </div>
           <% end %>
           <%= if @repo != nil do %>
-            <div class="flex-1">
-              <span class="font-semibold text-gray-100">Repo:</span>
-              <a href="<%= @repo.link || url(@event.repo.url) %>" class="text-white underline"><%= @repo.text || @event.repo.name %></a>
+            <div class="event__footer-container">
+              <span class="event__footer-title">Repo:</span>
+              <a href="<%= @repo.link || url(@event.repo.url) %>" class="event__footer-value">
+                <%= @repo.text || @event.repo.name %>
+              </a>
             </div>
           <% end %>
         </footer>

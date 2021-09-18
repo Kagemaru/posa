@@ -3,10 +3,8 @@ defmodule PosaWeb.TimelineComponent do
 
   def render(assigns) do
     ~L"""
-    <div id="timeline" class="">
-      <div class="absolute top-0 bottom-0 z-0 w-3 bg-gray-400 border border-gray-500 left-7"></div>
-    </div>
-    <div id="events" class="">
+    <div id="timeline"></div>
+    <div id="events">
       <%= for group <- Enum.with_index(month_groups(@events)) do %>
         <%= live_component @socket, PosaWeb.MonthGroupComponent, data: elem(group, 0), open: elem(group, 1) == 0 %>
       <% end %>
