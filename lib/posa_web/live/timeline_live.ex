@@ -10,6 +10,15 @@ defmodule PosaWeb.TimelineLive do
     {:ok, assign(socket, events: list_events())}
   end
 
+  @impl true
+  def render(assigns) do
+    ~L"""
+    <div class="flex flex-row px-4 pt-4 ml-3 overflow-auto">
+      <%= live_component @socket, PosaWeb.TimelineComponent, events: @events %>
+    </div>
+    """
+  end
+
   def list_events do
     Data.list_events() |> deep_atomize_keys
   end
