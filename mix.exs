@@ -41,27 +41,26 @@ defmodule Posa.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.3"},
-      {:phoenix_ecto, "~> 4.1"},
+      {:phoenix, "~> 1.5.12"},
+      {:phoenix_ecto, "~> 4.4"},
       {:ecto_sql, "~> 3.4"},
-      # {:postgrex, ">= 0.0.0"},
-      {:phoenix_live_view, "~> 0.13.0"},
-      {:floki, ">= 0.0.0", only: :test},
+      {:phoenix_live_view, "~> 0.15.1"},
+      {:floki, ">= 0.30.0", only: :test},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_dashboard, "~> 0.2.0"},
+      {:phoenix_live_dashboard, "~> 0.4"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
-      {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"},
-      {:httpoison, "~> 1.5"},
-      {:poison, "~> 3.1"},
-      {:phoenix_slime, "~> 0.13.1"},
-      {:timex, "~> 3.6.2"},
-      {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
-      {:earmark, "~> 1.4.15"}
+      {:gettext, "~> 0.18"},
+      {:jason, "~> 1.2"},
+      {:plug_cowboy, "~> 2.5"},
+      {:httpoison, "~> 1.8"},
+      {:poison, "~> 5.0"},
+      {:phoenix_slime, "~> 0.13"},
+      {:timex, "~> 3.7"},
+      {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
+      {:earmark, "~> 1.4"}
     ]
   end
 
