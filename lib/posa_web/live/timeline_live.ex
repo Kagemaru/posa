@@ -22,7 +22,6 @@ defmodule PosaWeb.TimelineLive do
   def render(assigns) do
     ~L"""
     <div class="flex flex-row px-4 pt-4 ml-3 overflow-auto">
-      <div class="absolute right-0 mr-10">Last update: <%= @last_updated |> DateTime.to_string %></div>
       <%= live_component @socket, PosaWeb.TimelineComponent, events: @events %>
     </div>
     """
