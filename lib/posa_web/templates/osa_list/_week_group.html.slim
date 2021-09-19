@@ -1,7 +1,0 @@
-.timeline-date
-  a data-toggle="collapse" data-target=".#{day_class(@group)}" href="#"
-    = day_tag(@group)
-  span = "#{Enum.count(@events)} Events"
-.day-container
-  .row.collapse class="#{day_class(@group)} #{@show_day}"
-    = for event <- @events, do: render_event(event)

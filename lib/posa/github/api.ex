@@ -54,7 +54,7 @@ defmodule Posa.Github.API do
   def process_request_options(options) do
     options
     |> Keyword.put(:recv_timeout, 10_000)
-    |> Keyword.put(:ssl, [{:ciphers, :ssl.cipher_suites(:all)}])
+    |> Keyword.put(:ssl, [{:ciphers, :ssl.cipher_suites(:all, :"tlsv1.3")}])
   end
 
   def process_response_body(body) do

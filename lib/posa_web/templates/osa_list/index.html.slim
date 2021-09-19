@@ -1,5 +1,0 @@
-.container
-  .timeline
-    = for {{group, events}, count} <- Enum.with_index(group_by_month(@events)) do
-      - show = if count == 0, do: "show", else: ""
-      = render "_month_group.html", group: group, events: events, show_month: show
