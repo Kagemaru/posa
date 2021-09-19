@@ -3,20 +3,39 @@ defmodule PosaWeb.TimelineLive do
 
   use PosaWeb, :live_view
 
+  alias Posa.Github
   alias Posa.Github.Data
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, events: list_events())}
+    if connected?(socket), do: Github.subscribe()
+
+    socket =
+      socket
+      |> assign(events: list_events())
+      |> assign(last_updated: DateTime.now!("Europe/Zurich"))
+
+    {:ok, socket}
   end
 
   @impl true
   def render(assigns) do
     ~L"""
     <div class="flex flex-row px-4 pt-4 ml-3 overflow-auto">
+      <div class="absolute right-0 mr-10">Last update: <%= @last_updated |> DateTime.to_string %></div>
       <%= live_component @socket, PosaWeb.TimelineComponent, events: @events %>
     </div>
     """
+  end
+
+  @impl true
+  def handle_info({"synced", last_update}, socket) do
+    socket =
+      socket
+      |> assign(events: list_events())
+      |> assign(last_updated: last_update)
+
+    {:noreply, socket}
   end
 
   def list_events do

@@ -15,6 +15,8 @@ defmodule Posa.Github do
     Supervisor.start_link(__MODULE__, :ok, name: __MODULE__)
   end
 
+  def subscribe, do: Phoenix.PubSub.subscribe(Posa.PubSub, "updates")
+
   @impl true
   def init(:ok) do
     children =
