@@ -218,14 +218,14 @@ defmodule PosaWeb.EventsComponent do
   defp markdown(nil), do: ""
 
   defp markdown(text) when is_binary(text) do
-    {:ok, html, _} =
-      Earmark.as_html(text, %Earmark.Options{
-        code_class_prefix: "language-",
-        compact_output: true,
-        gfm_tables: true
-      })
-
-    raw(html)
+    case Earmark.as_html(text, %Earmark.Options{
+            code_class_prefix: "language-",
+            compact_output: true,
+            gfm_tables: true
+         }) do
+      {:ok, html, _} -> raw(html)
+      {:error, _, _} -> text
+    end
   end
 
   defp markdown(text), do: text
