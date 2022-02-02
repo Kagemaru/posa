@@ -1,7 +1,7 @@
 module.exports = {
   mode: 'jit',
   purge: [
-    '../lib/**/*.{ex,eex,leex,slim}',
+    '../lib/**/*.{ex,eex,heex}',
     './js/**/*.js'
   ],
   darkMode: false, // or 'media' or 'class'

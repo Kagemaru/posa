@@ -17,9 +17,7 @@ defmodule PosaWeb.Router do
   scope "/", PosaWeb do
     pipe_through(:browser)
 
-    # get "/", OSAListController, :index
-    # live("/test", TestLive, :index)
-    live("/", TimelineLive, :index)
+    live "/", TimelineLive, :index
   end
 
   # Other scopes may use custom stacks.

@@ -25,9 +25,6 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-# Use Slim templating
-config :phoenix_slime, :use_slim_extension, true
-
 config :phoenix, :template_engines,
   slim: PhoenixSlime.Engine,
   slime: PhoenixSlime.Engine,
