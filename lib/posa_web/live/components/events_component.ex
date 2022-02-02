@@ -218,13 +218,18 @@ defmodule PosaWeb.EventsComponent do
   defp markdown(nil), do: ""
 
   defp markdown(text) when is_binary(text) do
-    case Earmark.as_html(text, %Earmark.Options{
-            code_class_prefix: "language-",
-            compact_output: true,
-            gfm_tables: true
-         }) do
+    options = %Earmark.Options{ code_class_prefix: "language-", compact_output: true, gfm_tables: true}
+
+    case  Earmark.as_html(text, options) do
       {:ok, html, _} -> raw(html)
-      {:error, _, _} -> text
+      {:error, html, errors} ->
+        error_output =
+          for {type, num, error} <- errors do
+            "#{type} ##{num}: #{error}"
+          end
+          |> IO.inspect
+          |> Enum.join("\n")
+        raw("<!-- markdown had errors:\n #{error_output}-->\n#{html}")
     end
   end
 
