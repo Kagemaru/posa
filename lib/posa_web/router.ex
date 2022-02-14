@@ -19,7 +19,14 @@ defmodule PosaWeb.Router do
 
     live_session :default do
       live "/", TimelineLive, :index
+      live "/metrics", MetricsLive, :index
     end
+  end
+
+  scope "/exports", PosaWeb do
+    pipe_through(:api)
+
+    get "/metrics", MetricsController, :index
   end
 
   # Other scopes may use custom stacks.
