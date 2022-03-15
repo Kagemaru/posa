@@ -2,8 +2,6 @@ defmodule Posa.Exports.Metrics do
   alias Posa.Github.Data
 
   def all_metrics do
-    require IEx
-
     get_metrics()
     |> sum_range(:day)
     |> sum_range(:week)

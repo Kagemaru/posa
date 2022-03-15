@@ -28,23 +28,32 @@ defmodule Posa.Github.Storage.Events do
     Map.merge(merge_events(map, t), h)
   end
 
+  # def get_metrics(date_range) do
+  #   metrics = get_internal_metrics(date_range)
+
+  #   DeepMerge.deep_merge(
+  #     %{
+  #       members: %{commits: 0, issues: 0, reviews: 0, other: 0},
+  #       external: %{commits: 0, issues: 0, reviews: 0, other: 0}
+  #     },
+  #     metrics
+  #   )
+  # end
+
   def get_metrics(date_range) do
-    metrics = get_internal_metrics(date_range)
-
-    Map.merge(
-      %{
-        members: %{commits: 0, issues: 0, reviews: 0, other: 0},
-        external: %{commits: 0, issues: 0, reviews: 0, other: 0}
-      },
-      metrics
-    )
-  end
-
-  def get_internal_metrics(date_range) do
     all_events()
     |> in_daterange(date_range)
     |> categorize_events()
     |> grouping
+    |> then(
+      &DeepMerge.deep_merge(
+        %{
+          members: %{commits: 0, issues: 0, reviews: 0, other: 0},
+          external: %{commits: 0, issues: 0, reviews: 0, other: 0}
+        },
+        &1
+      )
+    )
   end
 
   defp in_daterange(events, date_range) do
@@ -62,7 +71,7 @@ defmodule Posa.Github.Storage.Events do
           true -> :other
         end
 
-      member = event.actor["id"] in members(all_events())
+      member = event.actor["login"] in members()
 
       [%{type: type, member: member} | acc]
     end)
@@ -89,8 +98,9 @@ defmodule Posa.Github.Storage.Events do
 
   defp map_counts({key, value}), do: {key, Enum.count(value)}
 
-  defp members(metrics) do
-    metrics |> Enum.map(& &1.actor["id"])
+  def members do
+    for(org <- Posa.Github.Storage.Organizations.get_all(), do: org.members)
+    |> List.flatten()
   end
 
   defp types(:commits) do

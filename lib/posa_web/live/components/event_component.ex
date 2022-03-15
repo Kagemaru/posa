@@ -1,5 +1,5 @@
 defmodule PosaWeb.EventComponent do
-  @moduledoc "This cdomponent handles the display of events"
+  @moduledoc "This component handles the display of events"
 
   use PosaWeb, :live_component
 

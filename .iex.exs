@@ -20,6 +20,5 @@ IEx.configure(
   alive_prompt: "#{color}#{prefix}#{reset}_%prefix(%node)%counter>"
 )
 
-alias Posa.Github.Storage
-alias Posa.Github.Data
-alias Posa.Github.API
+alias Posa.Github.{API, Data, Metrics, Storage, Sync}
+alias Posa.Github.Storage.{Etags, Events, Organizations, Users}
