@@ -24,7 +24,7 @@ new_tag=$(
   sort -t'-' --sort=version |\
   tail -n1
 )
-os_version="$(echo $new_tag | cut -d- -f 5,6 | cut -d. -f 1,2)"
+os_version="$(echo "$new_tag" | cut -d- -f 5,6 | cut -d. -f 1,2)"
 echo "  => Using $repo:$new_tag for ImageStream"
 echo "  => Using $repo:$new_tag for Dockerfile (build)"
 echo "  => Using $os_flavour:$os_version for Dockerfile (app)"
