@@ -1,4 +1,5 @@
 defmodule PosaWeb.MonthGroupComponent do
+  @moduledoc "This handles the display of the month grouping"
   use PosaWeb, :live_component
 
   def render(assigns) do

@@ -1,4 +1,6 @@
 defmodule PosaWeb.TimelineComponent do
+  @moduledoc "This Component is for displaying the timeline view."
+
   use PosaWeb, :live_component
 
   def render(assigns) do

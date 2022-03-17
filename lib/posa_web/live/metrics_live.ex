@@ -1,4 +1,5 @@
 defmodule PosaWeb.MetricsLive do
+  @moduledoc "Display the usage metrics for the user"
   use PosaWeb, :live_view
 
   def mount(_params, _session, socket) do

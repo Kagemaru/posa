@@ -3,6 +3,8 @@ defmodule Posa.Github.Storage.Events do
 
   use Posa.Github.Storage.Base
 
+  alias Posa.Github.Storage.Organizations
+
   def add_event(user, id, value) do
     _update(&put_in_p(&1, [user, id], value))
   end
@@ -99,7 +101,7 @@ defmodule Posa.Github.Storage.Events do
   defp map_counts({key, value}), do: {key, Enum.count(value)}
 
   def members do
-    for(org <- Posa.Github.Storage.Organizations.get_all(), do: org.members)
+    for(org <- Organizations.get_all(), do: org.members)
     |> List.flatten()
   end
 

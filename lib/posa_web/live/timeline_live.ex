@@ -42,6 +42,7 @@ defmodule PosaWeb.TimelineLive do
   end
 
   # TODO: Move tooling to it's own module
+  # credo:disable-for-previous-line
   def deep_atomize_keys(data) when is_list(data) do
     for(item <- data, do: deep_atomize_keys(item))
   end

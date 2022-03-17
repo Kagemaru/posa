@@ -14,9 +14,7 @@ defmodule Posa.Github.Sync do
     fetch_users()
     fetch_events()
 
-    message =
-      {"synced", DateTime.now!("Europe/Zurich")}
-      |> IO.inspect(label: "broadcasted")
+    message = {"synced", DateTime.now!("Europe/Zurich")}
 
     Phoenix.PubSub.broadcast(Posa.PubSub, "updates", message)
   end
