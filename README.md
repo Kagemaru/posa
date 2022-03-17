@@ -34,3 +34,15 @@ Other than that, here you go:
 
 	docker build . --build-arg secret_key_base=AtLeast64BytesOfRandomCharacters -t posa:latest
 	docker run -p 4000:4000 posa:latest
+
+## Updating Elixir
+
+If you update the elixir-version, please follow the following steps:
+
+- update `.tool-versions`
+- check app and dependencies
+- run `openshift/bin/update-build-image`
+- commit `Dockerfile` and changed Openshift-YAMLs
+- push changes
+- apply the openshift-config
+- maybe check the imagestream and start a build (may be done automatically)
