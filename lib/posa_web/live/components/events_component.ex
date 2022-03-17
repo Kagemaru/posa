@@ -1,4 +1,5 @@
 defmodule PosaWeb.EventsComponent do
+  @moduledoc false
   use PosaWeb, :live_component
 
   def render(assigns) do
@@ -109,10 +110,10 @@ defmodule PosaWeb.EventsComponent do
     factor = (pr.additions + pr.deletions) / display_limit
     actual_factor = Enum.max([factor, 1.0])
 
-    additions = (pr.additions / actual_factor) |> Float.ceil |> Kernel.trunc
+    additions = (pr.additions / actual_factor) |> Float.ceil() |> Kernel.trunc()
     adds = String.duplicate("+", additions)
 
-    deletions = (pr.deletions / actual_factor) |> Float.ceil |> Kernel.trunc
+    deletions = (pr.deletions / actual_factor) |> Float.ceil() |> Kernel.trunc()
     dels = String.duplicate("-", deletions)
     # changes-info end
 
@@ -125,7 +126,11 @@ defmodule PosaWeb.EventsComponent do
         # %{title: "Additions", text: pr.additions},
         # %{title: "Deletions", text: pr.deletions},
         # %{title: "Commits", text: pr.commits},
-        %{title: "Changes", text: "#{adds}#{dels} #{pr.commits} Commits, #{pr.additions} Additions, #{pr.deletions} Deletions"},
+        %{
+          title: "Changes",
+          text:
+            "#{adds}#{dels} #{pr.commits} Commits, #{pr.additions} Additions, #{pr.deletions} Deletions"
+        },
         %{title: "Base", text: pr.base.label},
         %{title: "Head", text: pr.head.label}
       ],
@@ -138,8 +143,10 @@ defmodule PosaWeb.EventsComponent do
     # require IEx
     # IEx.pry
     # commit_messages = commits |> IO.inspect(label: "Commits") |> Enum.map(fn c -> "- #{c.message}" end) |> Enum.join("\n")
-    commit_messages = commits |> Enum.map(fn c -> "- #{c.message}" end) |> Enum.join("\n")
-    commit_url = commits |> Enum.map(fn c -> c.url end) |> Enum.reject(fn c -> is_nil(c) end) |> List.first
+    commit_messages = commits |> Enum.map_join("\n", fn c -> "- #{c.message}" end)
+
+    commit_url =
+      commits |> Enum.map(fn c -> c.url end) |> Enum.reject(fn c -> is_nil(c) end) |> List.first()
 
     message =
       if List.first(commits) do
@@ -218,17 +225,23 @@ defmodule PosaWeb.EventsComponent do
   defp markdown(nil), do: ""
 
   defp markdown(text) when is_binary(text) do
-    options = %Earmark.Options{ code_class_prefix: "language-", compact_output: true, gfm_tables: true}
+    options = %Earmark.Options{
+      code_class_prefix: "language-",
+      compact_output: true,
+      gfm_tables: true
+    }
 
-    case  Earmark.as_html(text, options) do
-      {:ok, html, _} -> raw(html)
+    case Earmark.as_html(text, options) do
+      {:ok, html, _} ->
+        raw(html)
+
       {:error, html, errors} ->
         error_output =
           for {type, num, error} <- errors do
             "#{type} ##{num}: #{error}"
           end
-          |> IO.inspect(label: "Markdown rendering error")
           |> Enum.join("\n")
+
         raw("<!-- markdown had errors:\n #{error_output}-->\n#{html}")
     end
   end
