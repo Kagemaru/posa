@@ -17,6 +17,7 @@ defmodule Posa.MixProject do
 
   defp dialyzer do
     [
+      plt_add_deps: :transitive,
       plt_core_path: "priv/plts",
       plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
     ]
@@ -46,9 +47,9 @@ defmodule Posa.MixProject do
       {:ecto_sql, "~> 3.4"},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_html, "~> 3.0"},
-      {:phoenix_live_view, "~> 0.16.4"},
+      {:phoenix_live_view, "~> 0.17"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_dashboard, "~> 0.5"},
+      {:phoenix_live_dashboard, "~> 0.6"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 0.5"},
       {:gettext, "~> 0.18"},
@@ -60,7 +61,8 @@ defmodule Posa.MixProject do
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
       {:earmark, "~> 1.4"},
-      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev}
+      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
+      {:deep_merge, "~> 1.0"}
     ]
   end
 

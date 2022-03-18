@@ -15,13 +15,15 @@ defmodule Posa.Github.Data do
   def get_user_by(params), do: user(params)
   def get_event_by(params), do: event(params)
 
+  def get_event_metrics(date_range), do: Events.get_metrics(date_range)
+
   def sort(list, key \\ :id, fun \\ &>=/2) do
     Users.sort(list, key, fun)
   end
 
   defp org(search), do: Organizations.get_by(search)
   defp user(search), do: Users.get_by(search)
-  defp event(search), do: Events.get_by(search)
+  defp event(search), do: Events.get_values_by(search)
 
   defp orgs, do: Organizations.get_all()
   defp users, do: Users.get_all()

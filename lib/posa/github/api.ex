@@ -24,7 +24,8 @@ defmodule Posa.Github.API do
          url <- url(type, id),
          etag_id <- etag_id(type, id),
          :ok <- set_etag(store, etag_id),
-         response <- get_or_retry(url) do
+         response <- get_or_retry(url),
+         code when code != 403 <- response.status_code do
       case response.body do
         nil ->
           nil
@@ -32,10 +33,51 @@ defmodule Posa.Github.API do
         _ ->
           response
           |> save_etag(store, etag_id)
-          |> Map.get(:body)
+          |> paginate
           |> set_github_id
-          |> extract_member_logins(type)
+          |> extract(type)
       end
+    else
+      _ -> nil
+    end
+  end
+
+  def paginate(response) do
+    output =
+      case next_link(response.headers) do
+        nil -> response.body
+        link -> response.body ++ (get_or_retry(link) |> paginate)
+      end
+
+    output
+  end
+
+  defp next_link(headers) do
+    link_header =
+      headers
+      |> Enum.into(%{})
+      |> Map.get("Link")
+
+    links =
+      case link_header do
+        nil ->
+          []
+
+        _ ->
+          link_header
+          |> String.split(", ")
+          |> Enum.filter(&String.contains?(&1, "rel=\"next\""))
+      end
+
+    case links do
+      [] ->
+        nil
+
+      [link] ->
+        link
+        |> String.split("; ")
+        |> List.first()
+        |> String.slice(24..-2//1)
     end
   end
 
@@ -68,19 +110,28 @@ defmodule Posa.Github.API do
 
   defp store(:organization), do: Organizations
   defp store(:member), do: Organizations
+  defp store(:repos), do: Organizations
   defp store(:user), do: Users
+  defp store(:collaborators), do: Users
   defp store(:event), do: Events
 
   defp url(:organization, id), do: "orgs/#{id}"
   defp url(:member, id), do: "orgs/#{id}/public_members?per_page=100"
+  defp url(:repos, id), do: "orgs/#{id}/repos?type=public&per_page=100"
   defp url(:user, id), do: "users/#{id}"
+  defp url(:collaborators, id), do: "repos/#{id}/collaborators?affiliation=outside&per_page=100"
   defp url(:event, id), do: "users/#{id}/events/public?per_page=50"
 
   defp etag_id(:member, id), do: id <> "_members"
+  defp etag_id(:repos, id), do: id <> "_repos"
+  defp etag_id(:collaborators, id), do: id <> "_collaborators"
   defp etag_id(_type, id), do: id
 
-  defp extract_member_logins(list, :member), do: Enum.map(list, & &1["login"])
-  defp extract_member_logins(map, _), do: map
+  defp extract(list, type) when type in [:member, :collaborators],
+    do: Enum.map(list, & &1["login"]) |> Enum.sort()
+
+  defp extract(list, :repos), do: Enum.map(list, & &1["name"]) |> Enum.sort()
+  defp extract(list, _), do: list
 
   defp set_github_id(map, key \\ "id") do
     case map do

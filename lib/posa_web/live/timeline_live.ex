@@ -22,7 +22,7 @@ defmodule PosaWeb.TimelineLive do
   def render(assigns) do
     ~L"""
     <div class="flex flex-row px-4 pt-4 ml-3 overflow-auto">
-      <%= live_component @socket, PosaWeb.TimelineComponent, events: @events %>
+      <%= live_component PosaWeb.TimelineComponent, events: @events %>
     </div>
     """
   end
@@ -41,6 +41,8 @@ defmodule PosaWeb.TimelineLive do
     Data.list_events() |> deep_atomize_keys
   end
 
+  # TODO: Move tooling to it's own module
+  # credo:disable-for-previous-line
   def deep_atomize_keys(data) when is_list(data) do
     for(item <- data, do: deep_atomize_keys(item))
   end

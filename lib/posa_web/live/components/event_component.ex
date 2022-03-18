@@ -1,5 +1,5 @@
 defmodule PosaWeb.EventComponent do
-  @moduledoc "This cdomponent handles the display of events"
+  @moduledoc "This component handles the display of events"
 
   use PosaWeb, :live_component
 
@@ -41,7 +41,7 @@ defmodule PosaWeb.EventComponent do
 
   def render(assigns) do
     ~L"""
-      <section class="event">
+      <section class="event" data-type="<%= @event.type %>">
         <header class="event__header">
           <%= if @icon != nil do %>
             <i class="event__icon fas <%= @icon %>"></i>

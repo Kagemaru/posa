@@ -6,17 +6,17 @@ defmodule PosaWeb.DayGroupComponent do
     ~L"""
     <details class="day-group" <%= if @open, do: "open" %>>
       <summary class="day-group__header">
-        <time datetime="<%= datetime(@data) %>" class="day-group__left-container" >
-          <%= caption(@data) %>
+        <time datetime="<%= datetime(@day_group) %>" class="day-group__left-container" >
+          <%= caption(@day_group) %>
         </time>
         <div class="day-group__right-container">
-          <%= count(@data) %>
+          <%= count(@day_group) %>
         </div>
       </summary>
       <section class="day-group__body" >
         <div class="day-group__events">
-          <%= for event <- get_events(@data) do %>
-            <%= live_component @socket, PosaWeb.EventsComponent, data: event %>
+          <%= for event <- get_events(@day_group) do %>
+            <%= live_component PosaWeb.EventsComponent, event: event %>
           <% end %>
         </div>
       </section>
