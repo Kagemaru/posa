@@ -7,13 +7,14 @@ defmodule PosaWeb.MonthGroupComponent do
     <details class="month-group" <%= if @open, do: "open" %>>
       <summary class="month-group__header">
         <div class="month-group__left-container">
-          <time class="month-group__date" datetime="<%= datetime(@data) %>"><%= caption(@data) %></time>
+          <time class="month-group__date" datetime="<%= datetime(@month_group) %>"><%= caption(@month_group) %></time>
         </div>
-        <div class="month-group__right-container"><%= count(@data) %></div>
+        <div class="month-group__right-container"><%= count(@month_group) %></div>
       </summary>
       <section class="month-group__body" >
-        <%= for group <- Enum.with_index(day_groups(@data)) do %>
-          <%= live_component @socket, PosaWeb.DayGroupComponent, data: elem(group, 0), open: elem(group, 1) == 0 %>
+        <%= for {group, index} <- Enum.with_index(day_groups(@month_group)) do %>
+          <% open = index == 0 %>
+          <%= live_component PosaWeb.DayGroupComponent, day_group: group, open: open %>
         <% end %>
       </section>
     </details>

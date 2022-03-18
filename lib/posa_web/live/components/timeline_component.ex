@@ -7,8 +7,9 @@ defmodule PosaWeb.TimelineComponent do
     ~L"""
     <div id="timeline"></div>
     <div id="events">
-      <%= for group <- Enum.with_index(month_groups(@events)) do %>
-        <%= live_component @socket, PosaWeb.MonthGroupComponent, data: elem(group, 0), open: elem(group, 1) == 0 %>
+      <%= for {group, index} <- Enum.with_index(month_groups(@events)) do %>
+        <% open = index == 0 %>
+        <%= live_component PosaWeb.MonthGroupComponent, month_group: group, open: open %>
       <% end %>
     </div>
     """

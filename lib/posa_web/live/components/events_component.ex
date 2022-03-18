@@ -3,7 +3,9 @@ defmodule PosaWeb.EventsComponent do
   use PosaWeb, :live_component
 
   def render(assigns) do
-    ~L"<%= live_component @socket, PosaWeb.EventComponent, event(@data) %>"
+    ~L"""
+    <%= live_component PosaWeb.EventComponent, event(@event) %>
+    """
   end
 
   defp event(event) do

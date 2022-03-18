@@ -22,7 +22,7 @@ defmodule PosaWeb.TimelineLive do
   def render(assigns) do
     ~L"""
     <div class="flex flex-row px-4 pt-4 ml-3 overflow-auto">
-      <%= live_component @socket, PosaWeb.TimelineComponent, events: @events %>
+      <%= live_component PosaWeb.TimelineComponent, events: @events %>
     </div>
     """
   end
