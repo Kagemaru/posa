@@ -3,11 +3,11 @@ kind: Route
 metadata:
   name: posa
 spec:
-  host: pitc-posa-int.ocp.aws.puzzle.ch
+  host: pitc-posa-int.ocp.cloudscale.puzzle.ch
 # ---
 # apiVersion: route.openshift.io/v1
 # kind: Route
 # metadata:
 #   name: posa-external
 # spec:
-#   host: osa.puzzle.ch
+#   host: osa-int.puzzle.ch
