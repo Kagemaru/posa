@@ -5,6 +5,7 @@ metadata:
     kubernetes.io/tls-acme: "true"
   labels:
     app: posa
+    public: "true"
   name: posa
 spec:
   port:
