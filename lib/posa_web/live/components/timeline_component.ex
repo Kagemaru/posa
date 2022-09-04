@@ -4,7 +4,7 @@ defmodule PosaWeb.TimelineComponent do
   use PosaWeb, :live_component
 
   def render(assigns) do
-    ~L"""
+    ~H"""
     <div id="timeline"></div>
     <div id="events">
       <%= for {group, index} <- Enum.with_index(month_groups(@events)) do %>

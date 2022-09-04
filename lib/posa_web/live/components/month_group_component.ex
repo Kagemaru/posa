@@ -3,11 +3,11 @@ defmodule PosaWeb.MonthGroupComponent do
   use PosaWeb, :live_component
 
   def render(assigns) do
-    ~L"""
-    <details class="month-group" <%= if @open, do: "open" %>>
+    ~H"""
+    <details class="month-group" open={@open} %>>
       <summary class="month-group__header">
         <div class="month-group__left-container">
-          <time class="month-group__date" datetime="<%= datetime(@month_group) %>"><%= caption(@month_group) %></time>
+          <time class="month-group__date" datetime={datetime(@month_group)}><%= caption(@month_group) %></time>
         </div>
         <div class="month-group__right-container"><%= count(@month_group) %></div>
       </summary>

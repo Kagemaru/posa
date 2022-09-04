@@ -20,7 +20,7 @@ defmodule PosaWeb.TimelineLive do
 
   @impl true
   def render(assigns) do
-    ~L"""
+    ~H"""
     <div class="flex flex-row px-4 pt-4 ml-3 overflow-auto">
       <%= live_component PosaWeb.TimelineComponent, events: @events %>
     </div>
@@ -37,9 +37,7 @@ defmodule PosaWeb.TimelineLive do
     {:noreply, socket}
   end
 
-  def list_events do
-    Data.list_events() |> deep_atomize_keys
-  end
+  def list_events(), do: Data.list_events() |> deep_atomize_keys
 
   # TODO: Move tooling to it's own module
   # credo:disable-for-previous-line

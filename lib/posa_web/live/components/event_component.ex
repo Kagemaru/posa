@@ -40,16 +40,16 @@ defmodule PosaWeb.EventComponent do
   end
 
   def render(assigns) do
-    ~L"""
-      <section class="event" data-type="<%= @event.type %>">
+    ~H"""
+      <section class="event" data-type={@event.type}>
         <header class="event__header">
           <%= if @icon != nil do %>
-            <i class="event__icon fas <%= @icon %>"></i>
+            <i class="event__icon fas #{@icon}"></i>
           <% end %>
           <div class="event__title"><%= @title || @event.type %></div>
           <%= if @button != nil do %>
             <div class="event__button">
-              <a href="<%= @button.link %>" class="event__button-link"><%= @button.text %></a>
+              <a href={@button.link} class="event__button-link"><%= @button.text %></a>
             </div>
           <% end %>
         </header>
@@ -66,7 +66,7 @@ defmodule PosaWeb.EventComponent do
           <%= if @user != nil do %>
             <div class="event__footer-container">
               <span class="event__footer-title">User:</span>
-              <a href="<%= @user.link || url(@event.actor.url) %>" class="event__footer-value">
+              <a href={@user.link || url(@event.actor.url)} class="event__footer-value">
                 <%= @user.text || @event.actor.display_login %>
               </a>
             </div>
@@ -74,7 +74,7 @@ defmodule PosaWeb.EventComponent do
           <%= if @repo != nil do %>
             <div class="event__footer-container">
               <span class="event__footer-title">Repo:</span>
-              <a href="<%= @repo.link || url(@event.repo.url) %>" class="event__footer-value">
+              <a href={@repo.link || url(@event.repo.url)} class="event__footer-value">
                 <%= @repo.text || @event.repo.name %>
               </a>
             </div>

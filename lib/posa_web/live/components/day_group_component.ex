@@ -3,10 +3,10 @@ defmodule PosaWeb.DayGroupComponent do
   use PosaWeb, :live_component
 
   def render(assigns) do
-    ~L"""
-    <details class="day-group" <%= if @open, do: "open" %>>
+    ~H"""
+    <details class="day-group" open={@open}>
       <summary class="day-group__header">
-        <time datetime="<%= datetime(@day_group) %>" class="day-group__left-container" >
+        <time datetime={datetime(@day_group)} class="day-group__left-container" >
           <%= caption(@day_group) %>
         </time>
         <div class="day-group__right-container">
