@@ -9,7 +9,6 @@
 
 html,
 body,
-body > div,
 main {
   margin: 0;
   padding: 0;
@@ -102,7 +101,7 @@ body {
   &__body {
     @apply mt-4 ml-5;
 
-    &[open] summary ~ * {
+    &[open] summary~* {
       animation: sweep .5s ease-in-out;
     }
   }
@@ -114,8 +113,15 @@ body {
 }
 
 @keyframes sweep {
-  0%    {opacity: 0; transform: translateX(-10px)}
-  100%  {opacity: 1; transform: translateX(0)}
+  0% {
+    opacity: 0;
+    transform: translateX(-10px)
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0)
+  }
 }
 
 /****************\
