@@ -25,6 +25,9 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Autoupdate seems broken
+config :tzdata, :autoupdate, :disabled
+
 config :esbuild,
   version: "0.12.18",
   default: [

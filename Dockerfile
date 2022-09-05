@@ -1,5 +1,5 @@
 # ===================================================================================
-FROM hexpm/elixir:1.13.2-erlang-24.1.7-alpine-3.15.0 AS build
+FROM hexpm/elixir:1.14.0-erlang-25.0.4-alpine-3.16.1 AS build
 
 # install build dependencies
 # RUN apk add --no-cache build-base npm git python
@@ -37,7 +37,7 @@ RUN mix do compile, release
 
 # ===================================================================================
 # prepare release image
-FROM alpine:3.15 AS app
+FROM alpine:3.16.1 AS app
 
 # Add User
 RUN adduser -D posa
@@ -51,8 +51,8 @@ WORKDIR /app
 # Copy release to running image
 COPY --from=build /app/_build/prod/rel/posa ./
 
-RUN chgrp -R 0 /app && \
-    chmod -R g=u /app
+RUN    chgrp -R 0 /app \
+    && chmod -R g=u /app
 
 # USER nobody:nobody
 USER posa

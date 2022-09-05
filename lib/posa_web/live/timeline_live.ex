@@ -37,7 +37,7 @@ defmodule PosaWeb.TimelineLive do
     {:noreply, socket}
   end
 
-  def list_events(), do: Data.list_events() |> deep_atomize_keys
+  def list_events, do: Data.list_events() |> deep_atomize_keys
 
   # TODO: Move tooling to it's own module
   # credo:disable-for-previous-line
