@@ -1,5 +1,5 @@
 # ===================================================================================
-FROM hexpm/elixir:1.14.0-erlang-25.0.4-alpine-3.16.1 AS build
+FROM hexpm/elixir:1.14.1-erlang-25.1.1-alpine-3.16.1 AS build
 
 # install build dependencies
 # RUN apk add --no-cache build-base npm git python
