@@ -1,3 +1,4 @@
+---
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
@@ -16,21 +17,24 @@ spec:
   to:
     kind: Service
     name: posa-web
-# ---
-# apiVersion: route.openshift.io/v1
-# kind: Route
-# metadata:
-#   annotations:
-#     kubernetes.io/tls-acme: "true"
-#   labels:
-#     app: posa-external
-#   name: posa-external
-# spec:
-#   port:
-#     targetPort: 4000-tcp
-#   tls:
-#     insecureEdgeTerminationPolicy: Redirect
-#     termination: edge
-#   to:
-#     kind: Service
-#     name: posa
+...
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  labels:
+    app: posa-external
+    public: "true"
+  name: posa-external
+spec:
+  port:
+    targetPort: 4000-tcp
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: posa
+...

@@ -61,6 +61,12 @@ spec:
             secretKeyRef:
               name: posa-secret-key-base
               key: key
+      buildArgs:
+      - name: secret_key_base
+        valueFrom:
+          secretKeyRef:
+            key: key_base
+            name: secret_key_base
   triggers:
     - imageChange:
         from:
