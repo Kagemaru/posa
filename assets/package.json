@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "autoprefixer": "^10.4.12",
+    "browserlist": "^1.0.1",
     "postcss": "^8.4.18",
     "postcss-advanced-variables": "^3.0.1",
     "postcss-cli": "^10.0.0",

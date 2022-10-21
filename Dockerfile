@@ -26,8 +26,8 @@ RUN npm --prefix ./assets ci --progress=false --no-audit --loglevel=error
 
 COPY priv priv
 COPY assets assets
-RUN npx -w ./assets browserslist@latest --update-db \
- && npm run --prefix ./assets deploy \
+RUN npm exec --prefix ./assets browserslist@latest --update-db \
+ && npm run --prefix ./assets deploy
 
 # digest files, compile, build release and clean up
 COPY lib lib
