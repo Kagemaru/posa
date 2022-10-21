@@ -26,14 +26,17 @@ RUN npm --prefix ./assets ci --progress=false --no-audit --loglevel=error
 
 COPY priv priv
 COPY assets assets
-RUN npm run --prefix ./assets deploy
-RUN mix phx.digest
+RUN npx browserslist@latest --update-db \
+ && npm run --prefix ./assets deploy \
 
-# compile and build release
+# digest files, compile, build release and clean up
 COPY lib lib
 # uncomment COPY if rel/ exists
 # COPY rel rel
-RUN mix do compile, release
+RUN mix phx.digest \
+ && mix compile \
+ && mix release \
+ && mix phx.digest.clean --all
 
 # ===================================================================================
 # prepare release image
@@ -42,17 +45,17 @@ FROM alpine:3.16.1 AS app
 # Add User
 RUN adduser -D posa
 
-RUN    apk update \
-    && apk upgrade --no-cache \
-    && apk add --no-cache postgresql-client bash openssl libgcc libstdc++ ncurses-libs
+RUN apk update \
+ && apk upgrade --no-cache \
+ && apk add --no-cache postgresql-client bash openssl libgcc libstdc++ ncurses-libs
 
 WORKDIR /app
 
 # Copy release to running image
 COPY --from=build /app/_build/prod/rel/posa ./
 
-RUN    chgrp -R 0 /app \
-    && chmod -R g=u /app
+RUN chgrp -R 0 /app \
+ && chmod -R g=u /app
 
 # USER nobody:nobody
 USER posa
