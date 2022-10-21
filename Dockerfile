@@ -1,5 +1,5 @@
 # ===================================================================================
-FROM hexpm/elixir:1.14.1-erlang-25.1.1-alpine-3.16.1 AS build
+FROM hexpm/elixir:1.14.1-erlang-25.1.1-alpine-3.16.2 AS build
 
 # install build dependencies
 # RUN apk add --no-cache build-base npm git python
@@ -40,7 +40,7 @@ RUN mix phx.digest \
 
 # ===================================================================================
 # prepare release image
-FROM alpine:3.16.1 AS app
+FROM alpine:3.16.2 AS app
 
 # Add User
 RUN adduser -D posa
