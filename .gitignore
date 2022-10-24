@@ -31,7 +31,12 @@ npm-debug.log
 # Since we are building assets from assets/,
 # we ignore priv/static. You may want to comment
 # this depending on your deployment strategy.
+#
+# We keep priv/static/images as this contains actual, albeit static images.
+# Those are not built/bundled/mangled by the deploy-scripts
 /priv/static/assets
+/priv/static/js
+/priv/static/css
 
 # Language Server files
 /.elixir_ls
