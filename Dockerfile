@@ -20,20 +20,19 @@ COPY mix.exs mix.lock ./
 COPY config config
 RUN mix do deps.get, deps.compile
 
-# build assets
+# prepare buildig assets
 COPY assets/package.json assets/package-lock.json ./assets/
 RUN npm --prefix ./assets ci --progress=false --no-audit --loglevel=error
 
 COPY priv priv
 COPY assets assets
-RUN npm exec --prefix ./assets browserslist@latest --update-db \
- && npm run --prefix ./assets deploy
+RUN npm exec --prefix ./assets browserslist@latest --update-db
 
-# digest files, compile, build release and clean up
+# build assets, digest files, compile, build release and clean up
 COPY lib lib
 # uncomment COPY if rel/ exists
 # COPY rel rel
-RUN mix phx.digest \
+RUN mix assets.deploy \
  && mix compile \
  && mix release \
  && mix phx.digest.clean --all
