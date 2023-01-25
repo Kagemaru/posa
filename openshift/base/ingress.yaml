@@ -36,5 +36,5 @@ spec:
     termination: edge
   to:
     kind: Service
-    name: posa
+    name: posa-web
 ...
