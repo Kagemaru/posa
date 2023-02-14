@@ -51,6 +51,8 @@ spec:
       env:
         - name: TZ
           value: Europe/Berlin
+        - name: PHX_SYNC_DELAY_MS
+          value: 900000 # 900000 ms = 15min
         - name: PHX_GITHUB_TOKEN
           valueFrom:
             secretKeyRef:
