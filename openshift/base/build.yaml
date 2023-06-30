@@ -1,22 +1,4 @@
 ---
-apiVersion: image.openshift.io/v1
-kind: ImageStream
-metadata:
-  name: elixir-upstream
-  annotations:
-    puzzle.ch/purpose: Upstream image change trigger
-spec:
-  dockerImageRepository: docker.io/hexpm/elixir
-  tags:
-    - from:
-        kind: DockerImage
-        name: docker.io/hexpm/elixir:1.14.1-erlang-25.1.1-alpine-3.16.2
-      importPolicy:
-        scheduled: true
-      name: latest
-  lookupPolicy:
-    local: true
----
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
@@ -45,9 +27,6 @@ spec:
     type: Docker
     dockerStrategy:
       dockerfilePath: Dockerfile
-      from:
-        kind: ImageStreamTag
-        name: elixir-upstream:1.14.1-erlang-25.1.1-alpine-3.16.2
       env:
         - name: TZ
           value: Europe/Berlin
@@ -69,12 +48,6 @@ spec:
           secretKeyRef:
             key: key_base
             name: secret_key_base
-  triggers:
-    - imageChange:
-        from:
-          kind: ImageStreamTag
-          name: elixir-upstream:1.14.1-erlang-25.1.1-alpine-3.16.2
-      type: ImageChange
 ...
 ---
 apiVersion: image.openshift.io/v1
