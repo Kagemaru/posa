@@ -41,7 +41,7 @@ defmodule Posa.Github.Sync do
 
   def fetch_users do
     for org <- Organizations.get_all() do
-      for login <- org[:members] ++ org[:collaborators] do
+      for login <- org[:members] do
         fetch_resource(:user, login)
       end
     end
