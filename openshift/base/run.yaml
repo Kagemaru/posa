@@ -19,7 +19,6 @@ spec:
   selector:
     matchLabels:
       app: posa-web
-    name: posa-web
   strategy:
     type: Recreate
   template:
@@ -35,10 +34,10 @@ spec:
           - -c
           - bin/posa start
         env:
-          - name: TZ
-            value: Europe/Berlin
           - name: PHX_SYNC_DELAY_MS
             value: 900000 # 900000 ms = 15min
+          - name: TZ
+            value: Europe/Berlin
           - name: PHX_GITHUB_TOKEN
             valueFrom:
               secretKeyRef:
