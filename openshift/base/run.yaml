@@ -1,10 +1,8 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
     app: posa-web
-    uses-database: "true"
   name: posa-web
   annotations:
     image.openshift.io/triggers: |-
