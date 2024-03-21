@@ -1,4 +1,5 @@
 elixir 1.14.1-otp-25
 erlang 25.1.1
 nodejs 16.4.1
-kustomize 4.4.1
+kustomize 5.0.1
+oc 4.14.12
