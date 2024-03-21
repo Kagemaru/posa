@@ -5,18 +5,21 @@ defmodule Posa.Application do
 
   use Application
 
+  @impl true
   def start(_type, _args) do
     children = [
       # Start github stuff
       Posa.Github,
-      # Start the Telemetry supervisor
       PosaWeb.Telemetry,
-      # Start the PubSub system
+      # Posa.Repo,
+      {DNSCluster, query: Application.get_env(:posa, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Posa.PubSub},
-      # Start the Endpoint (http/https)
-      PosaWeb.Endpoint
+      # Start the Finch HTTP client for sending emails
+      {Finch, name: Posa.Finch},
       # Start a worker by calling: Posa.Worker.start_link(arg)
-      # {Posa.Worker, arg}
+      # {Posa.Worker, arg},
+      # Start to serve requests, typically the last entry
+      PosaWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -27,6 +30,7 @@ defmodule Posa.Application do
 
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
+  @impl true
   def config_change(changed, _new, removed) do
     PosaWeb.Endpoint.config_change(changed, removed)
     :ok

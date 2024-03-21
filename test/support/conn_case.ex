@@ -19,6 +19,11 @@ defmodule PosaWeb.ConnCase do
 
   using do
     quote do
+      # The default endpoint for testing
+      @endpoint PosaWeb.Endpoint
+
+      use PosaWeb, :verified_routes
+
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
@@ -32,11 +37,7 @@ defmodule PosaWeb.ConnCase do
   end
 
   # setup tags do
-  #   :ok = Ecto.Adapters.SQL.Sandbox.checkout(Posa.Repo)
-  #
-  #   unless tags[:async] do
-  #     Ecto.Adapters.SQL.Sandbox.mode(Posa.Repo, {:shared, self()})
-  #   end
+  #   Posa.DataCase.setup_sandbox(tags)
   #
   #   {:ok, conn: Phoenix.ConnTest.build_conn()}
   # end

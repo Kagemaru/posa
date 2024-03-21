@@ -1,16 +1,8 @@
 import_file_if_available("~/.iex.exs")
+import_file_if_available(".iex.env.exs")
 
-IO.puts(Mix.env())
-
-color =
-  if Mix.env() == "prod" do
-    IO.ANSI.red()
-  else
-    IO.ANSI.green()
-  end
-
-prefix = Mix.env()
-
+color = CustomIEx.color()
+prefix = CustomIEx.env()
 reset = IO.ANSI.reset()
 
 IEx.configure(

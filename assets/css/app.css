@@ -1,11 +1,11 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 /* This file is for your main application css. */
-@import "./liveview.scss";
+
+// @import "./liveview.scss";
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
-
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 html,
 body,

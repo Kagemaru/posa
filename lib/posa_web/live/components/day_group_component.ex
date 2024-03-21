@@ -16,7 +16,7 @@ defmodule PosaWeb.DayGroupComponent do
       <section class="day-group__body" >
         <div class="day-group__events">
           <%= for event <- get_events(@day_group) do %>
-            <%= live_component PosaWeb.EventsComponent, event: event %>
+            <.live_component module={PosaWeb.EventsComponent} id={"event-lv-#{event.id}"} event={event} />
           <% end %>
         </div>
       </section>

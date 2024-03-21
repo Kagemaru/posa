@@ -99,12 +99,12 @@ defmodule Posa.Github.API do
     |> Keyword.put(:ssl, [{:ciphers, :ssl.cipher_suites(:all, :"tlsv1.3")}])
   end
 
-  def process_response_body(body) do
-    case body do
-      "" -> nil
-      x -> Poison.decode!(x)
-    end
-  end
+  # def process_response_body(body) do
+  #   case body do
+  #     "" -> nil
+  #     x -> Poison.decode!(x)
+  #   end
+  # end
 
   defp github_token, do: Application.get_env(:posa, :github_token)
 

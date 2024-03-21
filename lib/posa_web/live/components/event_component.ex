@@ -19,8 +19,8 @@ defmodule PosaWeb.EventComponent do
 
     actor = assigns.event.actor
     erepo = assigns.event.repo
-    user = Map.get(assigns, :user, %{text: actor.display_login, link: url(actor.url)})
-    repo = Map.get(assigns, :repo, %{text: erepo.name, link: url(erepo.url)})
+    user = Map.get(assigns, :user, %{text: actor.display_login, link: github_url(actor.url)})
+    repo = Map.get(assigns, :repo, %{text: erepo.name, link: github_url(erepo.url)})
 
     socket =
       assign(
@@ -33,7 +33,7 @@ defmodule PosaWeb.EventComponent do
   end
 
   # HACK: Duplication
-  defp url(url) do
+  defp github_url(url) do
     url
     |> String.replace("api.github.com", "github.com")
     |> String.replace(["users/", "repos/"], "")
@@ -66,7 +66,7 @@ defmodule PosaWeb.EventComponent do
           <%= if @user != nil do %>
             <div class="event__footer-container">
               <span class="event__footer-title">User:</span>
-              <a href={@user.link || url(@event.actor.url)} class="event__footer-value">
+              <a href={@user.link || github_url(@event.actor.url)} class="event__footer-value">
                 <%= @user.text || @event.actor.display_login %>
               </a>
             </div>
@@ -74,7 +74,7 @@ defmodule PosaWeb.EventComponent do
           <%= if @repo != nil do %>
             <div class="event__footer-container">
               <span class="event__footer-title">Repo:</span>
-              <a href={@repo.link || url(@event.repo.url)} class="event__footer-value">
+              <a href={@repo.link || github_url(@event.repo.url)} class="event__footer-value">
                 <%= @repo.text || @event.repo.name %>
               </a>
             </div>

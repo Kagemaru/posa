@@ -13,8 +13,7 @@ defmodule PosaWeb.MonthGroupComponent do
       </summary>
       <section class="month-group__body" >
         <%= for {group, index} <- Enum.with_index(day_groups(@month_group)) do %>
-          <% open = index == 0 %>
-          <%= live_component PosaWeb.DayGroupComponent, day_group: group, open: open %>
+          <.live_component module={PosaWeb.DayGroupComponent} id={"day-group-lv-#{index}"} day_group={group} open={index == 0} />
         <% end %>
       </section>
     </details>

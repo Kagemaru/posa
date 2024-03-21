@@ -4,7 +4,7 @@ defmodule PosaWeb.EventsComponent do
 
   def render(assigns) do
     ~H"""
-    <%= live_component PosaWeb.EventComponent, event(@event) %>
+    <.live_component module={PosaWeb.EventComponent} id={"events-lv-#{@event.id}"} event={event(@event)} />
     """
   end
 
@@ -29,7 +29,7 @@ defmodule PosaWeb.EventsComponent do
         %{title: "Author", text: comment.user.login},
         %{title: "Kommentar", text: markdown(comment.body)}
       ],
-      button: %{text: "Details", link: url(comment.html_url)}
+      button: %{text: "Details", link: github_url(comment.html_url)}
     }
   end
 
@@ -44,7 +44,7 @@ defmodule PosaWeb.EventsComponent do
         %{title: "Bewertung", text: review.state},
         %{title: "Kommentar", text: markdown(review.body)}
       ],
-      button: %{text: "Details", link: url(review.html_url)}
+      button: %{text: "Details", link: github_url(review.html_url)}
     }
   end
 
@@ -58,7 +58,7 @@ defmodule PosaWeb.EventsComponent do
         %{title: "Author", text: release.author.login},
         %{title: "Beschreibung", text: markdown(release.body)}
       ],
-      button: %{text: "Details", link: url(release.html_url)}
+      button: %{text: "Details", link: github_url(release.html_url)}
     }
   end
 
@@ -73,7 +73,7 @@ defmodule PosaWeb.EventsComponent do
         %{title: "Besitzer", text: owner},
         %{title: "Neues Repo", text: forkee.name}
       ],
-      button: %{text: "Details", link: url(forkee.git_url)}
+      button: %{text: "Details", link: github_url(forkee.git_url)}
     }
   end
 
@@ -136,7 +136,7 @@ defmodule PosaWeb.EventsComponent do
         %{title: "Base", text: pr.base.label},
         %{title: "Head", text: pr.head.label}
       ],
-      button: %{text: "Details", link: url(pr.html_url)}
+      button: %{text: "Details", link: github_url(pr.html_url)}
     }
   end
 
@@ -159,7 +159,7 @@ defmodule PosaWeb.EventsComponent do
 
     button =
       if commit_url do
-        %{text: "Details", link: url(commit_url)}
+        %{text: "Details", link: github_url(commit_url)}
       else
         nil
       end
@@ -188,9 +188,9 @@ defmodule PosaWeb.EventsComponent do
         %{title: "Author", text: comment.user.login},
         %{title: "Kommentar", text: markdown(comment.body)}
       ],
-      button: %{text: "Details", link: url(comment.html_url)},
-      user: %{text: event.actor.display_login, link: url(event.actor.url)},
-      repo: %{text: event.repo.name, link: url(event.repo.url)}
+      button: %{text: "Details", link: github_url(comment.html_url)},
+      user: %{text: event.actor.display_login, link: github_url(event.actor.url)},
+      repo: %{text: event.repo.name, link: github_url(event.repo.url)}
     }
   end
 
@@ -205,9 +205,9 @@ defmodule PosaWeb.EventsComponent do
         %{title: "Titel", text: issue.title},
         %{title: "Kommentar", text: markdown(issue.body)}
       ],
-      button: %{text: "Details", link: url(issue.html_url)},
-      user: %{text: event.actor.display_login, link: url(event.actor.url)},
-      repo: %{text: event.repo.name, link: url(event.repo.url)}
+      button: %{text: "Details", link: github_url(issue.html_url)},
+      user: %{text: event.actor.display_login, link: github_url(event.actor.url)},
+      repo: %{text: event.repo.name, link: github_url(event.repo.url)}
     }
   end
 
@@ -215,10 +215,10 @@ defmodule PosaWeb.EventsComponent do
 
   defp sha(commit_sha), do: commit_sha |> String.slice(0, 6)
 
-  defp url(nil), do: ""
+  defp github_url(nil), do: ""
 
   # HACK: Duplication
-  defp url(url) do
+  defp github_url(url) do
     url
     |> String.replace("api.github.com", "github.com")
     |> String.replace(["users/", "repos/"], "")
