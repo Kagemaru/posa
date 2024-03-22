@@ -4,7 +4,9 @@ set -euo pipefail
 IFS=$'\n\t'
 
 # these should not change
-repo="hexpm/elixir"
+namespace="hexpm"
+repository="elixir"
+repo="$namespace/$repository"
 os_flavour="alpine"
 
 echo "Determining currently used versions"
@@ -15,17 +17,28 @@ echo "  => Erlang: $erlang_version"
 echo
 
 echo "Searching for tags that match these versions"
-new_tag=$(
-  wget -q https://registry.hub.docker.com/v1/repositories/${repo}/tags -O - |\
-  tr -d '[]" ' | tr '}' '\n' | awk -F: '{print $3}' |\
-  grep "$elixir_version" |\
-  grep "$erlang_version" |\
-  grep "$os_flavour" |\
-  sort -t'-' --sort=version |\
-  tail -n1
-)
+base_url="https://hub.docker.com/v2/namespaces/$namespace/repositories/$repository/tags"
+new_tag=""
+next_page="$base_url?page_size=100&page=1" # well, first page...
+
+while [ -z $new_tag ]; do
+  result=$(curl --silent "$next_page" | jq -r '.next, (.results[] | .name)')
+  echo -n '.'
+
+  next_page=$(echo "$result" | head -n1)
+  # echo $next_page
+
+  new_tag=$(echo "$result" |\
+    grep "$elixir_version" |\
+    grep "$erlang_version" |\
+    grep "$os_flavour" |\
+    sort -t'-' --sort=version |\
+    tail -n1
+  ) || true
+done
+echo
+
 os_version="$(echo "$new_tag" | cut -d- -f 5,6 | cut -d. -f 1,2)"
-echo "  => Using $repo:$new_tag for ImageStream"
 echo "  => Using $repo:$new_tag for Dockerfile (build)"
 echo "  => Using $os_flavour:$os_version for Dockerfile (app)"
 echo
@@ -34,7 +47,6 @@ build_yaml="$(dirname "$(dirname "$0")")/base/build.yaml"
 dockerfile="$(dirname "$(dirname "$(dirname "$0")")")/Dockerfile"
 echo "Updating $build_yaml in-place"
 sed -i "s!docker.io/$repo:.*!docker.io/$repo:$new_tag!" "$build_yaml"
-sed -i "s!elixir-upstream:.*!elixir-upstream:$new_tag!" "$build_yaml"
 
 echo "Updating $dockerfile in-place"
 sed -i "s!FROM $repo:.* AS build!FROM $repo:$new_tag AS build!" "$dockerfile"

@@ -1,5 +1,5 @@
 # ===================================================================================
-FROM hexpm/elixir:1.14.1-erlang-25.1.1-alpine-3.16.2 AS build
+FROM hexpm/elixir:1.16.2-erlang-26.2.3-alpine-3.19.1 AS build
 
 # install build dependencies
 # RUN apk add --no-cache build-base npm git python
@@ -39,7 +39,7 @@ RUN mix assets.deploy \
 
 # ===================================================================================
 # prepare release image
-FROM alpine:3.16.2 AS app
+FROM alpine:3.19 AS app
 
 # Add User
 RUN adduser -D posa
