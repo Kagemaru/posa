@@ -16,26 +16,20 @@ jobs:
   build:
     name: Build and test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        elixir: [1.16.2]
-        otp: [26.2.3]
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Elixir
-        uses: actions/setup-elixir@v1
+      - uses: actions/checkout@v4
+      - id: setup-elixir
+        uses: erlef/setup-beam@v1
         with:
-          elixir-version: ${{ matrix.elixir }}  # Define the elixir version [required]
-          otp-version: ${{ matrix.otp }}  # Define the OTP version [required]
-          experimental-otp: true
-      - name: Restore dependencies cache
-        uses: actions/cache@v2
+          version-type: strict
+          version-file: ".tool-versions"
+      - id: mix-cache
+        uses: actions/cache@v4
         with:
           path: deps
-          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-test-mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-test-mix-
+          key: ${{ runner.os }}-${{ steps.setup-elixir.outputs.otp-version }}-${{ steps.setup-elixir.outputs.elixir-version }}-test-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-${{ steps.setup-elixir.outputs.otp-version }}-${{ steps.setup-elixir.outputs.elixir-version }}-test-mix-
       - name: Install dependencies
         if: steps.mix-cache.outputs.cache-hit != 'true'
         run: |
