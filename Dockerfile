@@ -20,13 +20,9 @@ COPY mix.exs mix.lock ./
 COPY config config
 RUN mix do deps.get, deps.compile
 
-# prepare buildig assets
-COPY assets/package.json assets/package-lock.json ./assets/
-RUN npm --prefix ./assets ci --progress=false --no-audit --loglevel=error
 
 COPY priv priv
 COPY assets assets
-RUN npm exec --prefix ./assets browserslist@latest --update-db
 
 # build assets, digest files, compile, build release and clean up
 COPY lib lib
