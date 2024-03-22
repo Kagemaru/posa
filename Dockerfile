@@ -20,14 +20,13 @@ COPY mix.exs mix.lock ./
 COPY config config
 RUN mix do deps.get, deps.compile
 
-
 COPY priv priv
 COPY assets assets
-
-# build assets, digest files, compile, build release and clean up
 COPY lib lib
 # uncomment COPY if rel/ exists
 # COPY rel rel
+
+# build assets, digest files, compile, build release and clean up
 RUN mix assets.deploy \
  && mix compile \
  && mix release \
