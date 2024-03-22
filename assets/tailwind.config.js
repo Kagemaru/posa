@@ -6,6 +6,7 @@ const fs = require("fs")
 const path = require("path")
 
 module.exports = {
+  mode: 'jit',
   content: [
     "./js/**/*.js",
     "../lib/posa_web.ex",

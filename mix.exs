@@ -104,7 +104,7 @@ defmodule Posa.MixProject do
   end
 
   defp copy_environment_iex_exs(_) do
-    File.rm ".iex.env.exs"
-    File.copy ".iex.#{Mix.env}.exs", ".iex.env.exs"
+    File.rm(".iex.env.exs")
+    File.copy(".iex.#{Mix.env()}.exs", ".iex.env.exs")
   end
 end

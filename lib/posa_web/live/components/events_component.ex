@@ -4,13 +4,25 @@ defmodule PosaWeb.EventsComponent do
 
   def render(assigns) do
     ~H"""
-    <.live_component module={PosaWeb.EventComponent} id={"events-lv-#{@event.id}"} event={event(@event)} />
+    <div>
+      <.live_component
+        module={PosaWeb.EventComponent}
+        id={"events-lv-#{@event.github_id}"}
+        event={@event}
+        icon={type(@event)[:icon]}
+        title={type(@event)[:title]}
+        content={type(@event)[:content]}
+        button={type(@event)[:button]}
+        user={type(@event)[:user]}
+        repo={type(@event)[:repo]}
+      />
+    </div>
     """
   end
 
-  defp event(event) do
-    Map.merge(type(event), %{event: event})
-  end
+  # defp event(event) do
+  #   Map.merge(type(event), %{event: event})
+  # end
 
   defp type(%{type: "PublicEvent"} = _event) do
     %{

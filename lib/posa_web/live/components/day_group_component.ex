@@ -4,19 +4,25 @@ defmodule PosaWeb.DayGroupComponent do
 
   def render(assigns) do
     ~H"""
-    <details class="day-group" open={@open}>
-      <summary class="day-group__header">
-        <time datetime={datetime(@day_group)} class="day-group__left-container" >
+    <details open={@open}>
+      <summary class="flex flex-row items-center cursor-pointer left-6 relative my-6
+               before:z-10 before:w-3 before:h-3 before:rounded-full before:relative before:border before:inline-block before:-left-6 before:bg-white before:border-pz-prussian-blue
+               after:w-7 after:h-1 after:-ml-0.after:5 after:rounded-full after:shadow-md after:border after:absolute after:-left-3 after:bg-white after:border-pz-prussian-blue">
+        <time datetime={datetime(@day_group)} class="day-group__left-container">
           <%= caption(@day_group) %>
         </time>
         <div class="day-group__right-container">
           <%= count(@day_group) %>
         </div>
       </summary>
-      <section class="day-group__body" >
+      <section class="day-group__body">
         <div class="day-group__events">
           <%= for event <- get_events(@day_group) do %>
-            <.live_component module={PosaWeb.EventsComponent} id={"event-lv-#{event.id}"} event={event} />
+            <.live_component
+              module={PosaWeb.EventsComponent}
+              id={"event-lv-#{event.github_id}"}
+              event={event}
+            />
           <% end %>
         </div>
       </section>

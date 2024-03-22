@@ -5,11 +5,22 @@ defmodule PosaWeb.TimelineComponent do
 
   def render(assigns) do
     ~H"""
-    <div id="timeline"></div>
-    <div id="events">
-      <%= for {group, index} <- Enum.with_index(month_groups(@events)) do %>
-        <.live_component module={PosaWeb.MonthGroupComponent} id={"month-group-lv-#{index}"} month_group={group} open={index == 0} />
-      <% end %>
+    <div>
+      <div
+        id="timeline"
+        class="fixed top-0 bottom-0 z-0 w-5 -m-1 bg-gradient-to-r from-pz-green-blue-crayola via-pz-maximum-blue-green to-pz-green-blue-crayola"
+      >
+      </div>
+      <div id="events">
+        <%= for {group, index} <- Enum.with_index(month_groups(@events)) do %>
+          <.live_component
+            module={PosaWeb.MonthGroupComponent}
+            id={"month-group-lv-#{index}"}
+            month_group={group}
+            open={index == 0}
+          />
+        <% end %>
+      </div>
     </div>
     """
   end

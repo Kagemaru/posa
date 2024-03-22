@@ -17,7 +17,7 @@ defmodule PosaWeb.Router do
   scope "/", PosaWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    # get "/", PageController, :home
 
     live_session :default do
       live "/", TimelineLive, :index

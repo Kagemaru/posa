@@ -41,46 +41,46 @@ defmodule PosaWeb.EventComponent do
 
   def render(assigns) do
     ~H"""
-      <section class="event" data-type={@event.type}>
-        <header class="event__header">
-          <%= if @icon != nil do %>
-            <i class="event__icon fas #{@icon}"></i>
-          <% end %>
-          <div class="event__title"><%= @title || @event.type %></div>
-          <%= if @button != nil do %>
-            <div class="event__button">
-              <a href={@button.link} class="event__button-link"><%= @button.text %></a>
-            </div>
-          <% end %>
-        </header>
-        <%= if @content != nil && @content != [] do %>
-          <dl class="event__content">
-            <%= for item <- @content do %>
-              <dt class="event__topic"><%= item.title %></dt>
-              <dd class="event__detail"><%= item.text %></dd>
-              <br />
-            <% end %>
-          </dl>
+    <section class="event" data-type={@event.type}>
+      <header class="event__header">
+        <%= if @icon != nil do %>
+          <i class={"event__icon fas #{@icon}"}></i>
         <% end %>
-        <footer class="event__footer">
-          <%= if @user != nil do %>
-            <div class="event__footer-container">
-              <span class="event__footer-title">User:</span>
-              <a href={@user.link || github_url(@event.actor.url)} class="event__footer-value">
-                <%= @user.text || @event.actor.display_login %>
-              </a>
-            </div>
+        <div class="event__title"><%= @title || @event.type %></div>
+        <%= if @button != nil do %>
+          <div class="event__button">
+            <a href={@button.link} class="event__button-link"><%= @button.text %></a>
+          </div>
+        <% end %>
+      </header>
+      <%= if @content != nil && @content != [] do %>
+        <dl class="event__content">
+          <%= for item <- @content do %>
+            <dt class="event__topic"><%= item.title %></dt>
+            <dd class="event__detail"><%= item.text %></dd>
+            <br />
           <% end %>
-          <%= if @repo != nil do %>
-            <div class="event__footer-container">
-              <span class="event__footer-title">Repo:</span>
-              <a href={@repo.link || github_url(@event.repo.url)} class="event__footer-value">
-                <%= @repo.text || @event.repo.name %>
-              </a>
-            </div>
-          <% end %>
-        </footer>
-      </section>
+        </dl>
+      <% end %>
+      <footer class="event__footer">
+        <%= if @user != nil do %>
+          <div class="event__footer-container">
+            <span class="event__footer-title">User:</span>
+            <a href={@user.link || github_url(@event.actor.url)} class="event__footer-value">
+              <%= @user.text || @event.actor.display_login %>
+            </a>
+          </div>
+        <% end %>
+        <%= if @repo != nil do %>
+          <div class="event__footer-container">
+            <span class="event__footer-title">Repo:</span>
+            <a href={@repo.link || github_url(@event.repo.url)} class="event__footer-value">
+              <%= @repo.text || @event.repo.name %>
+            </a>
+          </div>
+        <% end %>
+      </footer>
+    </section>
     """
   end
 end

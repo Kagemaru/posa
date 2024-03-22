@@ -4,8 +4,8 @@
 
 /* This file is for your main application css. */
 
-// @import "./liveview.scss";
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+/* @import "./liveview.scss"; */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap");
 
 html,
 body,
@@ -18,7 +18,7 @@ main {
 }
 
 body {
-  font-family: 'Roboto Slab', serif;
+  font-family: "Roboto Slab", serif;
   background-image: url(/images/bg-top-left.svg), url(/images/bg-top-right.svg);
   background-position: left top, right top;
   background-repeat: no-repeat;
@@ -29,16 +29,17 @@ body {
 *    Timeline    *
 \****************/
 
-#timeline {
-  /* @apply relative top-0 border bottom-0 z-0 w-3 left-3; */
-  @apply absolute top-0 border bottom-0 z-0 w-3 left-7;
-  @apply bg-pz-carolina-blue border-pz-green-blue-crayola;
-}
+/* #timeline { */
+/*  /* @apply relative top-0 border bottom-0 z-0 w-3 left-3; */
+/*  @apply absolute top-0 border bottom-0 z-0 w-3 left-7; */
+/*  @apply bg-pz-carolina-blue border-pz-green-blue-crayola; */
+/*} */
 
 /****************\
 *   Month Group  *
 \****************/
 
+/*
 .month-group {
   &__header {
     @apply flex flex-row items-center mb-8 rounded-full shadow-xl cursor-pointer w-min;
@@ -65,12 +66,13 @@ body {
     @apply z-10;
   }
 }
-
+*/
 
 /****************\
 *    Day Group   *
 \****************/
 
+/*
 .day-group {
   &__header {
     @apply flex flex-row items-center cursor-pointer left-6 relative my-6;
@@ -87,40 +89,39 @@ body {
       content: "";
     }
   }
+}
+*/
+.day-group__left-container {
+  @apply z-20 px-4 py-1 font-semibold rounded-full shadow-md border;
+  @apply bg-white border-pz-carolina-blue text-pz-prussian-blue;
+}
 
-  &__left-container {
-    @apply z-20 px-4 py-1 font-semibold rounded-full shadow-md border;
-    @apply bg-white border-pz-carolina-blue text-pz-prussian-blue;
-  }
+.day-group__right-container {
+  @apply z-10 px-6 py-1 pl-12 -ml-10 font-semibold rounded-full shadow-md;
+  @apply bg-pz-carolina-blue text-pz-prussian-blue;
+}
 
-  &__right-container {
-    @apply z-10 px-6 py-1 pl-12 -ml-10 font-semibold rounded-full shadow-md;
-    @apply bg-pz-carolina-blue text-pz-prussian-blue;
-  }
+.day-group__body {
+  @apply mt-4 ml-5;
+}
+.day-group[open] summary ~ * {
+  animation: sweep 0.5s ease-in-out;
+}
 
-  &__body {
-    @apply mt-4 ml-5;
-
-    &[open] summary~* {
-      animation: sweep .5s ease-in-out;
-    }
-  }
-
-  &__events {
-    @apply grid gap-4;
-    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
-  }
+.day-group__events {
+  @apply grid gap-4;
+  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
 }
 
 @keyframes sweep {
   0% {
     opacity: 0;
-    transform: translateX(-10px)
+    transform: translateX(-10px);
   }
 
   100% {
     opacity: 1;
-    transform: translateX(0)
+    transform: translateX(0);
   }
 }
 
@@ -132,62 +133,61 @@ body {
 
 .event {
   @apply flex flex-col z-10;
+}
+.event__header {
+  @apply flex flex-row gap-2 items-center flex-none h-12 px-3 py-1 font-semibold border rounded-tr-2xl;
+  @apply bg-pz-carolina-blue border-pz-dark-blue;
+}
 
-  &__header {
-    @apply flex flex-row gap-2 items-center flex-none h-12 px-3 py-1 font-semibold border rounded-tr-2xl;
-    @apply bg-pz-carolina-blue border-pz-dark-blue;
-  }
+.event__icon.fas {
+  @apply flex-grow-0 text-lg flex-shrink flex justify-center items-center ml-1 mr-2;
+  @apply text-pz-prussian-blue;
+}
 
-  &__icon.fas {
-    @apply flex-grow-0 text-lg flex-shrink flex justify-center items-center ml-1 mr-2;
-    @apply text-pz-prussian-blue;
-  }
+.event__title {
+  @apply flex-grow flex-shrink-0 text-lg;
+}
 
-  &__title {
-    @apply flex-grow flex-shrink-0 text-lg;
-  }
+.event__button {
+  @apply flex-grow-0 flex-shrink;
+}
 
-  &__button {
-    @apply flex-grow-0 flex-shrink;
-  }
+.event__button-link {
+  @apply px-3 py-1 mr-2 font-bold rounded-lg cursor-pointer border;
+  @apply bg-white text-pz-prussian-blue border-pz-prussian-blue;
+}
 
-  &__button-link {
-    @apply px-3 py-1 mr-2 font-bold rounded-lg cursor-pointer border;
-    @apply bg-white text-pz-prussian-blue border-pz-prussian-blue;
-  }
+.event__content {
+  @apply p-2 border-l border-r overflow-hidden;
+  @apply bg-blue-50 border-pz-prussian-blue;
+}
 
-  &__content {
-    @apply p-2 border-l border-r overflow-hidden;
-    @apply bg-blue-50 border-pz-prussian-blue;
-  }
+.event__topic {
+  @apply inline font-semibold mr-2;
+  @apply text-pz-dark-blue;
+}
 
-  &__topic {
-    @apply inline font-semibold mr-2;
-    @apply text-pz-dark-blue;
-  }
+.event__detail {
+  @apply inline;
+}
 
-  &__detail {
-    @apply inline;
-  }
+.event__footer {
+  @apply flex flex-row items-center justify-between h-12 px-3 py-1 border rounded-bl-2xl;
+  @apply bg-pz-carolina-blue border-pz-dark-blue;
+}
 
-  &__footer {
-    @apply flex flex-row items-center justify-between h-12 px-3 py-1 border rounded-bl-2xl;
-    @apply bg-pz-carolina-blue border-pz-dark-blue;
-  }
+.event__footer-container {
+  @apply flex-none;
+}
 
-  &__footer-container {
-    @apply flex-none;
-  }
+.event__footer-title {
+  @apply font-semibold mr-1;
+  @apply text-pz-prussian-blue;
+}
 
-  &__footer-title {
-    @apply font-semibold mr-1;
-    @apply text-pz-prussian-blue;
-  }
-
-  &__footer-value {
-    @apply underline;
-    @apply text-white;
-  }
+.event__footer-value {
+  @apply underline;
+  @apply text-white;
 }
 
 /****************\
