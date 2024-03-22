@@ -36,9 +36,7 @@ config :posa,
   github_token: github_token,
   sync_delay_ms: sync_delay_ms
 
-
 if config_env() == :prod do
-
   # We do not need a database right now
   #   database_url =
   #     System.get_env("DATABASE_URL") ||
@@ -55,7 +53,7 @@ if config_env() == :prod do
   #     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
   #     socket_options: maybe_ipv6
   #
-  
+
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
   # want to use a different value for prod and you most likely don't want
