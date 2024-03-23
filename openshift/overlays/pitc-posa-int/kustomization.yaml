@@ -15,6 +15,7 @@ patches:
           spec:
             containers:
             - name: posa-web
+              image: registry.puzzle.ch/posa/elixir-int:release
               env:
                 - name: PHX_SYNC_DELAY_MS
                   value: "7200000" # 7200000ms = 2 hours
