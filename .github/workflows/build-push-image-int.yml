@@ -22,5 +22,5 @@ jobs:
         with:
           push: true
           tags: |
-            posa/elixir-int:latest
-            posa/elixir-int:${{ github.sha }}
+            ${{ secrets.PUZZLE_REGISTRY }}/posa/elixir-int:latest
+            ${{ secrets.PUZZLE_REGISTRY }}/posa/elixir-int:${{ github.sha }}
