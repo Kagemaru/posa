@@ -21,10 +21,20 @@ defmodule PosaWeb.TimelineLive do
   @impl true
   def render(assigns) do
     ~H"""
+    <.button phx-click="sync_now" class="absolute right-4 top-4">
+      Sync Now
+    </.button>
     <div class="flex flex-row px-4 pt-4 ml-3 overflow-auto">
       <.live_component module={PosaWeb.TimelineComponent} id="timeline-lv" events={@events} />
     </div>
     """
+  end
+
+  @impl true
+  def handle_event("sync_now", _, socket) do
+    Posa.Sync.run_sync()
+
+    {:noreply, socket}
   end
 
   @impl true
