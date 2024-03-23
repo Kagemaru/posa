@@ -17,7 +17,7 @@ import Config
 # you can enable the server option below.
 config :posa, PosaWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "aaaaaaaa",
+  secret_key_base: "C2Qh9QxaFqmHv69GQmiNCK4r28lqeO2gzi3dTmPZl23mXUWUCZSG5mkAnn0stPIx",
   server: false
 
 # In test we don't send emails.
