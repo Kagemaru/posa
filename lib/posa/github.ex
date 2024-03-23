@@ -6,38 +6,33 @@ defmodule Posa.Github do
   alias Posa.Github.Storage.{Etags, Events, Organizations, Users}
   alias Posa.Sync
 
-  # Extract to config
-  @dialyzer {:nowarn_function, init: 1, add_storage: 1, add_sync: 1}
-  @start_storage true
-  @start_sync true
+  @services %{
+    storage: [Organizations, Users, Events, Etags],
+    sync: [Sync]
+  }
 
   def start_link(_opts) do
-    Supervisor.start_link(__MODULE__, :ok, name: __MODULE__)
+    Supervisor.start_link(__MODULE__, children(), name: __MODULE__)
   end
 
   def subscribe, do: Phoenix.PubSub.subscribe(Posa.PubSub, "updates")
 
   @impl true
-  def init(:ok) do
-    children =
-      []
-      |> add_storage()
-      |> add_sync()
+  def init([]), do: :ignore
 
+  def init(children) do
     Supervisor.init(children, strategy: :one_for_one, id: __MODULE__)
   end
 
-  defp add_storage(list) do
-    case @start_storage do
-      true -> list ++ [Organizations, Users, Events, Etags]
-      _ -> list
-    end
+  defp children do
+    []
+    |> add_services(:storage)
+    |> add_services(:sync)
   end
 
-  defp add_sync(list) do
-    case @start_sync do
-      true -> list ++ [Sync]
-      _ -> list
-    end
-  end
+  defp add_services(list, key), do: add_services(list, start?(key), @services[key])
+  defp add_services(list, true, services), do: list ++ services
+  defp add_services(list, _, _), do: list
+
+  defp start?(key), do: Application.get_env(:posa, :services)[key] || false
 end

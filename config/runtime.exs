@@ -30,11 +30,19 @@ github_token =
 
 organizations = System.get_env("PHX_ORGANIZATIONS", "puzzle") |> String.split(",")
 sync_delay_ms = System.get_env("PHX_SYNC_DELAY_MS", "120000") |> String.to_integer()
+initial_sync = System.get_env("PHX_INITIAL_SYNC", "true") |> String.to_existing_atom()
+start_storage = System.get_env("PHX_START_STORAGE", "true") |> String.to_existing_atom()
+start_sync = System.get_env("PHX_START_SYNC", "true") |> String.to_existing_atom()
 
 config :posa,
   organizations: organizations,
   github_token: github_token,
-  sync_delay_ms: sync_delay_ms
+  sync_delay_ms: sync_delay_ms,
+  initial_sync: initial_sync,
+  services: %{
+    storage: start_storage,
+    sync: start_sync
+  }
 
 if config_env() == :prod do
   # We do not need a database right now
@@ -44,9 +52,9 @@ if config_env() == :prod do
   #       environment variable DATABASE_URL is missing.
   #       For example: ecto://USER:PASS@HOST/DATABASE
   #       """
-  #  
+  #
   #   maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
-  #  
+  #
   #   config :posa, Posa.Repo,
   #     # ssl: true,
   #     url: database_url,
