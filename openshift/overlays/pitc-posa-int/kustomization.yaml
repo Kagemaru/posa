@@ -17,8 +17,16 @@ patches:
             - name: posa-web
               image: registry.puzzle.ch/posa/elixir-int:release
               env:
+                - name: PHX_ORGANIZATIONS
+                  value: "puzzle"
+                - name: PHX_INITIAL_SYNC
+                  value: "false"
+                - name: PHX_START_STORAGE
+                  value: "true"
+                - name: PHX_START_SYNC
+                  value: "true"
                 - name: PHX_SYNC_DELAY_MS
-                  value: "7200000" # 7200000ms = 2 hours
+                  value: "3600000" # 3600000ms = 1 hour
   - patch: |-
       apiVersion: route.openshift.io/v1
       kind: Route

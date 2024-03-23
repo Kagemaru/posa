@@ -6,6 +6,28 @@ resources:
 
 patches:
   - patch: |-
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: posa-web
+      spec:
+        template:
+          spec:
+            containers:
+            - name: posa-web
+              image: registry.puzzle.ch/posa/elixir-prod:release
+              env:
+                - name: PHX_ORGANIZATIONS
+                  value: "puzzle"
+                - name: PHX_INITIAL_SYNC
+                  value: "false"
+                - name: PHX_START_STORAGE
+                  value: "true"
+                - name: PHX_START_SYNC
+                  value: "true"
+                - name: PHX_SYNC_DELAY_MS
+                  value: "7200000" # 7200000ms = 2 hours
+  - patch: |-
       apiVersion: route.openshift.io/v1
       kind: Route
       metadata:
