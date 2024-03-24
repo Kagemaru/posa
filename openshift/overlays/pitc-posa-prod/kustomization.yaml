@@ -15,7 +15,7 @@ patches:
           spec:
             containers:
             - name: posa-web
-              image: registry.puzzle.ch/posa/elixir-prod:release
+              image: "posa-new:release"
               env:
                 - name: PHX_ORGANIZATIONS
                   value: "puzzle"

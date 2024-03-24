@@ -1,3 +1,4 @@
+---
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
@@ -15,7 +16,7 @@ patches:
           spec:
             containers:
             - name: posa-web
-              image: registry.puzzle.ch/posa/elixir-int:release
+              image: "posa-new:release"
               env:
                 - name: PHX_ORGANIZATIONS
                   value: "puzzle"
@@ -40,3 +41,24 @@ patches:
       metadata:
         name: posa-external
       $patch: delete
+  - patch: |-
+      apiVersion: image.openshift.io/v1
+      kind: ImageStream
+      metadata:
+        name: posa-new
+      spec:
+        dockerImageRepository: registry.puzzle.ch/posa/elixir-int
+        tags:
+          - name: latest
+            annotations:
+              openshift.io/imported-from: registry.puzzle.ch/posa/elixir-int
+            from:
+              name: registry.puzzle.ch/posa/elixir-int:latest
+              kind: DockerImage
+          - name: release
+            annotations:
+              openshift.io/imported-from: registry.puzzle.ch/posa/elixir-int
+            from:
+              name: registry.puzzle.ch/posa/elixir-int:release
+              kind: DockerImage
+...      

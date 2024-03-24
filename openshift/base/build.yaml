@@ -56,3 +56,26 @@ spec:
   lookupPolicy:
     local: true
 ...
+---
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: posa-new
+spec:
+  dockerImageRepository: registry.puzzle.ch/posa/elixir-prod
+  lookupPolicy:
+    local: false
+  tags:
+    - name: latest
+      annotations:
+        openshift.io/imported-from: registry.puzzle.ch/posa/elixir-prod
+      from:
+        kind: DockerImage
+        name: registry.puzzle.ch/posa/elixir-prod:latest
+    - name: release
+      annotations:
+        openshift.io/imported-from: registry.puzzle.ch/posa/elixir-prod
+      from:
+        kind: DockerImage
+        name: registry.puzzle.ch/posa/elixir-prod:release
+...
