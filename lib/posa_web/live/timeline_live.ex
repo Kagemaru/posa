@@ -1,19 +1,31 @@
 defmodule PosaWeb.TimelineLive do
-  @moduledoc false
+  @moduledoc """
+  Liveview that displays the timeline of events.
+  """
 
   use PosaWeb, :live_view
 
   alias Posa.Github
   alias Posa.Github.Data
+  import PosaWeb.TimelineComponents, only: [timeline: 1, month_group: 1, day_group: 1]
+  import PosaWeb.EventComponents, only: [event: 1]
 
   @impl true
   def mount(_params, _session, socket) do
-    if connected?(socket), do: Github.subscribe()
+    Github.subscribe()
 
     socket =
       socket
-      |> assign(events: list_events())
-      |> assign(last_updated: DateTime.now!("Europe/Zurich"))
+      |> assign(
+        dev_routes: dev_routes(),
+        events: list_events(),
+        last_updated: DateTime.now!("Europe/Zurich"),
+        stats: %{
+          orgs: Data.count_orgs(),
+          users: Data.count_users(),
+          events: Data.count_events()
+        }
+      )
 
     {:ok, socket}
   end
@@ -21,11 +33,40 @@ defmodule PosaWeb.TimelineLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <.button phx-click="sync_now" class="absolute right-4 top-4">
-      Sync Now
-    </.button>
-    <div class="flex flex-row px-4 pt-4 ml-3 overflow-auto">
-      <.live_component module={PosaWeb.TimelineComponent} id="timeline-lv" events={@events} />
+    <.debug_tools :if={@dev_routes} stats={@stats} />
+    <div class="px-4 py-20 sm:px-6 lg:px-8">
+      <div class="mx-auto max-w-[120rem]">
+        <div class="flex flex-col px-4 pt-24 ml-3 overflow-x-hidden overflow-y-scroll">
+          <.timeline events={@events}>
+            <:month :let={month}>
+              <.month_group open={month.index == 0} days={month.days}>
+                <:day :let={day}>
+                  <.day_group open={day.index == 0} events={day.events}>
+                    <:event :let={event}>
+                      <.event event={event} />
+                    </:event>
+                  </.day_group>
+                </:day>
+              </.month_group>
+            </:month>
+          </.timeline>
+
+          <%!-- <.live_component module={PosaWeb.TimelineComponent} id="timeline-lv" events={@events} /> --%>
+        </div>
+      </div>
+    </div>
+    """
+  end
+
+  def debug_tools(assigns) do
+    ~H"""
+    <div id="debug-helpers" class="fixed z-50 flex flex-col gap-4 right-4 top-4 min-w-48">
+      <.button phx-click="sync_now">Sync Now</.button>
+      <ul class="p-4 border rounded-lg bg-slate-200 border-slate-600">
+        <li class="flex justify-between"><span>Organizations:</span><%= @stats.orgs %></li>
+        <li class="flex justify-between"><span>Users:</span><%= @stats.users %></li>
+        <li class="flex justify-between"><span>Events:</span><%= @stats.events %></li>
+      </ul>
     </div>
     """
   end
@@ -65,4 +106,6 @@ defmodule PosaWeb.TimelineLive do
 
   defp atomize(key) when is_binary(key), do: String.to_atom(key)
   defp atomize(key) when is_atom(key), do: key
+
+  defp dev_routes, do: Application.fetch_env!(:posa, :dev_routes)
 end
