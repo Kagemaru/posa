@@ -9,18 +9,25 @@ defmodule Posa.Github.Storage.Events do
     _update(&put_in_p(&1, [user, id], value))
   end
 
-  def get_values_by([{key, val}]) do
-    all_events() |> Enum.find(&match?(%{^key => ^val}, &1))
+  def get_values_by(pairs) do
+    all_events()
+    |> Enum.filter(fn event ->
+      Enum.all?(pairs, fn {key, val} -> Map.get(event, key) == val end)
+    end)
   end
 
-  def all_events, do: merge_events(%{}, Map.values(get())) |> Map.values()
+  def all_events, do: merge_events(%{}, Map.values(get())) |> Map.values() |> sort_by_date()
+
   def count, do: Enum.count(all_events())
 
   def output do
     all_events()
-    |> sort(:created_at, &>=/2)
+    |> sort_by_date()
     |> top_50
   end
+
+  def sort_by_date(events),
+    do: Enum.sort_by(events, & &1.created_at, NaiveDateTime) |> Enum.reverse()
 
   defp top_50(list), do: list |> Enum.slice(0, 50)
 

@@ -3,6 +3,10 @@ defmodule Posa.Github.Data do
 
   alias Posa.Github.Storage.{Events, Organizations, Users}
 
+  def count_orgs, do: Organizations.count()
+  def count_users, do: Users.count()
+  def count_events, do: Events.count()
+
   def list_orgs, do: orgs()
   def list_users, do: users()
   def list_events, do: events()

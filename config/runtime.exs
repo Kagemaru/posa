@@ -1,4 +1,5 @@
 import Config
+import Posa.Utils
 
 # config/runtime.exs is executed for all environments, including
 # during releases. It is executed after compilation and before the
@@ -28,17 +29,25 @@ github_token =
     See https://github.com/settings/tokens
     """
 
-organizations = System.get_env("PHX_ORGANIZATIONS", "puzzle") |> String.split(",")
-sync_delay_ms = System.get_env("PHX_SYNC_DELAY_MS", "120000") |> String.to_integer()
-initial_sync = System.get_env("PHX_INITIAL_SYNC", "true") |> String.to_existing_atom()
-start_storage = System.get_env("PHX_START_STORAGE", "true") |> String.to_existing_atom()
-start_sync = System.get_env("PHX_START_SYNC", "true") |> String.to_existing_atom()
+# System.get_env("PHX_ORGANIZATIONS", "puzzle") |> String.split(",")
+organizations = system_env("PHX_ORGANIZATIONS", "puzzle", :array)
+# System.get_env("PHX_SYNC_DELAY_MS", "120000") |> String.to_integer()
+sync_delay_ms = system_env("PHX_SYNC_DELAY_MS", "120000", :integer)
+# System.get_env("PHX_INITIAL_SYNC", "true") |> String.to_existing_atom()
+initial_sync = system_env("PHX_INITIAL_SYNC", "true", :bool)
+# System.get_env("PHX_START_STORAGE", "true") |> String.to_existing_atom()
+start_storage = system_env("PHX_START_STORAGE", "true", :bool)
+# System.get_env("PHX_START_SYNC", "true") |> String.to_existing_atom()
+start_sync = system_env("PHX_START_SYNC", "true", :bool)
+# System.get_env("PHX_DEBUG", "false") |> String.to_existing_atom()
+debug = system_env("PHX_DEBUG", "false", :bool)
 
 config :posa,
   organizations: organizations,
   github_token: github_token,
   sync_delay_ms: sync_delay_ms,
   initial_sync: initial_sync,
+  debug: debug,
   services: %{
     storage: start_storage,
     sync: start_sync
@@ -74,10 +83,11 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("PHX_HOST") || "example.com"
-  port = String.to_integer(System.get_env("PORT") || "4000")
+  host = system_env("PHX_HOST", "example.com")
+  port = system_env("PORT", "4000", :integer)
+  allowed_origins = system_env("PHX_ALLOWED_ORIGINS", "//posa.local", :array)
 
-  config :posa, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
+  config :posa, :dns_cluster_query, system_env("DNS_CLUSTER_QUERY")
 
   config :posa, PosaWeb.Endpoint,
     url: [host: host, port: 443, scheme: "https"],
@@ -89,7 +99,8 @@ if config_env() == :prod do
       ip: :any,
       port: port
     ],
-    secret_key_base: secret_key_base
+    secret_key_base: secret_key_base,
+    check_origin: allowed_origins
 
   # ## SSL Support
   #
