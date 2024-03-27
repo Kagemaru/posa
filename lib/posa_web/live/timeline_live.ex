@@ -14,18 +14,19 @@ defmodule PosaWeb.TimelineLive do
   def mount(_params, _session, socket) do
     Github.subscribe()
 
+    debug = debug()
+
     socket =
       socket
       |> assign(
-        dev_routes: dev_routes(),
+        debug: debug,
         events: list_events(),
-        last_updated: DateTime.now!("Europe/Zurich"),
-        stats: %{
-          orgs: Data.count_orgs(),
-          users: Data.count_users(),
-          events: Data.count_events()
-        }
+        last_updated: DateTime.now!("Europe/Zurich")
       )
+
+    if connected?(socket) && debug.enabled do
+      Process.send_after(self(), :tick, 1000)
+    end
 
     {:ok, socket}
   end
@@ -33,7 +34,7 @@ defmodule PosaWeb.TimelineLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <.debug_tools :if={@dev_routes} stats={@stats} />
+    <.debug_tools :if={@debug.enabled} debug={@debug} />
     <div class="px-4 py-20 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-[120rem]">
         <div class="flex flex-col px-4 pt-24 ml-3 overflow-x-hidden overflow-y-scroll">
@@ -58,17 +59,43 @@ defmodule PosaWeb.TimelineLive do
     """
   end
 
+  attr :debug, :map, default: %{}, doc: "Debugging information"
+
   def debug_tools(assigns) do
     ~H"""
     <div id="debug-helpers" class="fixed z-50 flex flex-col gap-4 right-4 top-4 min-w-48">
       <.button phx-click="sync_now">Sync Now</.button>
       <ul class="p-4 border rounded-lg bg-slate-200 border-slate-600">
-        <li class="flex justify-between"><span>Organizations:</span><%= @stats.orgs %></li>
-        <li class="flex justify-between"><span>Users:</span><%= @stats.users %></li>
-        <li class="flex justify-between"><span>Events:</span><%= @stats.events %></li>
+        <li class="flex justify-between">
+          <span>Next:</span>
+          <time datetime={@debug.time}>
+            <%= (@debug.time && "#{div(@debug.time, 1000)} s") || "off" %>
+          </time>
+        </li>
+      </ul>
+      <.button disabled={!@debug.time} phx-click="cancel_sync_timer">Cancel Sync Timer</.button>
+      <.button disabled={!!@debug.time} phx-click="start_sync_timer">Start Sync Timer</.button>
+      <ul class="p-4 border rounded-lg bg-slate-200 border-slate-600">
+        <li class="flex justify-between"><span>Organizations:</span><%= @debug.stats.orgs %></li>
+        <li class="flex justify-between"><span>Users:</span><%= @debug.stats.users %></li>
+        <li class="flex justify-between"><span>Events:</span><%= @debug.stats.events %></li>
       </ul>
     </div>
     """
+  end
+
+  @impl true
+  def handle_event("cancel_sync_timer", _, socket) do
+    Posa.Sync.cancel_timer()
+
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("start_sync_timer", _, socket) do
+    Posa.Sync.set_timer()
+
+    {:noreply, socket}
   end
 
   @impl true
@@ -76,6 +103,13 @@ defmodule PosaWeb.TimelineLive do
     Posa.Sync.run_sync()
 
     {:noreply, socket}
+  end
+
+  @impl true
+  def handle_info(:tick, socket) do
+    Process.send_after(self(), :tick, 1000)
+
+    {:noreply, assign(socket, debug: debug())}
   end
 
   @impl true
@@ -107,5 +141,15 @@ defmodule PosaWeb.TimelineLive do
   defp atomize(key) when is_binary(key), do: String.to_atom(key)
   defp atomize(key) when is_atom(key), do: key
 
-  defp dev_routes, do: Application.fetch_env!(:posa, :dev_routes)
+  defp debug do
+    %{
+      enabled: Application.fetch_env!(:posa, :debug),
+      time: Posa.Sync.get_time(),
+      stats: %{
+        orgs: Data.count_orgs(),
+        users: Data.count_users(),
+        events: Data.count_events()
+      }
+    }
+  end
 end

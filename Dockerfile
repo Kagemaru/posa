@@ -28,9 +28,9 @@ COPY lib lib
 
 # build assets, digest files, compile, build release and clean up
 RUN mix assets.deploy \
- && mix compile \
- && mix release \
- && mix phx.digest.clean --all
+    && mix compile \
+    && mix release \
+    && mix phx.digest.clean --all
 
 # ===================================================================================
 # prepare release image
@@ -40,8 +40,8 @@ FROM alpine:3.19 AS app
 RUN adduser -D posa
 
 RUN apk update \
- && apk upgrade --no-cache \
- && apk add --no-cache postgresql-client bash openssl libgcc libstdc++ ncurses-libs
+    && apk upgrade --no-cache \
+    && apk add --no-cache postgresql-client bash openssl libgcc libstdc++ ncurses-libs
 
 WORKDIR /app
 
@@ -49,7 +49,7 @@ WORKDIR /app
 COPY --from=build /app/_build/prod/rel/posa ./
 
 RUN chgrp -R 0 /app \
- && chmod -R g=u /app
+    && chmod -R g=u /app
 
 # USER nobody:nobody
 USER posa
