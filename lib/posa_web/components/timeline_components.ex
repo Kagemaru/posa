@@ -143,7 +143,7 @@ defmodule PosaWeb.TimelineComponents do
     ~H"""
     <details open={@open}>
       <.day_header date={@date} count={@count} />
-      <section class="relative mt-4 ml-8 animate-sweep">
+      <section class="relative my-4 ml-8 animate-sweep">
         <div class="grid gap-4 grid-cols-auto_fit">
           <%= for event<- @events do %>
             <%= for event_slot <- @event do %>

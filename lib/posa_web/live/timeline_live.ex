@@ -24,10 +24,6 @@ defmodule PosaWeb.TimelineLive do
         last_updated: DateTime.now!("Europe/Zurich")
       )
 
-    if connected?(socket) && debug.enabled do
-      Process.send_after(self(), :tick, 1000)
-    end
-
     {:ok, socket}
   end
 
@@ -73,6 +69,7 @@ defmodule PosaWeb.TimelineLive do
           </time>
         </li>
       </ul>
+      <.button phx-click="update_sync_timer">Update Timer & Stats</.button>
       <.button disabled={!@debug.time} phx-click="cancel_sync_timer">Cancel Sync Timer</.button>
       <.button disabled={!!@debug.time} phx-click="start_sync_timer">Start Sync Timer</.button>
       <ul class="p-4 border rounded-lg bg-slate-200 border-slate-600">
@@ -85,17 +82,22 @@ defmodule PosaWeb.TimelineLive do
   end
 
   @impl true
+  def handle_event("update_sync_timer", _, socket) do
+    {:noreply, assign(socket, debug: debug())}
+  end
+
+  @impl true
   def handle_event("cancel_sync_timer", _, socket) do
     Posa.Sync.cancel_timer()
 
-    {:noreply, socket}
+    {:noreply, assign(socket, debug: debug())}
   end
 
   @impl true
   def handle_event("start_sync_timer", _, socket) do
     Posa.Sync.set_timer()
 
-    {:noreply, socket}
+    {:noreply, assign(socket, debug: debug())}
   end
 
   @impl true
@@ -103,13 +105,6 @@ defmodule PosaWeb.TimelineLive do
     Posa.Sync.run_sync()
 
     {:noreply, socket}
-  end
-
-  @impl true
-  def handle_info(:tick, socket) do
-    Process.send_after(self(), :tick, 1000)
-
-    {:noreply, assign(socket, debug: debug())}
   end
 
   @impl true

@@ -64,12 +64,12 @@ defmodule PosaWeb.EventComponents do
     assigns = assign(assigns, link: List.first(assigns.link))
 
     ~H"""
-    <article class="flex flex-col z-10">
-      <header class="flex flex-row gap-2 items-center flex-none h-12 px-3 py-1 font-semibold border rounded-tr-2xl bg-pz-carolina-blue border-pz-dark-blue">
+    <article class="z-10 flex flex-col">
+      <header class="flex flex-row items-center flex-none h-12 gap-2 px-3 py-1 font-semibold border rounded-tr-2xl bg-pz-carolina-blue border-pz-dark-blue">
         <.icon
           :if={@icon}
           name={@icon}
-          class="flex-grow-0 text-lg flex-shrink flex justify-center items-center ml-1 mr-2 text-pz-prussian-blue"
+          class="flex items-center justify-center flex-grow-0 flex-shrink ml-1 mr-2 text-lg text-pz-prussian-blue"
         />
         <h3 class="flex-grow flex-shrink-0 text-lg">
           <%= render_slot(@title) || component_name(@event.type) %>
@@ -77,7 +77,7 @@ defmodule PosaWeb.EventComponents do
         <div :if={@link} class="flex-grow-0 flex-shrink">
           <.link
             href={@link.href}
-            class="px-3 py-1 mr-2 font-bold rounded-lg cursor-pointer border bg-white text-pz-prussian-blue border-pz-prussian-blue"
+            class="px-3 py-1 mr-2 font-bold bg-white border rounded-lg cursor-pointer text-pz-prussian-blue border-pz-prussian-blue"
           >
             <%= render_slot(@link) %>
           </.link>
@@ -86,9 +86,9 @@ defmodule PosaWeb.EventComponents do
 
       <dl
         :for={entry <- @content}
-        class="p-2 border-l border-r overflow-hidden bg-blue-50 border-pz-prussian-blue"
+        class="p-2 overflow-hidden border-l border-r bg-blue-50 border-pz-prussian-blue"
       >
-        <dt :if={entry.label} class="inline font-semibold mr-2 text-pz-dark-blue">
+        <dt :if={entry.label} class="inline mr-2 font-semibold text-pz-dark-blue">
           <%= entry.label %>
         </dt>
         <dd class="inline"><%= render_slot(entry) %></dd>
@@ -106,11 +106,11 @@ defmodule PosaWeb.EventComponents do
   defp container(assigns) do
     ~H"""
     <div class="flex-none">
-      <span :if={@entry.label} class="font-semibold mr-1 text-pz-prussian-blue">
+      <span :if={@entry.label} class="mr-1 font-semibold text-pz-prussian-blue">
         <%= @entry.label %>
       </span>
       <%= if @entry.link do %>
-        <.link href={@entry.link} class="underline text-white"><%= render_slot(@entry) %></.link>
+        <.link href={@entry.link} class="text-white underline"><%= render_slot(@entry) %></.link>
       <% else %>
         <%= render_slot(@entry) %>
       <% end %>
@@ -176,7 +176,7 @@ defmodule PosaWeb.EventComponents do
     <.base_event icon="fa-arrow-down">
       <:title>Pull Request durchgesehen</:title>
       <:link href={@url}>Details</:link>
-      <:content label="Reviewer">"<%= @reviewer %></:content>
+      <:content label="Reviewer"><%= @reviewer %></:content>
       <:content label="Bewertung"><%= @evaluation %></:content>
       <:content label="Kommentar"><%= @comment %></:content>
     </.base_event>
@@ -203,7 +203,7 @@ defmodule PosaWeb.EventComponents do
     <.base_event icon="fa-archive">
       <:title>Release erstellt</:title>
       <:link href={@url}>Details</:link>
-      <:content label="Author">"<%= @author %></:content>
+      <:content label="Author"><%= @author %></:content>
       <:content label="Beschreibung"><%= @description %></:content>
     </.base_event>
     """
@@ -229,7 +229,7 @@ defmodule PosaWeb.EventComponents do
     <.base_event icon="fa-code-branch">
       <:title>Fork erstellt</:title>
       <:link href={@url}>Details</:link>
-      <:content label="Besitzer">"<%= @owner %></:content>
+      <:content label="Besitzer"><%= @owner %></:content>
       <:content label="Neues Repo"><%= @repo %></:content>
     </.base_event>
     """
@@ -262,7 +262,7 @@ defmodule PosaWeb.EventComponents do
     ~H"""
     <.base_event icon="fa-plus">
       <:title>Repository erstellt</:title>
-      <:content label="Beschreibung">"<%= @description %></:content>
+      <:content label="Beschreibung"><%= @description %></:content>
       <:content label="DefaultBranch"><%= @default_branch %></:content>
     </.base_event>
     """
@@ -302,7 +302,7 @@ defmodule PosaWeb.EventComponents do
     <.base_event icon="fa-arrow-down">
       <:title>Pull Request erstellt</:title>
       <:link href={@url}>Details</:link>
-      <:content label="Author">"<%= @author %></:content>
+      <:content label="Author"><%= @author %></:content>
       <:content label="Message"><%= @message %></:content>
       <:content label="Changes"><%= @changes %></:content>
       <:content label="Base"><%= @base %></:content>
@@ -476,7 +476,7 @@ defmodule PosaWeb.EventComponents do
       <span class="text-red">#{dels}</span>
       - #{commits} Commits
       - #{additions} Additions
-      - #{deletions} Deletions"
+      - #{deletions} Deletions
       """,
       escape: false
     )
