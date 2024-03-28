@@ -599,6 +599,12 @@ defmodule PosaWeb.CoreComponents do
     """
   end
 
+  def icon(%{name: "fa-" <> _} = assigns) do
+    ~H"""
+    <span class={["fas", @name, @class]} />
+    """
+  end
+
   ## JS Commands
 
   def show(js \\ %JS{}, selector) do

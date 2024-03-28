@@ -10,6 +10,7 @@ defmodule Posa.Sync do
   def set_timer(delay \\ nil), do: GenServer.call(__MODULE__, {:set_timer, delay || sync_delay()})
   def get_timer, do: GenServer.call(__MODULE__, :get_timer)
   def cancel_timer, do: GenServer.cast(__MODULE__, :cancel_timer)
+  def get_time, do: GenServer.call(__MODULE__, :get_time)
 
   # Server callbacks
 
@@ -41,11 +42,13 @@ defmodule Posa.Sync do
     {:reply, timer, %{state | delay: delay, timer: timer}}
   end
 
-  def handle_call(:get_timer, _, state) do
+  def handle_call(:get_time, _, state) do
     time = Process.read_timer(state.timer)
 
     {:reply, time, state}
   end
+
+  def handle_call(:get_timer, _, state), do: {:reply, state.timer, state}
 
   def handle_info(:sync, state) do
     execute_sync()
