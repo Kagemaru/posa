@@ -37,7 +37,7 @@ defmodule Posa.Github.Data.Organization do
     field :type, :string
   end
 
-  def changeset(schema, params \\ %{}) do
+  def changeset(schema \\ %__MODULE__{}, params) do
     schema
     |> cast(params, @required_fields, @optional_fields)
   end

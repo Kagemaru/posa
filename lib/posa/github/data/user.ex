@@ -32,7 +32,7 @@ defmodule Posa.Github.Data.User do
     field :site_admin, :boolean, default: false
   end
 
-  def changeset(schema, params \\ %{}) do
+  def changeset(schema \\ %__MODULE__{}, params) do
     schema
     |> cast(params, @required_fields, @optional_fields)
   end
