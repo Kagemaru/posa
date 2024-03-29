@@ -20,7 +20,7 @@ defmodule Posa.Github.Data.Event do
     field :created_at, :naive_datetime
   end
 
-  def changeset(schema, params \\ %{}) do
+  def changeset(schema \\ %__MODULE__{}, params) do
     schema
     |> cast(params, @required_fields, @optional_fields)
   end

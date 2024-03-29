@@ -14,12 +14,10 @@ defmodule PosaWeb.TimelineLive do
   def mount(_params, _session, socket) do
     Github.subscribe()
 
-    debug = debug()
-
     socket =
       socket
       |> assign(
-        debug: debug,
+        debug: debug(),
         events: list_events(),
         last_updated: DateTime.now!("Europe/Zurich")
       )
