@@ -7,9 +7,9 @@
 # General application configuration
 import Config
 
-config :posa,
-  ecto_repos: [],
-  generators: [timestamp_type: :utc_datetime]
+config :posa, ash_domains: [Posa.Github]
+
+config :posa, generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint
 config :posa, PosaWeb.Endpoint,

@@ -1,6 +1,10 @@
 defmodule Posa.Sync do
   @moduledoc "Handles the recurring sync"
 
+  alias Posa.Github.{Collaborator, Event, Member, Organization, Repository}
+
+  require Logger
+
   use GenServer
 
   # Client callbacks
@@ -57,8 +61,23 @@ defmodule Posa.Sync do
     {:noreply, %{state | timer: timer}}
   end
 
-  # credo:disable-for-next-line
-  defp execute_sync, do: spawn_link(&Posa.Github.Sync.run/0)
+  defp execute_sync do
+    {:ok, pid} =
+      Task.start(fn ->
+        start = System.monotonic_time()
+        :telemetry.execute([:posa, :sync, :start], %{time: start})
+
+        [Organization, Member, Repository, Collaborator, Event]
+        |> Enum.map(& &1.sync!())
+
+        stop = System.monotonic_time()
+        :telemetry.execute([:posa, :sync, :stop], %{time: stop, duration: stop - start})
+        Logger.info("Sync completed")
+      end)
+
+    Process.register(pid, :sync_task)
+  end
+
   defp schedule_sync(delay), do: Process.send_after(self(), :sync, delay)
   defp sync_delay, do: Application.get_env(:posa, :sync_delay_ms)
   defp initial_sync, do: Application.get_env(:posa, :initial_sync)

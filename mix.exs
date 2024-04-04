@@ -29,7 +29,7 @@ defmodule Posa.MixProject do
   def application do
     [
       mod: {Posa.Application, []},
-      extra_applications: [:logger, :runtime_tools, :os_mon]
+      extra_applications: [:logger, :runtime_tools, :os_mon, :wx, :observer]
     ]
   end
 
@@ -64,10 +64,19 @@ defmodule Posa.MixProject do
       {:finch, "~> 0.13"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
+      {:circular_buffer, "~> 0.4"},
       {:gettext, "~> 0.24"},
       {:jason, "~> 1.4"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
+
+      # Ash
+      {:ash, ">= 3.0.0-rc.25", github: "ash-project/ash", branch: "main", override: true},
+      # {:ash, ">= 3.0.0-rc.6"},
+      {:picosat_elixir, ">= 0.2.3"},
+      {:ash_phoenix, ">= 2.0.0-rc.1"},
+      {:ash_authentication, ">= 4.0.0-rc.1"},
+      {:ash_authentication_phoenix, ">= 2.0.0-rc.0"},
 
       # App specific
       {:httpoison, "~> 2.2"},
@@ -76,7 +85,10 @@ defmodule Posa.MixProject do
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:earmark, "~> 1.4"},
-      {:deep_merge, "~> 1.0"}
+      {:deep_merge, "~> 1.0"},
+      {:flow, "~> 1.2.4"},
+      {:req, "~> 0.4.0"},
+      {:atomic_map, "~> 0.9.3"}
     ]
   end
 
@@ -98,13 +110,7 @@ defmodule Posa.MixProject do
         "tailwind posa --minify",
         "esbuild posa --minify",
         "phx.digest"
-      ],
-      compile: [&copy_environment_iex_exs/1, "compile"]
+      ]
     ]
-  end
-
-  defp copy_environment_iex_exs(_) do
-    File.rm(".iex.env.exs")
-    File.copy(".iex.#{Mix.env()}.exs", ".iex.env.exs")
   end
 end

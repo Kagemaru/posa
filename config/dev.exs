@@ -63,6 +63,9 @@ config :posa, PosaWeb.Endpoint,
     ]
   ]
 
+# Configure Ash to enable debugging on pub/sub channels
+config :ash, :pub_sub, debug?: false
+
 # Enable dev routes for dashboard and mailbox
 config :posa, dev_routes: true
 

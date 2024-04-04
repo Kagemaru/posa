@@ -44,6 +44,12 @@ defmodule PosaWeb.EventComponents do
     examples: ["fa-lock-open", "fa-comments", "fa-arrow-down"],
     doc: "A FontAwesome icon from https://fontawesome.com/icons"
 
+  attr :event, :map, required: true, doc: "Event"
+
+  attr :expanded, :any, doc: "Expanded events"
+
+  attr :rest, :global
+
   slot :title, doc: "Title of the event"
 
   slot :link, doc: "Link in the header" do
@@ -61,18 +67,27 @@ defmodule PosaWeb.EventComponents do
 
   ## Attrs/Slots }}}
   def base_event(assigns) do
-    assigns = assign(assigns, link: List.first(assigns.link))
+    link = List.first(assigns.link)
+    expand = MapSet.member?(assigns.expanded, assigns.event.id)
+    has_content = assigns.content != []
+
+    assigns = assign(assigns, link: link, expand: expand, has_content: has_content)
 
     ~H"""
     <article class="z-10 flex flex-col">
-      <header class="flex flex-row items-center flex-none h-12 gap-2 px-3 py-1 font-semibold border rounded-tr-2xl bg-pz-carolina-blue border-pz-dark-blue">
+      <header
+        phx-click={if @has_content, do: "toggle_expand"}
+        phx-value-id={@event.id}
+        phx-target={@rest.phx_target}
+        class="flex flex-row items-center flex-none h-12 gap-2 px-3 py-1 font-semibold border rounded-tr-2xl bg-pz-carolina-blue border-pz-dark-blue"
+      >
         <.icon
           :if={@icon}
           name={@icon}
           class="flex items-center justify-center flex-grow-0 flex-shrink ml-1 mr-2 text-lg text-pz-prussian-blue"
         />
         <h3 class="flex-grow flex-shrink-0 text-lg">
-          <%= render_slot(@title) || component_name(@event.type) %>
+          <%= render_slot(@title) || humanized_name(@event.type) %>
         </h3>
         <div :if={@link} class="flex-grow-0 flex-shrink">
           <.link
@@ -82,18 +97,24 @@ defmodule PosaWeb.EventComponents do
             <%= render_slot(@link) %>
           </.link>
         </div>
+        <div class="flex-grow-0 flex-shrink-0">
+          <%= if @has_content do %>
+            <.icon :if={!@expand} name="fa-chevron-down" class="text-pz-prussian-blue" />
+            <.icon :if={@expand} name="fa-chevron-up" class="text-pz-prussian-blue" />
+          <% end %>
+        </div>
       </header>
-
-      <dl
-        :for={entry <- @content}
-        class="p-2 overflow-hidden border-l border-r bg-blue-50 border-pz-prussian-blue"
-      >
-        <dt :if={entry.label} class="inline mr-2 font-semibold text-pz-dark-blue">
-          <%= entry.label %>
-        </dt>
-        <dd class="inline"><%= render_slot(entry) %></dd>
-      </dl>
-
+      <section :if={@expand}>
+        <dl
+          :for={entry <- @content}
+          class="p-2 overflow-hidden border-l border-r bg-blue-50 border-pz-prussian-blue"
+        >
+          <dt :if={entry.label} class="inline mr-2 font-semibold text-pz-dark-blue">
+            <%= entry.label %>
+          </dt>
+          <dd class="inline"><%= render_slot(entry) %></dd>
+        </dl>
+      </section>
       <footer class="flex flex-row items-center justify-between h-12 px-3 py-1 border rounded-bl-2xl bg-pz-carolina-blue border-pz-dark-blue">
         <.container :for={entry <- @footer} entry={entry} />
       </footer>
@@ -121,9 +142,11 @@ defmodule PosaWeb.EventComponents do
   ## /Base Event Component }}}
   ## PublicEvent {{{
 
+  attr :event, :map, required: true, doc: "Event"
+
   def public_event(assigns) do
     ~H"""
-    <.base_event icon="fa-lock-open">
+    <.base_event icon="fa-lock-open" {assigns}>
       <:title>Repo publiziert</:title>
     </.base_event>
     """
@@ -146,7 +169,7 @@ defmodule PosaWeb.EventComponents do
       )
 
     ~H"""
-    <.base_event icon="fa-comments">
+    <.base_event icon="fa-comments" {assigns}>
       <:title>Review kommentiert</:title>
       <:link href={@url}>Details</:link>
       <:content label="Author"><%= @author %></:content>
@@ -173,7 +196,7 @@ defmodule PosaWeb.EventComponents do
       )
 
     ~H"""
-    <.base_event icon="fa-arrow-down">
+    <.base_event icon="fa-arrow-down" {assigns}>
       <:title>Pull Request durchgesehen</:title>
       <:link href={@url}>Details</:link>
       <:content label="Reviewer"><%= @reviewer %></:content>
@@ -200,7 +223,7 @@ defmodule PosaWeb.EventComponents do
       )
 
     ~H"""
-    <.base_event icon="fa-archive">
+    <.base_event icon="fa-archive" {assigns}>
       <:title>Release erstellt</:title>
       <:link href={@url}>Details</:link>
       <:content label="Author"><%= @author %></:content>
@@ -226,7 +249,7 @@ defmodule PosaWeb.EventComponents do
       )
 
     ~H"""
-    <.base_event icon="fa-code-branch">
+    <.base_event icon="fa-code-branch" {assigns}>
       <:title>Fork erstellt</:title>
       <:link href={@url}>Details</:link>
       <:content label="Besitzer"><%= @owner %></:content>
@@ -238,9 +261,11 @@ defmodule PosaWeb.EventComponents do
   ## /ForkEvent }}}
   ## WatchEvent {{{
 
+  attr :event, :map, required: true, doc: "Event"
+
   def watch_event(assigns) do
     ~H"""
-    <.base_event icon="fa-eye">
+    <.base_event icon="fa-eye" {assigns}>
       <:title>Neuer Beobachter</:title>
     </.base_event>
     """
@@ -260,7 +285,7 @@ defmodule PosaWeb.EventComponents do
       )
 
     ~H"""
-    <.base_event icon="fa-plus">
+    <.base_event icon="fa-plus" {assigns}>
       <:title>Repository erstellt</:title>
       <:content label="Beschreibung"><%= @description %></:content>
       <:content label="DefaultBranch"><%= @default_branch %></:content>
@@ -271,9 +296,11 @@ defmodule PosaWeb.EventComponents do
   ## /CreateEvent }}}
   ## DeleteEvent {{{
 
+  attr :event, :map, required: true, doc: "Event"
+
   def delete_event(assigns) do
     ~H"""
-    <.base_event icon="fa-trash-alt">
+    <.base_event icon="fa-trash-alt" {assigns}>
       <:title>Branch gelöscht</:title>
     </.base_event>
     """
@@ -299,7 +326,7 @@ defmodule PosaWeb.EventComponents do
       )
 
     ~H"""
-    <.base_event icon="fa-arrow-down">
+    <.base_event icon="fa-arrow-down" {assigns}>
       <:title>Pull Request erstellt</:title>
       <:link href={@url}>Details</:link>
       <:content label="Author"><%= @author %></:content>
@@ -333,7 +360,7 @@ defmodule PosaWeb.EventComponents do
       )
 
     ~H"""
-    <.base_event icon="fa-arrow-up">
+    <.base_event icon="fa-arrow-up" {assigns}>
       <:title>Commits gepusht</:title>
       <:link href={@url}>Details</:link>
       <:content label="User"><%= @user %></:content>
@@ -368,7 +395,7 @@ defmodule PosaWeb.EventComponents do
       )
 
     ~H"""
-    <.base_event icon="fa-comments">
+    <.base_event icon="fa-comments" {assigns}>
       <:title>Issue kommentiert</:title>
       <:link href={@url}>Details</:link>
       <:content label="Author"><%= @author %></:content>
@@ -404,7 +431,7 @@ defmodule PosaWeb.EventComponents do
       )
 
     ~H"""
-    <.base_event icon="fa-exclamation">
+    <.base_event icon="fa-exclamation" {assigns}>
       <:title>Issue erstellt</:title>
       <:link href={@url}>Details</:link>
       <:content label="Author"><%= @author %></:content>
@@ -421,6 +448,15 @@ defmodule PosaWeb.EventComponents do
   # /Components }}}
 
   # Helpers {{{
+
+  defp humanized_name(name) do
+    name
+    |> component_name()
+    |> Phoenix.Naming.humanize()
+    |> String.split(" ")
+    |> Enum.map_join(" ", &String.capitalize/1)
+  end
+
   defp component_name(name) do
     name |> Phoenix.Naming.underscore() |> String.to_atom()
   end
