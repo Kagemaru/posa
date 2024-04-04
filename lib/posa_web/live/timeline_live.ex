@@ -5,14 +5,14 @@ defmodule PosaWeb.TimelineLive do
 
   use PosaWeb, :live_view
 
-  alias Posa.Github
-  alias Posa.Github.Data
+  alias Posa.GithubOld
+  alias Posa.GithubOld.Data
   import PosaWeb.TimelineComponents, only: [timeline: 1, month_group: 1, day_group: 1]
   import PosaWeb.EventComponents, only: [event: 1]
 
   @impl true
   def mount(_params, _session, socket) do
-    Github.subscribe()
+    GithubOld.subscribe()
 
     socket =
       socket

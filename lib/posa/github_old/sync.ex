@@ -1,9 +1,9 @@
-defmodule Posa.Github.Sync do
+defmodule Posa.GithubOld.Sync do
   @moduledoc "Handles the sync of Github data"
 
-  alias Posa.Github.API
-  alias Posa.Github.Storage.{Events, Organizations, Users}
-  alias Posa.Github.Data.{Event, Organization, User}
+  alias Posa.GithubOld.API
+  alias Posa.GithubOld.Storage.{Events, Organizations, Users}
+  alias Posa.GithubOld.Data.{Event, Organization, User}
 
   def run do
     API.start()

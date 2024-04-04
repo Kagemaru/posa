@@ -1,6 +1,6 @@
 defmodule Posa.Exports.Metrics do
   @moduledoc "This handles the generating of the metrics for export"
-  alias Posa.Github.Data
+  alias Posa.GithubOld.Data
 
   def all_metrics do
     get_metrics()

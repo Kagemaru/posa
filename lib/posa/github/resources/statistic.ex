@@ -1,0 +1,21 @@
+defmodule Posa.Github.Statistic do
+  use Ash.Resource, domain: Posa.Github, data_layer: Ash.DataLayer.Ets
+
+  actions do
+    defaults [:read, :destroy, create: :*, update: :*]
+
+    action :as_map, :map do
+      run fn _, _ ->
+        Ash.read!(__MODULE__)
+        |> Enum.into(%{}, &{&1.name, &1.value})
+        |> then(&{:ok, &1})
+      end
+    end
+  end
+
+  attributes do
+    attribute :key, :atom, writable?: true, allow_nil?: false, primary_key?: true, public?: true
+    attribute :name, :string, public?: true
+    attribute :value, :term, public?: true
+  end
+end

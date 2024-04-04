@@ -1,8 +1,8 @@
-defmodule Posa.Github.API do
+defmodule Posa.GithubOld.API do
   @moduledoc "Github API Interface"
 
   use HTTPoison.Base
-  alias Posa.Github.Storage.{Etags, Events, Organizations, Users}
+  alias Posa.GithubOld.Storage.{Etags, Events, Organizations, Users}
 
   def get_or_retry(url, count \\ 1) do
     get!(url)

@@ -1,9 +1,9 @@
-defmodule Posa.Github.Storage.Events do
+defmodule Posa.GithubOld.Storage.Events do
   @moduledoc "Event storage"
 
-  use Posa.Github.Storage.Base
+  use Posa.GithubOld.Storage.Base
 
-  alias Posa.Github.Storage.Organizations
+  alias Posa.GithubOld.Storage.Organizations
 
   def add_event(user, id, value) do
     _update(&put_in_p(&1, [user, id], value))

@@ -1,4 +1,4 @@
-defmodule Posa.Github.Data.Organization do
+defmodule Posa.GithubOld.Data.Organization do
   @moduledoc "Organization model"
 
   use Ecto.Schema

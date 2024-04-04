@@ -1,4 +1,4 @@
-defmodule Posa.Github.Data.Event do
+defmodule Posa.GithubOld.Data.Event do
   @moduledoc "Event model"
 
   use Ecto.Schema

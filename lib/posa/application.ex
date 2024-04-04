@@ -9,7 +9,7 @@ defmodule Posa.Application do
   def start(_type, _args) do
     children = [
       # Start github stuff
-      Posa.Github,
+      Posa.GithubOld,
       PosaWeb.Telemetry,
       # Posa.Repo,
       {DNSCluster, query: Application.get_env(:posa, :dns_cluster_query) || :ignore},

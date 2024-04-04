@@ -1,4 +1,4 @@
-defmodule Posa.Github.Data.User do
+defmodule Posa.GithubOld.Data.User do
   @moduledoc "User model"
 
   use Ecto.Schema

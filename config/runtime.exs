@@ -51,6 +51,10 @@ config :posa,
   services: %{
     storage: start_storage,
     sync: start_sync
+  },
+  github_api: %{
+    base_url: "https://api.github.com",
+    token: github_token
   }
 
 if config_env() == :prod do

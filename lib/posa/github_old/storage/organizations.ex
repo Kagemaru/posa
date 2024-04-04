@@ -1,7 +1,7 @@
-defmodule Posa.Github.Storage.Organizations do
+defmodule Posa.GithubOld.Storage.Organizations do
   @moduledoc "Organization storage"
 
-  use Posa.Github.Storage.Base
+  use Posa.GithubOld.Storage.Base
 
   def count, do: get_all() |> Enum.count()
 end

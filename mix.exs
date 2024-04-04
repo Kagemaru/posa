@@ -69,6 +69,13 @@ defmodule Posa.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
 
+      # Ash
+      {:ash, "== 3.0.0-rc.6"},
+      {:picosat_elixir, "== 0.2.3"},
+      {:ash_phoenix, "== 2.0.0-rc.1"},
+      {:ash_authentication, "== 4.0.0-rc.1"},
+      {:ash_authentication_phoenix, "== 2.0.0-rc.0"},
+
       # App specific
       {:httpoison, "~> 2.2"},
       {:poison, "~> 5.0"},
@@ -76,7 +83,9 @@ defmodule Posa.MixProject do
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:earmark, "~> 1.4"},
-      {:deep_merge, "~> 1.0"}
+      {:deep_merge, "~> 1.0"},
+      {:flow, "~> 1.2.4"},
+      {:req, "~> 0.4.0"}
     ]
   end
 
@@ -98,13 +107,7 @@ defmodule Posa.MixProject do
         "tailwind posa --minify",
         "esbuild posa --minify",
         "phx.digest"
-      ],
-      compile: [&copy_environment_iex_exs/1, "compile"]
+      ]
     ]
-  end
-
-  defp copy_environment_iex_exs(_) do
-    File.rm(".iex.env.exs")
-    File.copy(".iex.#{Mix.env()}.exs", ".iex.env.exs")
   end
 end

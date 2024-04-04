@@ -1,4 +1,4 @@
-defmodule Posa.Github.Storage.Base do
+defmodule Posa.GithubOld.Storage.Base do
   @moduledoc "Based Module for storage"
 
   defmacro __using__(_) do

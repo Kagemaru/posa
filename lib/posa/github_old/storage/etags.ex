@@ -1,7 +1,7 @@
-defmodule Posa.Github.Storage.Etags do
+defmodule Posa.GithubOld.Storage.Etags do
   @moduledoc "Etag storage"
 
-  use Posa.Github.Storage.Base
+  use Posa.GithubOld.Storage.Base
 
   def get_domains, do: _get(&Map.keys(&1))
   def get_etag(domain), do: _get(&get_in(&1, [domain]))

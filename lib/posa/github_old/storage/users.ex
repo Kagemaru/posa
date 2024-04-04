@@ -1,7 +1,7 @@
-defmodule Posa.Github.Storage.Users do
+defmodule Posa.GithubOld.Storage.Users do
   @moduledoc "User storage"
 
-  use Posa.Github.Storage.Base
+  use Posa.GithubOld.Storage.Base
 
   def count, do: get_all() |> Enum.count()
 end
