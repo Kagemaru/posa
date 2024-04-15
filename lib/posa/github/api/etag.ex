@@ -1,4 +1,4 @@
-defmodule Posa.GithubApi.Etag do
+defmodule Posa.Github.API.Etag do
   @doc """
   Save and load etags
 

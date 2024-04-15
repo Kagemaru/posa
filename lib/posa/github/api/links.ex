@@ -1,4 +1,8 @@
-defmodule Posa.GithubApi.Links do
+defmodule Posa.Github.API.Links do
+  @type request :: Req.Request.t()
+  @type response :: Req.Response.t()
+  @type options :: keyword()
+
   @doc """
   Extract Github Pagination Links
 
@@ -13,20 +17,18 @@ defmodule Posa.GithubApi.Links do
     |> Req.Request.append_response_steps(extract_links: &extract_github_links/1)
   end
 
+  @spec extract_github_links({request, response}) :: {request, response}
   def extract_github_links({request, response}) do
     with true <- request.options[:github_links],
-         links <- response.get_header("link"),
+         [links | _] <- Req.Response.get_header(response, "link"),
          parsed <- parse_links(links) do
-      {
-        request,
-        response
-        |> Req.Response.put_private(:github_links, parsed)
-      }
+      {request, Req.Response.put_private(response, :github, %{links: parsed})}
     else
       _ -> {request, response}
     end
   end
 
+  @spec parse_links(String.t()) :: map()
   def parse_links(links) do
     links
     |> String.split(",")
@@ -34,10 +36,12 @@ defmodule Posa.GithubApi.Links do
     |> Map.new()
   end
 
+  @spec extract_links(String.t()) :: {atom(), String.t()}
   def extract_links(pair) do
-    String.trim(pair) |> String.split(";") |> extract_parts()
+    pair |> String.trim() |> String.split(";") |> extract_parts()
   end
 
+  @spec extract_parts([String.t()]) :: {atom(), String.t()}
   def extract_parts([url, rel]) do
     {
       String.slice(rel, 6..-2//1) |> String.to_atom(),

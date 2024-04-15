@@ -1,16 +1,74 @@
 defmodule Posa.Github.Event do
-  use Ash.Resource, domain: Posa.Github, data_layer: Ash.DataLayer.Ets
+  use Ash.Resource,
+    domain: Posa.Github,
+    data_layer: Ash.DataLayer.Ets,
+    notifiers: [Ash.Notifier.PubSub]
+
+  require Logger
+
+  alias Posa.Github.User
+  alias Posa.Github.API
 
   actions do
     defaults [:read, :destroy, create: :*, update: :*]
+
+    action :count, :integer, run: fn _, _ -> Ash.count(__MODULE__) end
+
+    read :list do
+      prepare build(sort: [created_at: :desc])
+    end
+
+    action :sync, {:array, :struct} do
+      run fn _, _ ->
+        for user <- User.read!() do
+          events =
+            case API.events(user.login) do
+              {:ok, events} ->
+                events
+
+              {:error, message} ->
+                Logger.info("Users sync error: #{message}")
+                []
+            end
+
+          dbg()
+
+          user
+          |> Ash.Changeset.for_update(:update)
+          |> Ash.Changeset.manage_relationship(
+            :events,
+            events,
+            on_no_match: :create,
+            on_lookup: :relate_and_update,
+            on_match: :update,
+            on_missing: :unrelate
+          )
+          |> Ash.update!()
+        end
+        |> then(&{:ok, &1})
+      end
+    end
+  end
+
+  code_interface do
+    define :create, action: :create
+    define :read, action: :read
+    define :update, action: :update
+    define :destroy, action: :destroy
+
+    define :count, action: :count
+    define :list, action: :list
+    define :sync, action: :sync
   end
 
   attributes do
-    integer_primary_key :id
+    integer_primary_key :id, writable?: true, public?: true
 
-    attribute :type, :string
+    attribute :type, :string, public?: true
 
     attribute :actor, :map do
+      public? true
+
       constraints fields: [
                     id: [type: :integer],
                     login: [type: :string],
@@ -22,6 +80,8 @@ defmodule Posa.Github.Event do
     end
 
     attribute :repo, :map do
+      public? true
+
       constraints fields: [
                     id: [type: :integer],
                     name: [type: :string],
@@ -30,6 +90,8 @@ defmodule Posa.Github.Event do
     end
 
     attribute :org, :map do
+      public? true
+
       constraints fields: [
                     id: [type: :integer],
                     login: [type: :string],
@@ -41,6 +103,8 @@ defmodule Posa.Github.Event do
     end
 
     attribute :payload, :map do
+      public? true
+
       constraints fields: [
                     action: [type: :string],
                     issue: [
@@ -636,7 +700,26 @@ defmodule Posa.Github.Event do
                   ]
     end
 
-    attribute :public, :boolean
-    attribute :created_at, :naive_datetime
+    attribute :public, :boolean, public?: true
+    attribute :created_at, :naive_datetime, public?: true
+  end
+
+  relationships do
+    belongs_to :user, User, attribute_type: :integer
+  end
+
+  pub_sub do
+    module PosaWeb.Endpoint
+    prefix "github"
+
+    publish_all :create, "activity"
+    publish_all :update, "activity"
+    publish_all :destroy, "activity"
+
+    publish_all :create, ["event", [nil, "created"], [nil, :id]]
+    publish_all :update, ["event", [nil, "updated"], [nil, :id]], previous_values?: true
+    publish_all :destroy, ["event", [nil, "destroyed"], [nil, :id]]
+
+    # publish :sync, ["event", [nil, "synched"], [nil, :id]], previous_values?: true, event: "sync"
   end
 end

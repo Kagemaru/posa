@@ -3,17 +3,17 @@ defmodule PosaWeb.TimelineLive do
   Liveview that displays the timeline of events.
   """
 
+  alias Posa.Github.Organization
+  alias Posa.Github.User
+  alias Posa.Github.Event
+
   use PosaWeb, :live_view
 
-  alias Posa.GithubOld
-  alias Posa.GithubOld.Data
   import PosaWeb.TimelineComponents, only: [timeline: 1, month_group: 1, day_group: 1]
   import PosaWeb.EventComponents, only: [event: 1]
 
   @impl true
   def mount(_params, _session, socket) do
-    GithubOld.subscribe()
-
     socket =
       socket
       |> assign(
@@ -21,6 +21,8 @@ defmodule PosaWeb.TimelineLive do
         events: list_events(),
         last_updated: DateTime.now!("Europe/Zurich")
       )
+
+    if connected?(socket), do: Phoenix.PubSub.subscribe(Posa.PubSub, "github")
 
     {:ok, socket}
   end
@@ -106,16 +108,17 @@ defmodule PosaWeb.TimelineLive do
   end
 
   @impl true
-  def handle_info({"synced", last_update}, socket) do
+  def handle_info("activity", socket) do
     socket =
       socket
       |> assign(events: list_events())
-      |> assign(last_updated: last_update)
+
+    # |> assign(last_updated: last_update)
 
     {:noreply, socket}
   end
 
-  def list_events, do: Data.list_events() |> deep_atomize_keys
+  def list_events, do: Event.list!()
 
   # TODO: Move tooling to it's own module
   # credo:disable-for-previous-line
@@ -139,9 +142,9 @@ defmodule PosaWeb.TimelineLive do
       enabled: Application.fetch_env!(:posa, :debug),
       time: Posa.Sync.get_time(),
       stats: %{
-        orgs: Data.count_orgs(),
-        users: Data.count_users(),
-        events: Data.count_events()
+        orgs: Organization.count!(),
+        users: User.count!(),
+        events: Event.count!()
       }
     }
   end

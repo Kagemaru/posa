@@ -1,13 +1,18 @@
 defmodule Posa.Github do
   use Ash.Domain
 
-  resources do
-    resource Posa.Github.Organization
-    resource Posa.Github.User
-    resource Posa.Github.Event
-    resource Posa.Github.Etag
+  alias Posa.Github.{Organization, Member, User, Event, Etag, Repository, Collaborator, Statistic}
 
-    resource Posa.Github.Statistic do
+  resources do
+    resource Organization
+    resource Member
+    resource User
+    resource Event
+    resource Etag
+    resource Repository
+    resource Collaborator
+
+    resource Statistic do
       define :statistics_as_map, action: :as_map
     end
   end

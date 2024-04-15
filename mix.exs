@@ -70,11 +70,11 @@ defmodule Posa.MixProject do
       {:bandit, "~> 1.2"},
 
       # Ash
-      {:ash, "== 3.0.0-rc.6"},
-      {:picosat_elixir, "== 0.2.3"},
-      {:ash_phoenix, "== 2.0.0-rc.1"},
-      {:ash_authentication, "== 4.0.0-rc.1"},
-      {:ash_authentication_phoenix, "== 2.0.0-rc.0"},
+      {:ash, ">= 3.0.0-rc.6"},
+      {:picosat_elixir, ">= 0.2.3"},
+      {:ash_phoenix, ">= 2.0.0-rc.1"},
+      {:ash_authentication, ">= 4.0.0-rc.1"},
+      {:ash_authentication_phoenix, ">= 2.0.0-rc.0"},
 
       # App specific
       {:httpoison, "~> 2.2"},
@@ -85,7 +85,8 @@ defmodule Posa.MixProject do
       {:earmark, "~> 1.4"},
       {:deep_merge, "~> 1.0"},
       {:flow, "~> 1.2.4"},
-      {:req, "~> 0.4.0"}
+      {:req, "~> 0.4.0"},
+      {:atomic_map, "~> 0.9.3"}
     ]
   end
 
