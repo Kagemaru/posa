@@ -17,12 +17,13 @@ defmodule PosaWeb.TimelineLive do
     months = Event.months!()
     days = Event.days!(%{group: true})
     stats = Statistic.as_map!()
-    open = months |> Enum.map(&"month-#{&1}") |> MapSet.new()
+    open = initial_open(months)
 
     socket = assign(socket, debug: debug(), months: months, days: days, stats: stats, open: open)
 
     if connected?(socket) do
-      Phoenix.PubSub.subscribe(Posa.PubSub, "github")
+      Phoenix.PubSub.subscribe(Posa.PubSub, "github:sync")
+      Phoenix.PubSub.subscribe(Posa.PubSub, "github:stats")
     end
 
     {:ok, socket}
@@ -34,7 +35,7 @@ defmodule PosaWeb.TimelineLive do
     <.debug_tools :if={@debug.enabled} debug={@debug} />
     <div class="px-4 py-20 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-[120rem]">
-        <div class="flex flex-col px-4 pt-24 ml-3 overflow-x-hidden overflow-y-scroll">
+        <div class="flex flex-col px-4 pt-24 ml-3 overflow-hidden">
           <.timeline open={@open} months={@months} days={@days} stats={@stats} />
         </div>
       </div>
@@ -98,9 +99,6 @@ defmodule PosaWeb.TimelineLive do
   def handle_event("toggle_open", %{"id" => id}, socket) do
     open = socket.assigns.open
 
-    IO.inspect(open, label: "open")
-    IO.inspect(id, label: "id")
-
     open =
       if MapSet.member?(open, id) do
         MapSet.delete(open, id)
@@ -112,10 +110,35 @@ defmodule PosaWeb.TimelineLive do
   end
 
   @impl true
-  def handle_info("activity", socket) do
-    socket = assign(socket, months: Event.months!(), days: Event.days!())
+  def handle_info({:sync_finished, _}, socket) do
+    months = Event.months!()
+    days = Event.days!(%{group: true})
+    open = socket.assigns.open
+
+    open =
+      if open == [] do
+        initial_open(socket.assigns.months)
+      else
+        open
+      end
+
+    socket = assign(socket, months: Event.months!(), days: Event.days!(%{group: true}))
+    {:noreply, socket}
 
     {:noreply, socket}
+  end
+
+  @impl true
+  def handle_info({:stats_finished, _}, socket) do
+    socket = assign(socket, stats: Statistic.as_map!())
+
+    {:noreply, socket}
+  end
+
+  defp initial_open(months) do
+    months
+    |> Enum.map(&"month-#{&1}")
+    |> MapSet.new()
   end
 
   defp debug do

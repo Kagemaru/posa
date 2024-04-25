@@ -11,7 +11,7 @@ defmodule PosaWeb.DayComponent do
   def day_group(assigns) do
     id = "day-#{assigns.day}"
     open = MapSet.member?(assigns.open, id)
-    count = assigns.stats["tags_day_#{assigns.day}"]
+    count = assigns.stats["tags_day_#{assigns.day}"] || 0
 
     assigns = assign(assigns, id: id, count: count, open: open)
 

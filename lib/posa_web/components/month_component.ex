@@ -13,8 +13,8 @@ defmodule PosaWeb.MonthComponent do
     show = MapSet.member?(assigns.open, id)
 
     counts = %{
-      days: assigns.days |> Enum.count(),
-      events: assigns.stats["tags_month_#{assigns.month}"]
+      days: (assigns.days || []) |> Enum.count(),
+      events: assigns.stats["tags_month_#{assigns.month}"] || 0
     }
 
     assigns = assign(assigns, id: id, show: show, counts: counts)
