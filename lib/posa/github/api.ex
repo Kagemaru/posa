@@ -1,5 +1,4 @@
 defmodule Posa.Github.API do
-  alias Ash.Error.Forbidden
   alias Posa.Github.API.Client
 
   @type id :: String.t()

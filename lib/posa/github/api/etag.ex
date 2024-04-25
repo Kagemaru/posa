@@ -42,12 +42,11 @@ defmodule Posa.Github.API.Etag do
   end
 
   defp load_etag(request) do
-    etag =
-      case Posa.Github.Etag.get(%{key: request.url}) do
-        {:ok, %{etag: etag}} -> etag
-        _ -> ""
-      end
+    url = "#{request.options.base_url}#{request.url |> URI.to_string()}"
 
-    Req.Request.put_header(request, "If-None-Match", etag)
+    case Posa.Github.Etag.get(%{key: url}) do
+      {:ok, %{etag: etag}} -> Req.Request.put_header(request, "If-None-Match", etag)
+      _ -> request
+    end
   end
 end

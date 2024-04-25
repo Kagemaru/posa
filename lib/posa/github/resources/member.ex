@@ -2,42 +2,64 @@ defmodule Posa.Github.Member do
   use Ash.Resource,
     domain: Posa.Github,
     data_layer: Ash.DataLayer.Ets,
-    notifiers: [Ash.Notifier.PubSub]
+    notifiers: Ash.Notifier.PubSub
 
   require Logger
 
-  alias Posa.Github.API
-  alias Posa.Github.Organization
-  alias Posa.Github.User
+  alias Posa.Github.{API, Organization, User}
 
   actions do
-    defaults [:read, :destroy, create: :*, update: :*]
+    defaults [:read, :destroy, update: :*]
+
+    create :create do
+      argument :organization, :struct do
+        allow_nil? false
+        constraints instance_of: Organization
+      end
+
+      argument :user, :struct do
+        allow_nil? false
+        constraints instance_of: User
+      end
+
+      accept []
+      primary? true
+
+      change manage_relationship(:organization, :organization, type: :append)
+      change manage_relationship(:user, :user, type: :append)
+    end
+
+    action :logins, {:array, :string} do
+      run fn _, _ ->
+        __MODULE__
+        |> Ash.Query.load(:user)
+        |> Ash.read!()
+        |> Enum.map(& &1.user.login)
+        |> then(&{:ok, &1})
+      end
+    end
+
+    action :count, :integer, run: fn _, _ -> Ash.count(__MODULE__) end
 
     action :sync, {:array, :struct} do
       run fn _, _ ->
         for org <- Organization.read!() do
-          members =
-            case API.org_members(org.login) do
-              {:ok, members} ->
-                members
+          case API.org_members(org.login) do
+            {:ok, :not_modified} ->
+              nil
 
-              {:error, message} ->
-                Logger.info("Members sync error: #{message}")
-                []
-            end
+            {:ok, users} ->
+              for user <- users do
+                %{organization: org, user: User.create!(user)}
+                |> __MODULE__.create!()
+              end
 
-          org
-          |> Ash.Changeset.for_update(:update)
-          |> Ash.Changeset.manage_relationship(
-            :members,
-            members,
-            on_no_match: :create,
-            on_lookup: :relate_and_update,
-            on_match: :update,
-            on_missing: :unrelate
-          )
-          |> Ash.update!()
+            {:err, message} ->
+              Logger.info("Members sync error: #{message}")
+              nil
+          end
         end
+        |> List.flatten()
         |> then(&{:ok, &1})
       end
     end
@@ -49,6 +71,8 @@ defmodule Posa.Github.Member do
     define :update, action: :update
     define :destroy, action: :destroy
 
+    define :logins, action: :logins
+    define :count, action: :count
     define :sync, action: :sync
   end
 
@@ -77,9 +101,9 @@ defmodule Posa.Github.Member do
     publish_all :update, "activity"
     publish_all :destroy, "activity"
 
-    publish_all :create, ["member", [nil, "created"], [nil, :_pkey]]
-    publish_all :update, ["member", [nil, "updated"], [nil, :_pkey]], previous_values?: true
-    publish_all :destroy, ["member", [nil, "destroyed"], [nil, :_pkey]]
+    # publish_all :create, ["member", [nil, "created"], [nil, :_pkey]]
+    # publish_all :update, ["member", [nil, "updated"], [nil, :_pkey]], previous_values?: true
+    # publish_all :destroy, ["member", [nil, "destroyed"], [nil, :_pkey]]
 
     # publish :sync, ["member", [nil, "synched"], [nil, :_pkey]], previous_values?: true, event: "sync"
   end

@@ -26,7 +26,7 @@ defmodule Posa.Github.Etag do
         with {:ok, resource} <- get(input.arguments) do
           {:ok, :deleted}
         else
-          _ -> {:error, :not_found}
+          _ -> {:err, :not_found}
         end
       end
     end

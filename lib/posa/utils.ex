@@ -16,6 +16,38 @@ defmodule Posa.Utils do
   # Public functions
 
   @doc ~S"""
+  """
+  @spec month_tag(Date.t()) :: map()
+  def month_tag(date) do
+    date = date |> Date.beginning_of_month()
+
+    %{
+      date: date,
+      machine: Timex.format!(date, "{YYYY}-{0M}"),
+      month_label: Timex.lformat!(date, "{Mfull}", "de"),
+      year_label: Timex.format!(date, "{YYYY}")
+    }
+  end
+
+  @doc ~S"""
+  """
+  @spec day_tag(DateTime.t()) :: map()
+  def day_tag(%DateTime{} = date), do: day_tag(date |> DateTime.to_date())
+
+  @spec day_tag(NaiveDateTime.t()) :: map()
+  def day_tag(%NaiveDateTime{} = date), do: day_tag(date |> NaiveDateTime.to_date())
+
+  @spec day_tag(Date.t()) :: map()
+  def day_tag(%Date{} = date) do
+    %{
+      date: date,
+      machine: Timex.format!(date, "{YYYY}-{0M}-{0D}"),
+      day_label: Timex.lformat!(date, "{WDfull}", "de"),
+      date_label: Timex.format!(date, "{0D}.{0M}.{YYYY}")
+    }
+  end
+
+  @doc ~S"""
   Tries to retrieve system env variables in order from the list of keys.
   If no key is found, the default value is returned.
   If a type is specified, the value is converted to that type.

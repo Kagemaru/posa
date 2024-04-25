@@ -29,7 +29,7 @@ defmodule Posa.MixProject do
   def application do
     [
       mod: {Posa.Application, []},
-      extra_applications: [:logger, :runtime_tools, :os_mon]
+      extra_applications: [:logger, :runtime_tools, :os_mon, :wx, :observer]
     ]
   end
 
@@ -64,13 +64,15 @@ defmodule Posa.MixProject do
       {:finch, "~> 0.13"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
+      {:circular_buffer, "~> 0.4"},
       {:gettext, "~> 0.24"},
       {:jason, "~> 1.4"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
 
       # Ash
-      {:ash, ">= 3.0.0-rc.6"},
+      {:ash, ">= 3.0.0-rc.25", github: "ash-project/ash", branch: "main", override: true},
+      # {:ash, ">= 3.0.0-rc.6"},
       {:picosat_elixir, ">= 0.2.3"},
       {:ash_phoenix, ">= 2.0.0-rc.1"},
       {:ash_authentication, ">= 4.0.0-rc.1"},

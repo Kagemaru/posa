@@ -6,10 +6,7 @@ defmodule Posa.Github.Organization do
 
   require Logger
 
-  alias Posa.Github.User
-  alias Posa.Github.Member
-  alias Posa.Github.Repository
-  alias Posa.Github.API
+  alias Posa.Github.{API, Member, Repository, User}
 
   actions do
     defaults [:read, :destroy, create: :*, update: :*]
@@ -18,16 +15,14 @@ defmodule Posa.Github.Organization do
 
     action :sync, {:array, :struct} do
       run fn _, _ ->
-        result =
-          for org_name <- Application.fetch_env!(:posa, :organizations) do
-            case API.organization(org_name) do
-              {:ok, :not_modified} -> nil
-              {:ok, org} -> __MODULE__.create!(org)
-              {:error, message} -> Logger.info("Organization sync error: #{message}")
-            end
+        for org_name <- Application.fetch_env!(:posa, :organizations) do
+          case API.organization(org_name) do
+            {:ok, :not_modified} -> nil
+            {:ok, org} -> __MODULE__.create!(org)
+            {:err, message} -> Logger.info("Organization sync error: #{message}")
           end
-
-        {:ok, result}
+        end
+        |> then(&{:ok, &1})
       end
     end
   end

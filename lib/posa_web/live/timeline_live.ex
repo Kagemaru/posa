@@ -3,26 +3,27 @@ defmodule PosaWeb.TimelineLive do
   Liveview that displays the timeline of events.
   """
 
+  alias Posa.Github.Statistic
   alias Posa.Github.Organization
   alias Posa.Github.User
   alias Posa.Github.Event
 
   use PosaWeb, :live_view
 
-  import PosaWeb.TimelineComponents, only: [timeline: 1, month_group: 1, day_group: 1]
-  import PosaWeb.EventComponents, only: [event: 1]
+  import PosaWeb.TimelineComponent, only: [timeline: 1]
 
   @impl true
   def mount(_params, _session, socket) do
-    socket =
-      socket
-      |> assign(
-        debug: debug(),
-        events: list_events(),
-        last_updated: DateTime.now!("Europe/Zurich")
-      )
+    months = Event.months!()
+    days = Event.days!(%{group: true})
+    stats = Statistic.as_map!()
+    open = months |> Enum.map(&"month-#{&1}") |> MapSet.new()
 
-    if connected?(socket), do: Phoenix.PubSub.subscribe(Posa.PubSub, "github")
+    socket = assign(socket, debug: debug(), months: months, days: days, stats: stats, open: open)
+
+    if connected?(socket) do
+      Phoenix.PubSub.subscribe(Posa.PubSub, "github")
+    end
 
     {:ok, socket}
   end
@@ -34,21 +35,7 @@ defmodule PosaWeb.TimelineLive do
     <div class="px-4 py-20 sm:px-6 lg:px-8">
       <div class="mx-auto max-w-[120rem]">
         <div class="flex flex-col px-4 pt-24 ml-3 overflow-x-hidden overflow-y-scroll">
-          <.timeline events={@events}>
-            <:month :let={month}>
-              <.month_group open={month.index == 0} days={month.days}>
-                <:day :let={day}>
-                  <.day_group open={day.index == 0} events={day.events}>
-                    <:event :let={event}>
-                      <.event event={event} />
-                    </:event>
-                  </.day_group>
-                </:day>
-              </.month_group>
-            </:month>
-          </.timeline>
-
-          <%!-- <.live_component module={PosaWeb.TimelineComponent} id="timeline-lv" events={@events} /> --%>
+          <.timeline open={@open} months={@months} days={@days} stats={@stats} />
         </div>
       </div>
     </div>
@@ -108,34 +95,28 @@ defmodule PosaWeb.TimelineLive do
   end
 
   @impl true
-  def handle_info("activity", socket) do
-    socket =
-      socket
-      |> assign(events: list_events())
+  def handle_event("toggle_open", %{"id" => id}, socket) do
+    open = socket.assigns.open
 
-    # |> assign(last_updated: last_update)
+    IO.inspect(open, label: "open")
+    IO.inspect(id, label: "id")
+
+    open =
+      if MapSet.member?(open, id) do
+        MapSet.delete(open, id)
+      else
+        MapSet.put(open, id)
+      end
+
+    {:noreply, assign(socket, open: open)}
+  end
+
+  @impl true
+  def handle_info("activity", socket) do
+    socket = assign(socket, months: Event.months!(), days: Event.days!())
 
     {:noreply, socket}
   end
-
-  def list_events, do: Event.list!()
-
-  # TODO: Move tooling to it's own module
-  # credo:disable-for-previous-line
-  def deep_atomize_keys(data) when is_list(data) do
-    for(item <- data, do: deep_atomize_keys(item))
-  end
-
-  def deep_atomize_keys(data) when is_struct(data), do: data
-
-  def deep_atomize_keys(data) when is_map(data) do
-    for {key, val} <- data, into: %{}, do: {atomize(key), deep_atomize_keys(val)}
-  end
-
-  def deep_atomize_keys(data), do: data
-
-  defp atomize(key) when is_binary(key), do: String.to_atom(key)
-  defp atomize(key) when is_atom(key), do: key
 
   defp debug do
     %{

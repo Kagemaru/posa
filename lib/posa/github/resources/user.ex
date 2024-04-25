@@ -2,13 +2,11 @@ defmodule Posa.Github.User do
   use Ash.Resource,
     domain: Posa.Github,
     data_layer: Ash.DataLayer.Ets,
-    notifiers: [Ash.Notifier.PubSub]
+    notifiers: Ash.Notifier.PubSub
 
   require Logger
 
-  alias Posa.Github.Event
-  alias Posa.Github.API
-  alias Posa.Github.{Organization, Member}
+  alias Posa.Github.{API, Event, Member, Organization}
 
   actions do
     defaults [:read, :destroy, create: :*, update: :*]
@@ -17,21 +15,25 @@ defmodule Posa.Github.User do
 
     action :sync, {:array, :struct} do
       run fn _, _ ->
-        for user <- __MODULE__.read!() do
-          api_user =
+        try do
+          for user <- __MODULE__.read!() do
             case API.user(user.login) do
               {:ok, user} ->
-                user
+                __MODULE__.update!(user)
 
-              {:error, message} ->
+              {:err, "Forbidden"} ->
+                Logger.info("Users sync error: Forbidden")
+                throw(:forbidden)
+
+              {:err, message} ->
                 Logger.info("Users sync error: #{message}")
                 nil
             end
-
-          user
-          |> Ash.Changeset.for_update(:update, api_user)
-          |> Ash.update!()
+          end
+        catch
+          :forbidden -> []
         end
+        |> List.flatten()
         |> then(&{:ok, &1})
       end
     end

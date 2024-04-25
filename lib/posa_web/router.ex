@@ -49,7 +49,10 @@ defmodule PosaWeb.Router do
     scope "/dev" do
       pipe_through :browser
 
-      live_dashboard "/dashboard", metrics: PosaWeb.Telemetry
+      live_dashboard "/dashboard",
+        metrics: PosaWeb.Telemetry,
+        metrics_history: {Posa.Telemetry.MetricsHistory, :metrics_history, []}
+
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
   end

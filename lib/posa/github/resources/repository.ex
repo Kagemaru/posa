@@ -4,43 +4,47 @@ defmodule Posa.Github.Repository do
   use Ash.Resource,
     domain: Posa.Github,
     data_layer: Ash.DataLayer.Ets,
-    notifiers: [Ash.Notifier.PubSub]
+    notifiers: Ash.Notifier.PubSub
 
-  alias Posa.Github.API
-  alias Posa.Github.Collaborator
-  alias Posa.Github.Organization
-  alias Posa.Github.User
+  alias Posa.Github.{API, Collaborator, Organization, User}
 
   actions do
-    defaults [:read, :destroy, create: :*, update: :*]
+    defaults [:read, :destroy, update: :*]
+
+    create :create do
+      argument :organization, :struct do
+        constraints instance_of: Organization
+      end
+
+      accept [:id, :name]
+      primary? true
+
+      change manage_relationship(:organization, :organization, type: :append)
+    end
 
     action :count, :integer, run: fn _, _ -> Ash.count(__MODULE__) end
 
     action :sync, {:array, :struct} do
       run fn _, _ ->
         for org <- Organization.read!() do
-          repos =
-            case API.org_repositories(org.login) do
-              {:ok, repos} ->
-                repos
+          case API.org_repositories(org.login) do
+            {:ok, :not_modified} ->
+              nil
 
-              {:error, message} ->
-                Logger.info("Repos sync error: #{message}")
-                []
-            end
+            {:ok, repos} ->
+              for repo <- repos do
+                repo
+                |> Map.take(["id", "name"])
+                |> Map.put(:organization, org)
+                |> __MODULE__.create!()
+              end
 
-          org
-          |> Ash.Changeset.for_update(:update)
-          |> Ash.Changeset.manage_relationship(
-            :repositories,
-            repos,
-            on_no_match: :create,
-            on_lookup: :relate_and_update,
-            on_match: :update,
-            on_missing: :unrelate
-          )
-          |> Ash.update!()
+            {:err, message} ->
+              Logger.info("Repos sync error: #{message}")
+              nil
+          end
         end
+        |> List.flatten()
         |> then(&{:ok, &1})
       end
     end

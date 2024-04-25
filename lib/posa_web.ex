@@ -68,7 +68,7 @@ defmodule PosaWeb do
 
   def html do
     quote do
-      use Phoenix.Component
+      use Phoenix.Component, global_prefixes: ~w[phx-]
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
