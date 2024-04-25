@@ -62,20 +62,26 @@ defmodule Posa.Sync do
   end
 
   defp execute_sync do
-    {:ok, pid} =
+    {:ok, sync_task} =
       Task.start(fn ->
         start = System.monotonic_time()
         :telemetry.execute([:posa, :sync, :start], %{time: start})
-
-        [Organization, Member, Repository, Collaborator, Event]
-        |> Enum.map(& &1.sync!())
-
+        result = Enum.map([Organization, Member, Repository, Collaborator, Event], & &1.sync!())
         stop = System.monotonic_time()
         :telemetry.execute([:posa, :sync, :stop], %{time: stop, duration: stop - start})
         Logger.info("Sync completed")
+        Phoenix.PubSub.broadcast(Posa.PubSub, "github:sync", {:sync_finished, result})
+
+        start = System.monotonic_time()
+        :telemetry.execute([:posa, :stats, :start], %{time: start})
+        result = Posa.Github.Statistic.calculate!()
+        stop = System.monotonic_time()
+        :telemetry.execute([:posa, :stats, :stop], %{time: stop, duration: stop - start})
+        Logger.info("Stats collecting completed")
+        Phoenix.PubSub.broadcast(Posa.PubSub, "github:stats", {:stats_finished, result})
       end)
 
-    Process.register(pid, :sync_task)
+    Process.register(sync_task, :sync_task)
   end
 
   defp schedule_sync(delay), do: Process.send_after(self(), :sync, delay)
