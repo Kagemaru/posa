@@ -114,16 +114,9 @@ defmodule PosaWeb.TimelineLive do
     months = Event.months!()
     days = Event.days!(%{group: true})
     open = socket.assigns.open
+    open = if open == MapSet.new([]), do: initial_open(months), else: open
 
-    open =
-      if open == [] do
-        initial_open(socket.assigns.months)
-      else
-        open
-      end
-
-    socket = assign(socket, months: Event.months!(), days: Event.days!(%{group: true}))
-    {:noreply, socket}
+    socket = assign(socket, months: months, days: days, open: open)
 
     {:noreply, socket}
   end
@@ -135,11 +128,7 @@ defmodule PosaWeb.TimelineLive do
     {:noreply, socket}
   end
 
-  defp initial_open(months) do
-    months
-    |> Enum.map(&"month-#{&1}")
-    |> MapSet.new()
-  end
+  defp initial_open(months), do: months |> Enum.map(&"month-#{&1}") |> MapSet.new()
 
   defp debug do
     %{
