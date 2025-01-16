@@ -797,7 +797,7 @@ defmodule Posa.Github.Event do
 
     calculate :from_member?,
               :boolean,
-              expr(^ref([:actor, :login]) in fragment(&Posa.Github.Member.logins!/0))
+              expr(^ref([:actor, :login], :login) in fragment(&Posa.Github.Member.logins!/0))
 
     # expr(^ref([:actor, :login] in fragment(&Member.logins/0, nil)))
   end

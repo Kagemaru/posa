@@ -4,7 +4,7 @@ defmodule Posa.Github.Statistic do
   use Ash.Resource,
     domain: Posa.Github,
     data_layer: Ash.DataLayer.Ets,
-    notifiers: [Ash.Notifier.PubSub]
+    notifiers: Ash.Notifier.PubSub
 
   actions do
     defaults [:read, :destroy, create: :*, update: :*]

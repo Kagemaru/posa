@@ -18,7 +18,7 @@ defmodule PosaWeb.CoreComponents do
 
   alias Phoenix.HTML.Form
   alias Phoenix.LiveView.JS
-  import PosaWeb.Gettext
+  use Gettext, backend: PosaWeb.Gettext
 
   @doc """
   Renders a modal.

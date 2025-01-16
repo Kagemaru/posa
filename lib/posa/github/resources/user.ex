@@ -83,6 +83,7 @@ defmodule Posa.Github.User do
     attribute :following, :integer, writable?: true, public?: true
     attribute :created_at, :naive_datetime, writable?: true, public?: true
     attribute :updated_at, :naive_datetime, writable?: true, public?: true
+    attribute :user_view_type, :string, writable?: true, public?: true
   end
 
   relationships do
