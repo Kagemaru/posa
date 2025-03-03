@@ -4,12 +4,9 @@
 
 /* This file is for your main application css. */
 
-/* @import "./liveview.scss"; */
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap");
+[data-phx-root-id] { display: contents }
 
 /* Style scrollbar */
-
-[data-phx-root-id] { display: contents }
 
 /* Hide scrollbar for IE, Edge and Firefox */
 html {
@@ -21,3 +18,6 @@ html {
 html::-webkit-scrollbar {
   display: none;
 }
+
+/* @import "./liveview.scss"; */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap");
