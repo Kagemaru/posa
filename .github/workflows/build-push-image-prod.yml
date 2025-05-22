@@ -21,5 +21,6 @@ jobs:
         with:
           push: true
           tags: |
-            ${{ secrets.PUZZLE_REGISTRY }}/posa/elixir-prod:latest
-            ${{ secrets.PUZZLE_REGISTRY }}/posa/elixir-prod:${{ github.sha }}
+            ${{ secrets.PUZZLE_REGISTRY }}/pitc-ruby-public/posa/web:latest
+            ${{ secrets.PUZZLE_REGISTRY }}/pitc-ruby-public/posa/web:production
+            ${{ secrets.PUZZLE_REGISTRY }}/pitc-ruby-public/posa/web:${{ github.sha }}

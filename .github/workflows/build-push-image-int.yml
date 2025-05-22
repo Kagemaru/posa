@@ -22,5 +22,6 @@ jobs:
         with:
           push: true
           tags: |
-            ${{ secrets.PUZZLE_REGISTRY }}/posa/elixir-int:latest
-            ${{ secrets.PUZZLE_REGISTRY }}/posa/elixir-int:${{ github.sha }}
+            ${{ secrets.PUZZLE_REGISTRY }}/pitc-ruby-public/posa/web:latest
+            ${{ secrets.PUZZLE_REGISTRY }}/pitc-ruby-public/posa/web:integration
+            ${{ secrets.PUZZLE_REGISTRY }}/pitc-ruby-public/posa/web:${{ github.sha }}
