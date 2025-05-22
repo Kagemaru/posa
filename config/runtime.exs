@@ -79,7 +79,7 @@ if config_env() == :prod do
 
   host = system_env("PHX_HOST", "example.com")
   port = system_env("PORT", "4000", :integer)
-  allowed_origins = system_env("PHX_ALLOWED_ORIGINS", "//posa.local", :array)
+  allowed_origins = system_env("PHX_ALLOWED_ORIGINS", "//posa.local", :list)
 
   config :posa, :dns_cluster_query, system_env("DNS_CLUSTER_QUERY")
 

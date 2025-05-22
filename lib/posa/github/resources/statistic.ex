@@ -20,9 +20,9 @@ defmodule Posa.Github.Statistic do
     action :calculate, :map do
       run fn _, _ ->
         if :ets.info(__MODULE__) == :undefined do
-          clear_all!()
-        else
           :ets.new(__MODULE__, [])
+        else
+          clear_all!()
         end
 
         metrics = Metrics.all_metrics()
