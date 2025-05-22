@@ -30,7 +30,7 @@ github_token =
     """
 
 organizations = system_env("PHX_ORGANIZATIONS", "puzzle", :list)
-sync_delay_ms = system_env("PHX_SYNC_DELAY_MS", "120000", :integer)
+sync_delay_ms = system_env("PHX_SYNC_DELAY_MS", "300000", :integer)
 initial_sync = system_env("PHX_INITIAL_SYNC", "true", :bool)
 start_sync = system_env("PHX_START_SYNC", "true", :bool)
 debug = system_env("PHX_DEBUG", "false", :bool)
