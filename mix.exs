@@ -5,7 +5,7 @@ defmodule Posa.MixProject do
     [
       app: :posa,
       version: "2.0.0",
-      elixir: "~> 1.18.2",
+      elixir: "~> 1.18.4",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
