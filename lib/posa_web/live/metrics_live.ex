@@ -17,64 +17,35 @@ defmodule PosaWeb.MetricsLive do
     ~H"""
     <%= if @metrics do %>
       <div class="grid grid-cols-3">
-        <div class="p-2 m-2 bg-white border-4 border-blue-300 shadow-sm rounded-xl">
-          <h2 class="text-lg font-bold">Commits today</h2>
-          <%= @metrics.day.members.commits %> from members<br />
-          <%= @metrics.day.external.commits %> from external people<br />
-          <%= @metrics.day.all.commits %> total<br />
-        </div>
-        <div class="p-2 m-2 bg-white border-4 border-blue-300 shadow-sm rounded-xl">
-          <h2 class="text-lg font-bold">Reviews today</h2>
-          <%= @metrics.day.members.reviews %> from members<br />
-          <%= @metrics.day.external.reviews %> from external people<br />
-          <%= @metrics.day.all.reviews %> total<br />
-        </div>
-        <div class="p-2 m-2 bg-white border-4 border-blue-300 shadow-sm rounded-xl">
-          <h2 class="text-lg font-bold">Issues today</h2>
-          <%= @metrics.day.members.issues %> from members<br />
-          <%= @metrics.day.external.issues %> from external people<br />
-          <%= @metrics.day.all.issues %> total<br />
-        </div>
-        <div class="p-2 m-2 bg-white border-4 border-blue-300 shadow-sm rounded-xl">
-          <h2 class="text-lg font-bold">Commits last week</h2>
-          <%= @metrics.week.members.commits %> from members<br />
-          <%= @metrics.week.external.commits %> from external people<br />
-          <%= @metrics.week.all.commits %> total<br />
-        </div>
-        <div class="p-2 m-2 bg-white border-4 border-blue-300 shadow-sm rounded-xl">
-          <h2 class="text-lg font-bold">Reviews last week</h2>
-          <%= @metrics.week.members.reviews %> from members<br />
-          <%= @metrics.week.external.reviews %> from external people<br />
-          <%= @metrics.week.all.reviews %> total<br />
-        </div>
-        <div class="p-2 m-2 bg-white border-4 border-blue-300 shadow-sm rounded-xl">
-          <h2 class="text-lg font-bold">Issues last week</h2>
-          <%= @metrics.week.members.issues %> from members<br />
-          <%= @metrics.week.external.issues %> from external people<br />
-          <%= @metrics.week.all.issues %> total<br />
-        </div>
-        <div class="p-2 m-2 bg-white border-4 border-blue-300 shadow-sm rounded-xl">
-          <h2 class="text-lg font-bold">Commits last month</h2>
-          <%= @metrics.month.members.commits %> from members<br />
-          <%= @metrics.month.external.commits %> from external people<br />
-          <%= @metrics.month.all.commits %> total<br />
-        </div>
-        <div class="p-2 m-2 bg-white border-4 border-blue-300 shadow-sm rounded-xl">
-          <h2 class="text-lg font-bold">Reviews last month</h2>
-          <%= @metrics.month.members.reviews %> from members<br />
-          <%= @metrics.month.external.reviews %> from external people<br />
-          <%= @metrics.month.all.reviews %> total<br />
-        </div>
-        <div class="p-2 m-2 bg-white border-4 border-blue-300 shadow-sm rounded-xl">
-          <h2 class="text-lg font-bold">Issues last month</h2>
-          <%= @metrics.month.members.issues %> from members<br />
-          <%= @metrics.month.external.issues %> from external people<br />
-          <%= @metrics.month.all.issues %> total<br />
-        </div>
+      <.metrics title="Commits today"      metrics={@metrics.day.commits} />
+      <.metrics title="Reviews today"      metrics={@metrics.day.reviews} />
+      <.metrics title="Issues today"       metrics={@metrics.day.issues} />
+      <.metrics title="Commits last week"  metrics={@metrics.week.commits} />
+      <.metrics title="Reviews last week"  metrics={@metrics.week.reviews} />
+      <.metrics title="Issues last week"   metrics={@metrics.week.issues} />
+      <.metrics title="Commits last month" metrics={@metrics.month.commits} />
+      <.metrics title="Reviews last month" metrics={@metrics.month.reviews} />
+      <.metrics title="Issues last month"  metrics={@metrics.month.issues} />
       </div>
     <% else %>
       <div>Loading...</div>
     <% end %>
+    """
+  end
+
+  attr :title, :string, required: true
+  # attr :internal, :integer, required: true
+  # attr :total, :integer, required: true
+  attr :metrics, :map, required: true
+
+  def metrics(assigns) do
+    ~H"""
+    <div class="p-2 m-2 bg-white border-4 border-blue-300 shadow-sm rounded-xl">
+      <h2 class="text-lg font-bold"><%=@title%></h2>
+      <%= @metrics.internal %> from members<br />
+      <%= @metrics.total - @metrics.internal %> from external people<br />
+      <%= @metrics.total %> total<br />
+    </div>
     """
   end
 

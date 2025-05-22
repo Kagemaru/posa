@@ -45,7 +45,7 @@ defmodule PosaWeb.MonthComponent do
       />
       <.month_count_label
         label={ngettext("1 Event", "%{count} Events", @counts.events)}
-        class="z-0 w-48 -ml-16 bg-pz-carolina-blue text-slate-100"
+        class="z-0 w-52 -ml-16 bg-pz-carolina-blue text-slate-100"
       />
     </div>
     """

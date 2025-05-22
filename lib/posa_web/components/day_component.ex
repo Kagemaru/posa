@@ -34,10 +34,10 @@ defmodule PosaWeb.DayComponent do
       phx-value-id={@id}
       class="relative flex flex-row items-center w-full h-8 mb-4 cursor-pointer"
     >
-      <.day_date_label date={@date} class="z-20 w-56" />
+      <.day_date_label date={@date} class="z-20 w-64" />
       <.day_count_label
         label={ngettext("1 Event", "%{count} Events", @count)}
-        class="z-10 -ml-8 w-36 bg-pz-carolina-blue text-slate-100"
+        class="z-10 -ml-8 w-44 bg-pz-carolina-blue text-slate-100"
       />
     </div>
     """
