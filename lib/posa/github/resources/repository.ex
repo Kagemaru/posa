@@ -1,4 +1,8 @@
 defmodule Posa.Github.Repository do
+  @moduledoc """
+  Represents a Github Repository.
+  """
+
   require Logger
 
   use Ash.Resource,

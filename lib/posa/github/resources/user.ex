@@ -1,4 +1,8 @@
 defmodule Posa.Github.User do
+  @moduledoc """
+  Representation of a Github User.
+  """
+
   use Ash.Resource,
     domain: Posa.Github,
     data_layer: Ash.DataLayer.Ets,

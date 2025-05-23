@@ -1,4 +1,8 @@
 defmodule Posa.Github.Event do
+  @moduledoc """
+  Represents a Github Event.
+  """
+
   use Ash.Resource,
     domain: Posa.Github,
     data_layer: Ash.DataLayer.Ets,

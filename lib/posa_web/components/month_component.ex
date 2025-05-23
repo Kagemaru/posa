@@ -1,4 +1,7 @@
 defmodule PosaWeb.MonthComponent do
+  @moduledoc """
+  Display components for the month entry in the timeline view.
+  """
   use PosaWeb, :html
 
   import PosaWeb.DayComponent, only: [day_group: 1]

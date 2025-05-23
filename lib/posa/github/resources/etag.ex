@@ -1,4 +1,8 @@
 defmodule Posa.Github.Etag do
+  @moduledoc """
+  Represents a Github Etag.
+  """
+
   use Ash.Resource, domain: Posa.Github, data_layer: Ash.DataLayer.Ets
 
   actions do
@@ -22,13 +26,7 @@ defmodule Posa.Github.Etag do
       argument :domain, :term, default: General
       argument :key, :term, allow_nil?: false
 
-      run fn input, _ ->
-        with {:ok, resource} <- get(input.arguments) do
-          {:ok, :deleted}
-        else
-          _ -> {:err, :not_found}
-        end
-      end
+      run fn input, _ -> :ets.delete(input.arguments) end
     end
 
     action :clear_all, :term do

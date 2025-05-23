@@ -30,7 +30,7 @@ defmodule Posa.Exports.Metrics do
   #       }
 
   def all_metrics do
-    Posa.Github.Event.read!() |> Enum.map(&count/1)
+    Posa.Github.Event.read!() |> Enum.each(&count/1)
 
     Process.get(:counts)
   end

@@ -1,4 +1,8 @@
 defmodule Posa.Github.API.Links do
+  @moduledoc """
+  Handles github links for the Github API
+  """
+
   @type request :: Req.Request.t()
   @type response :: Req.Response.t()
   @type options :: keyword()

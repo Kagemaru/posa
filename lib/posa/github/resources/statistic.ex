@@ -1,4 +1,8 @@
 defmodule Posa.Github.Statistic do
+  @moduledoc """
+  Represents a Github Statistic Entry.
+  """
+
   alias Posa.Exports.Metrics
 
   use Ash.Resource,

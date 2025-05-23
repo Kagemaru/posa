@@ -1,4 +1,8 @@
 defmodule Posa.Github.Organization do
+  @moduledoc """
+  Represents a Github Organization.
+  """
+
   use Ash.Resource,
     domain: Posa.Github,
     data_layer: Ash.DataLayer.Ets,

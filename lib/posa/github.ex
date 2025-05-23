@@ -1,4 +1,8 @@
 defmodule Posa.Github do
+  @moduledoc """
+  Ash Domain to represend Github.
+  """
+
   use Ash.Domain
 
   alias Posa.Github.{Organization, Member, User, Event, Etag, Repository, Collaborator, Statistic}

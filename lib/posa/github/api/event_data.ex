@@ -1,4 +1,8 @@
 defmodule Posa.Github.API.EventData do
+  @moduledoc """
+  API Interface for the Github Events
+  """
+
   def transform(event) do
     %{
       id: event["id"],

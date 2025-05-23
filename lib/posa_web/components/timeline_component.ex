@@ -1,4 +1,8 @@
 defmodule PosaWeb.TimelineComponent do
+  @moduledoc """
+  Display components for the timeline view.
+  """
+
   alias PosaWeb.MonthComponent
   use PosaWeb, :html
 

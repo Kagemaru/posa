@@ -1,5 +1,5 @@
 defmodule Posa.Github.API.Etag do
-  @doc """
+  @moduledoc """
   Save and load etags
 
   ## Request Options

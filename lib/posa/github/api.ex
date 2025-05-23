@@ -1,4 +1,8 @@
 defmodule Posa.Github.API do
+  @moduledoc """
+  Handles interaction with the Github API
+  """
+
   alias Posa.Github.API.Client
 
   @type id :: String.t()

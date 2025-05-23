@@ -1,4 +1,8 @@
 defmodule Posa.Github.API.PaginatingAdapter do
+  @moduledoc """
+  Handles pagination for the Github API
+  """
+
   def run_finch(request), do: {request, paginate(request)}
 
   def paginate(request, response \\ nil, collection \\ [])

@@ -1,4 +1,8 @@
 defmodule PosaWeb.DayComponent do
+  @moduledoc """
+  Display components for the day entry in the timeline view.
+  """
+
   use PosaWeb, :html
 
   alias PosaWeb.EventsComponent, as: Events

@@ -1,4 +1,5 @@
 defmodule Posa.Telemetry.MetricsHistory do
+  @moduledoc false
   use GenServer
 
   @history_buffer_size 50

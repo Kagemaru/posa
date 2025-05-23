@@ -1,4 +1,8 @@
 defmodule Posa.Github.Collaborator do
+  @moduledoc """
+  Represents a Github Collaborator
+  """
+
   require Logger
 
   use Ash.Resource,

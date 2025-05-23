@@ -1,4 +1,6 @@
 defmodule PosaWeb.EventsComponent do
+  @moduledoc false
+
   alias Posa.Github.Event
 
   # import PosaWeb.EventComponents, only: [event: 1]
