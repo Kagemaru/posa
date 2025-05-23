@@ -3,10 +3,10 @@ defmodule PosaWeb.TimelineLive do
   Liveview that displays the timeline of events.
   """
 
-  alias Posa.Github.Statistic
-  alias Posa.Github.Organization
-  alias Posa.Github.User
   alias Posa.Github.Event
+  alias Posa.Github.Organization
+  alias Posa.Github.Statistic
+  alias Posa.Github.User
 
   use PosaWeb, :live_view
 

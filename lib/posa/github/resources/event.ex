@@ -13,8 +13,10 @@ defmodule Posa.Github.Event do
 
   require Ash.Resource.Preparation.Builtins
   require Ash.Resource.Preparation.Builtins
-  alias Posa.Github.User
+
   alias Posa.Github.API
+  alias Posa.Github.Member
+  alias Posa.Github.User
 
   actions do
     defaults [:read, :destroy, update: :*]
@@ -801,7 +803,7 @@ defmodule Posa.Github.Event do
 
     calculate :from_member?,
               :boolean,
-              expr(^ref([:actor, :login], :login) in fragment(&Posa.Github.Member.logins!/0))
+              expr(^ref([:actor, :login], :login) in fragment(&Member.logins!/0))
 
     # expr(^ref([:actor, :login] in fragment(&Member.logins/0, nil)))
   end

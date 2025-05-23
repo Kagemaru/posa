@@ -1,6 +1,9 @@
 defmodule Posa.Exports.Metrics do
   @moduledoc "This handles the generating of the metrics for export"
 
+  alias Posa.Github.Event
+  alias Posa.Github.Member
+
   # @type user_type :: :internal | :external
   # @type event_type :: :commits | :issues | :reviews | :other
   # @type range :: :day | :week | :month | :total
@@ -30,7 +33,7 @@ defmodule Posa.Exports.Metrics do
   #       }
 
   def all_metrics do
-    Posa.Github.Event.read!() |> Enum.each(&count/1)
+    Event.read!() |> Enum.each(&count/1)
 
     Process.get(:counts)
   end
@@ -95,5 +98,5 @@ defmodule Posa.Exports.Metrics do
   defp month_tag(date), do: Posa.Utils.month_tag(date) |> Map.get(:date)
   defp day_tag(date), do: Posa.Utils.day_tag(date) |> Map.get(:date)
 
-  defp logins, do: Posa.Github.Member.logins!()
+  defp logins, do: Member.logins!()
 end

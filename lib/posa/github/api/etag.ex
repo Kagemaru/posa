@@ -8,6 +8,9 @@ defmodule Posa.Github.API.Etag do
     * `:etags_save_fun` - function to save etags. Defaults to `&save_etag/1`.
     * `:etags_load_fun` - function to load etags. Defaults to `&load_etag/1`.
   """
+
+  alias Posa.Github.Etag
+
   def attach(%Req.Request{} = request, options \\ []) do
     request
     |> Req.Request.register_options([:etags, :etags_save_fun, :etags_load_fun])
@@ -26,7 +29,7 @@ defmodule Posa.Github.API.Etag do
   end
 
   defp save_etag({request, response}) do
-    Posa.Github.Etag.set(%{
+    Etag.set(%{
       key: request.url |> URI.to_string(),
       etag: response |> Req.Response.get_header("etag") |> List.first()
     })
@@ -44,7 +47,7 @@ defmodule Posa.Github.API.Etag do
   defp load_etag(request) do
     url = "#{request.options.base_url}#{request.url |> URI.to_string()}"
 
-    case Posa.Github.Etag.get(%{key: url}) do
+    case Etag.get(%{key: url}) do
       {:ok, %{etag: etag}} -> Req.Request.put_header(request, "If-None-Match", etag)
       _ -> request
     end

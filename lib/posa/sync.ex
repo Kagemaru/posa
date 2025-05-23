@@ -2,6 +2,7 @@ defmodule Posa.Sync do
   @moduledoc "Handles the recurring sync"
 
   alias Posa.Github.{Collaborator, Event, Member, Organization, Repository}
+  alias Posa.Github.Statistic
 
   require Logger
 
@@ -74,7 +75,7 @@ defmodule Posa.Sync do
 
         start = System.monotonic_time()
         :telemetry.execute([:posa, :stats, :start], %{time: start})
-        result = Posa.Github.Statistic.calculate!()
+        result = Statistic.calculate!()
         stop = System.monotonic_time()
         :telemetry.execute([:posa, :stats, :stop], %{time: stop, duration: stop - start})
         Logger.info("Stats collecting completed")

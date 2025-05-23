@@ -5,7 +5,14 @@ defmodule Posa.Github do
 
   use Ash.Domain
 
-  alias Posa.Github.{Organization, Member, User, Event, Etag, Repository, Collaborator, Statistic}
+  alias Posa.Github.Collaborator
+  alias Posa.Github.Etag
+  alias Posa.Github.Event
+  alias Posa.Github.Member
+  alias Posa.Github.Organization
+  alias Posa.Github.Repository
+  alias Posa.Github.Statistic
+  alias Posa.Github.User
 
   resources do
     resource Organization
