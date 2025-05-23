@@ -67,8 +67,8 @@ defmodule PosaWeb.MonthComponent do
         datetime={Timex.format!(@date, "{YYYY}-{0M}")}
         class="flex flex-row justify-between w-full font-bold"
       >
-        <span><%= Timex.lformat!(@date, "{Mfull}", "de") %></span>
-        <span><%= Timex.format!(@date, "{YYYY}") %></span>
+        <span>{Timex.lformat!(@date, "{Mfull}", "de")}</span>
+        <span>{Timex.format!(@date, "{YYYY}")}</span>
       </time>
     </div>
     """
@@ -84,7 +84,7 @@ defmodule PosaWeb.MonthComponent do
       @class
     ]}>
       <div class="pl-2 pr-4 font-semibold whitespace-nowrap ">
-        <%= @label %>
+        {@label}
       </div>
     </div>
     """

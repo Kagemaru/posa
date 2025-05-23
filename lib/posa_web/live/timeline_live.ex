@@ -53,7 +53,7 @@ defmodule PosaWeb.TimelineLive do
         <li class="flex justify-between">
           <span>Next:</span>
           <time datetime={@debug.time}>
-            <%= (@debug.time && "#{div(@debug.time, 1000)} s") || "off" %>
+            {(@debug.time && "#{div(@debug.time, 1000)} s") || "off"}
           </time>
         </li>
       </ul>
@@ -61,9 +61,9 @@ defmodule PosaWeb.TimelineLive do
       <.button disabled={!@debug.time} phx-click="cancel_sync_timer">Cancel Sync Timer</.button>
       <.button disabled={!!@debug.time} phx-click="start_sync_timer">Start Sync Timer</.button>
       <ul class="p-4 border rounded-lg bg-slate-200 border-slate-600">
-        <li class="flex justify-between"><span>Organizations:</span><%= @debug.stats.orgs %></li>
-        <li class="flex justify-between"><span>Users:</span><%= @debug.stats.users %></li>
-        <li class="flex justify-between"><span>Events:</span><%= @debug.stats.events %></li>
+        <li class="flex justify-between"><span>Organizations:</span>{@debug.stats.orgs}</li>
+        <li class="flex justify-between"><span>Users:</span>{@debug.stats.users}</li>
+        <li class="flex justify-between"><span>Events:</span>{@debug.stats.events}</li>
       </ul>
     </div>
     """

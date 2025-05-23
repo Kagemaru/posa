@@ -17,15 +17,15 @@ defmodule PosaWeb.MetricsLive do
     ~H"""
     <%= if @metrics do %>
       <div class="grid grid-cols-3">
-      <.metrics title="Commits today"      metrics={@metrics.day.commits} />
-      <.metrics title="Reviews today"      metrics={@metrics.day.reviews} />
-      <.metrics title="Issues today"       metrics={@metrics.day.issues} />
-      <.metrics title="Commits last week"  metrics={@metrics.week.commits} />
-      <.metrics title="Reviews last week"  metrics={@metrics.week.reviews} />
-      <.metrics title="Issues last week"   metrics={@metrics.week.issues} />
-      <.metrics title="Commits last month" metrics={@metrics.month.commits} />
-      <.metrics title="Reviews last month" metrics={@metrics.month.reviews} />
-      <.metrics title="Issues last month"  metrics={@metrics.month.issues} />
+        <.metrics title="Commits today" metrics={@metrics.day.commits} />
+        <.metrics title="Reviews today" metrics={@metrics.day.reviews} />
+        <.metrics title="Issues today" metrics={@metrics.day.issues} />
+        <.metrics title="Commits last week" metrics={@metrics.week.commits} />
+        <.metrics title="Reviews last week" metrics={@metrics.week.reviews} />
+        <.metrics title="Issues last week" metrics={@metrics.week.issues} />
+        <.metrics title="Commits last month" metrics={@metrics.month.commits} />
+        <.metrics title="Reviews last month" metrics={@metrics.month.reviews} />
+        <.metrics title="Issues last month" metrics={@metrics.month.issues} />
       </div>
     <% else %>
       <div>Loading...</div>
@@ -41,10 +41,10 @@ defmodule PosaWeb.MetricsLive do
   def metrics(assigns) do
     ~H"""
     <div class="p-2 m-2 bg-white border-4 border-blue-300 shadow-sm rounded-xl">
-      <h2 class="text-lg font-bold"><%=@title%></h2>
-      <%= @metrics.internal %> from members<br />
-      <%= @metrics.total - @metrics.internal %> from external people<br />
-      <%= @metrics.total %> total<br />
+      <h2 class="text-lg font-bold">{@title}</h2>
+      {@metrics.internal} from members<br />
+      {@metrics.total - @metrics.internal} from external people<br />
+      {@metrics.total} total<br />
     </div>
     """
   end

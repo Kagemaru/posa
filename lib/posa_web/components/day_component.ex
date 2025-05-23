@@ -59,8 +59,8 @@ defmodule PosaWeb.DayComponent do
         datetime={Timex.format!(@date, "{YYYY}-{0M}-{0D}")}
         class="relative z-10 w-60 h-full font-semibold bg-white border rounded-full border-pz-carolina-blue text-pz-prussian-blue -left-[1px] flex flex-row items-center px-3 justify-between shadow-md"
       >
-        <span><%= Timex.lformat!(@date, "{WDfull}", "de") %></span>
-        <span><%= Timex.format!(@date, "{0D}.{0M}.{YYYY}") %></span>
+        <span>{Timex.lformat!(@date, "{WDfull}", "de")}</span>
+        <span>{Timex.format!(@date, "{0D}.{0M}.{YYYY}")}</span>
       </time>
     </div>
     """
@@ -75,7 +75,7 @@ defmodule PosaWeb.DayComponent do
       "font-semibold pr-4 h-full rounded-full shadow-md flex flex-row justify-end items-center border border-white",
       @class
     ]}>
-      <%= @label %>
+      {@label}
     </div>
     """
   end
