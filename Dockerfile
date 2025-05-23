@@ -3,7 +3,7 @@ FROM hexpm/elixir:1.18.4-erlang-27.3.4-alpine-3.21.3 AS build
 
 # install build dependencies
 # RUN apk add --no-cache build-base npm git python
-RUN apk update && apk add --no-cache build-base npm git
+RUN apk update && apk add --no-cache build-base npm git libgcc libstdc++ make
 
 # prepare build dir
 WORKDIR /app
@@ -34,14 +34,14 @@ RUN mix assets.deploy \
 
 # ===================================================================================
 # prepare release image
-FROM alpine:3.19 AS app
+FROM alpine:3.21 AS app
 
 # Add User
 RUN adduser -D posa
 
 RUN apk update \
     && apk upgrade --no-cache \
-    && apk add --no-cache postgresql-client bash openssl libgcc libstdc++ ncurses-libs
+    && apk add --no-cache postgresql-client bash openssl libgcc libstdc++ ncurses-libs make
 
 WORKDIR /app
 
