@@ -1,6 +1,6 @@
 defmodule Posa.Github do
   @moduledoc """
-  Ash Domain to represend Github.
+  Ash Domain to represent Github.
   """
 
   use Ash.Domain

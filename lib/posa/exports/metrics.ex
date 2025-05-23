@@ -79,12 +79,12 @@ defmodule Posa.Exports.Metrics do
     if login in logins(), do: :internal, else: :external
   end
 
-  def date_in_range?(date, :day), do: Date.diff(date, now()) >= -1
-  def date_in_range?(date, :week), do: Date.diff(date, now()) >= -7
-  def date_in_range?(date, :month), do: Date.diff(date, now()) >= -30
+  def date_in_range?(date, :day), do: Date.diff(date, today()) >= -1
+  def date_in_range?(date, :week), do: Date.diff(date, today()) >= -7
+  def date_in_range?(date, :month), do: Date.diff(date, today()) >= -30
   def date_in_range?(_, :total), do: true
 
-  def now, do: DateTime.now!("Europe/Zurich")
+  def today, do: DateTime.now!("Europe/Zurich") |> DateTime.to_date()
 
   def event_type(type) do
     case type do
