@@ -21,7 +21,7 @@ defmodule Posa.Github.API.Etag do
 
   defp save_etags({request, response}) do
     if request.options[:etags] do
-      fun = request.options[:save_fun] || (&save_etag/1)
+      fun = request.options[:etags_save_fun] || (&save_etag/1)
       fun.({request, response})
     end
 
@@ -37,7 +37,7 @@ defmodule Posa.Github.API.Etag do
 
   defp load_etags(request) do
     if request.options[:etags] do
-      fun = request.options[:load_fun] || (&load_etag/1)
+      fun = request.options[:etags_load_fun] || (&load_etag/1)
       fun.(request)
     else
       request

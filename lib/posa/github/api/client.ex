@@ -25,9 +25,9 @@ defmodule Posa.Github.API.Client do
     )
   end
 
-  defp retry_delay(0..2), do: 1_000
-  defp retry_delay(3..5), do: 10_000
-  defp retry_delay(6..8), do: 100_000
+  defp retry_delay(n) when n in 0..2, do: 1_000
+  defp retry_delay(n) when n in 3..5, do: 10_000
+  defp retry_delay(n) when n in 6..8, do: 100_000
   defp retry_delay(_), do: 1_000_000
 
   defp token, do: Application.fetch_env!(:posa, :github_token)

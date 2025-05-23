@@ -13,7 +13,7 @@ defmodule Posa.Github.API do
   @type response :: Req.Response.t()
 
   @type single_return_ok :: {:ok, item()} | {:ok, :not_modified}
-  @type collection_return_ok :: {:ok, collection()} | {:ok, []}
+  @type collection_return_ok :: {:ok, collection()} | {:ok, :not_modified} | {:ok, []}
   @type return_error :: {:err, error()}
 
   @type single_return :: single_return_ok() | return_error()
