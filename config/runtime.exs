@@ -29,17 +29,10 @@ github_token =
     See https://github.com/settings/tokens
     """
 
-# System.get_env("PHX_ORGANIZATIONS", "puzzle") |> String.split(",")
-organizations = system_env("PHX_ORGANIZATIONS", "puzzle", :array)
-# System.get_env("PHX_SYNC_DELAY_MS", "120000") |> String.to_integer()
-sync_delay_ms = system_env("PHX_SYNC_DELAY_MS", "120000", :integer)
-# System.get_env("PHX_INITIAL_SYNC", "true") |> String.to_existing_atom()
+organizations = system_env("PHX_ORGANIZATIONS", "puzzle", :list)
+sync_delay_ms = system_env("PHX_SYNC_DELAY_MS", "300000", :integer)
 initial_sync = system_env("PHX_INITIAL_SYNC", "true", :bool)
-# System.get_env("PHX_START_STORAGE", "true") |> String.to_existing_atom()
-start_storage = system_env("PHX_START_STORAGE", "true", :bool)
-# System.get_env("PHX_START_SYNC", "true") |> String.to_existing_atom()
 start_sync = system_env("PHX_START_SYNC", "true", :bool)
-# System.get_env("PHX_DEBUG", "false") |> String.to_existing_atom()
 debug = system_env("PHX_DEBUG", "false", :bool)
 
 config :posa,
@@ -48,9 +41,10 @@ config :posa,
   sync_delay_ms: sync_delay_ms,
   initial_sync: initial_sync,
   debug: debug,
-  services: %{
-    storage: start_storage,
-    sync: start_sync
+  start_sync: start_sync,
+  github_api: %{
+    base_url: "https://api.github.com",
+    token: github_token
   }
 
 if config_env() == :prod do
@@ -85,7 +79,7 @@ if config_env() == :prod do
 
   host = system_env("PHX_HOST", "example.com")
   port = system_env("PORT", "4000", :integer)
-  allowed_origins = system_env("PHX_ALLOWED_ORIGINS", "//posa.local", :array)
+  allowed_origins = system_env("PHX_ALLOWED_ORIGINS", "//posa.local", :list)
 
   config :posa, :dns_cluster_query, system_env("DNS_CLUSTER_QUERY")
 

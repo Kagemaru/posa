@@ -1,37 +1,30 @@
 defmodule Posa.Github do
-  @moduledoc "Github Supervisor"
+  @moduledoc """
+  Ash Domain to represent Github.
+  """
 
-  use Supervisor
+  use Ash.Domain
 
-  alias Posa.Github.Storage.{Etags, Events, Organizations, Users}
-  alias Posa.Sync
+  alias Posa.Github.Collaborator
+  alias Posa.Github.Etag
+  alias Posa.Github.Event
+  alias Posa.Github.Member
+  alias Posa.Github.Organization
+  alias Posa.Github.Repository
+  alias Posa.Github.Statistic
+  alias Posa.Github.User
 
-  def start_link(_opts) do
-    Supervisor.start_link(__MODULE__, nil, name: __MODULE__)
+  resources do
+    resource Organization
+    resource Member
+    resource User
+    resource Event
+    resource Etag
+    resource Repository
+    resource Collaborator
+
+    resource Statistic do
+      define :statistics_as_map, action: :as_map
+    end
   end
-
-  def subscribe, do: Phoenix.PubSub.subscribe(Posa.PubSub, "updates")
-
-  @impl true
-  def init([]), do: :ignore
-
-  def init(_) do
-    children =
-      List.flatten([
-        storage_services(),
-        sync_services()
-      ])
-
-    Supervisor.init(children, strategy: :one_for_one, id: __MODULE__)
-  end
-
-  def storage_services do
-    if start?(:storage), do: [Organizations, Users, Events, Etags], else: []
-  end
-
-  def sync_services do
-    if start?(:sync), do: [Sync], else: []
-  end
-
-  defp start?(key), do: Application.get_env(:posa, :services)[key] || false
 end

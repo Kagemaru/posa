@@ -43,7 +43,7 @@ defmodule PosaWeb do
         layouts: [html: PosaWeb.Layouts]
 
       import Plug.Conn
-      import PosaWeb.Gettext
+      use Gettext, backend: PosaWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -68,7 +68,7 @@ defmodule PosaWeb do
 
   def html do
     quote do
-      use Phoenix.Component
+      use Phoenix.Component, global_prefixes: ~w[phx-]
 
       # Import convenience functions from controllers
       import Phoenix.Controller,
@@ -85,7 +85,7 @@ defmodule PosaWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import PosaWeb.CoreComponents
-      import PosaWeb.Gettext
+      use Gettext, backend: PosaWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS

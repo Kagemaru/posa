@@ -20,5 +20,5 @@ defmodule PosaWeb.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :posa
+  use Gettext.Backend, otp_app: :posa
 end

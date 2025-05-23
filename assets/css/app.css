@@ -4,5 +4,20 @@
 
 /* This file is for your main application css. */
 
+[data-phx-root-id] { display: contents }
+
+/* Style scrollbar */
+
+/* Hide scrollbar for IE, Edge and Firefox */
+html {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+html::-webkit-scrollbar {
+  display: none;
+}
+
 /* @import "./liveview.scss"; */
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap");

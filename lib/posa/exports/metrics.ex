@@ -1,41 +1,102 @@
 defmodule Posa.Exports.Metrics do
   @moduledoc "This handles the generating of the metrics for export"
-  alias Posa.Github.Data
+
+  alias Posa.Github.Event
+  alias Posa.Github.Member
+
+  # @type user_type :: :internal | :external
+  # @type event_type :: :commits | :issues | :reviews | :other
+  # @type range :: :day | :week | :month | :total
+  # @type date :: DateTime.t()
+  # @type day_count :: integer()
+  # @type week_count :: integer()
+  # @type month_count :: integer()
+  # @type total_count :: integer()
+  # @type event_source :: {
+  #         user_type(),
+  #         event_type(),
+  #         day_count(),
+  #         week_count(),
+  #         month_count(),
+  #         total_count()
+  #       }
+  # @type event_sources :: [event_source()]
+  # @type stats :: %{
+  #         user: user_type(),
+  #         event: event_type(),
+  #         counts: %{
+  #           day: day_count(),
+  #           week: week_count(),
+  #           month: month_count(),
+  #           total: total_count()
+  #         }
+  #       }
 
   def all_metrics do
-    get_metrics()
-    |> sum_range(:day)
-    |> sum_range(:week)
-    |> sum_range(:month)
+    Event.read!() |> Enum.each(&count/1)
+
+    Process.get(:counts)
   end
 
-  def get_metrics do
-    %{
-      day: date_range(:day) |> get_metrics(),
-      week: date_range(:week) |> get_metrics(),
-      month: date_range(:month) |> get_metrics()
-    }
+  def count(event) do
+    user_type = internal?(event.actor.login)
+    event_type = event_type(event.type)
+    month = month_tag(event.created_at)
+    day = day_tag(event.created_at)
+    count_day? = date_in_range?(event.created_at, :day)
+    count_week? = date_in_range?(event.created_at, :week)
+    count_month? = date_in_range?(event.created_at, :month)
+
+    count_event(:month, event_type, user_type, count_month?)
+    count_event(:week, event_type, user_type, count_week?)
+    count_event(:day, event_type, user_type, count_day?)
+    count_event(:total, event_type, user_type, true)
+
+    increase({:tags, :month, month}, true)
+    increase({:tags, :day, day}, true)
   end
 
-  def get_metrics(date_range), do: Data.get_event_metrics(date_range)
-
-  defp date_range(:day), do: Date.add(Date.utc_today(), -1) |> date_range()
-  defp date_range(:week), do: Date.add(Date.utc_today(), -7) |> date_range()
-  defp date_range(:month), do: Date.add(Date.utc_today(), -30) |> date_range()
-  defp date_range(start), do: Date.range(start, Date.utc_today())
-
-  defp sum_range(metrics, key) do
-    %{^key => %{members: members, external: external}} = metrics
-    sum = sum(members, external)
-
-    put_in(metrics, [key, :all], sum)
+  def count_event(topic, event_type, user_type, count?) do
+    increase({topic, :total, :total}, count?)
+    increase({topic, :total, user_type}, count?)
+    increase({topic, event_type, :total}, count?)
+    increase({topic, event_type, user_type}, count?)
   end
 
-  defp sum(members, external) do
-    %{
-      commits: members.commits + external.commits,
-      issues: members.issues + external.issues,
-      reviews: members.reviews + external.reviews
-    }
+  def increase(keys, true) do
+    {key1, key2, key3} = keys
+
+    counts =
+      (Process.get(:counts) || %{})
+      |> update_in([Access.key(key1, %{}), Access.key(key2, %{}), Access.key(key3, 0)], &(&1 + 1))
+
+    Process.put(:counts, counts)
   end
+
+  def increase(_, _), do: nil
+
+  def internal?(login) do
+    if login in logins(), do: :internal, else: :external
+  end
+
+  def date_in_range?(date, :day), do: Date.diff(date, today()) >= -1
+  def date_in_range?(date, :week), do: Date.diff(date, today()) >= -7
+  def date_in_range?(date, :month), do: Date.diff(date, today()) >= -30
+  def date_in_range?(_, :total), do: true
+
+  def today, do: DateTime.now!("Europe/Zurich") |> DateTime.to_date()
+
+  def event_type(type) do
+    case type do
+      type when type in ~w[PushEvent] -> :commits
+      type when type in ~w[IssueCommentEvent IssuesEvent] -> :issues
+      type when type in ~w[PullRequestReviewCommentEvent PullRequestReviewEvent] -> :reviews
+      _ -> :other
+    end
+  end
+
+  defp month_tag(date), do: Posa.Utils.month_tag(date) |> Map.get(:date)
+  defp day_tag(date), do: Posa.Utils.day_tag(date) |> Map.get(:date)
+
+  defp logins, do: Member.logins!()
 end

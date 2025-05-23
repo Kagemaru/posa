@@ -11,9 +11,10 @@ defmodule PosaWeb.Telemetry do
     children = [
       # Telemetry poller will execute the given period measurements
       # every 10_000ms. Learn more here: https://hexdocs.pm/telemetry_metrics
-      {:telemetry_poller, measurements: periodic_measurements(), period: 10_000}
+      {:telemetry_poller, measurements: periodic_measurements(), period: 10_000},
       # Add reporters as children of your supervision tree.
-      # {Telemetry.Metrics.ConsoleReporter, metrics: metrics()}
+      # {Telemetry.Metrics.ConsoleReporter, metrics: metrics()},
+      {Posa.Telemetry.MetricsHistory, metrics()}
     ]
 
     Supervisor.init(children, strategy: :one_for_one)
@@ -55,7 +56,30 @@ defmodule PosaWeb.Telemetry do
       summary("vm.memory.total", unit: {:byte, :kilobyte}),
       summary("vm.total_run_queue_lengths.total"),
       summary("vm.total_run_queue_lengths.cpu"),
-      summary("vm.total_run_queue_lengths.io")
+      summary("vm.total_run_queue_lengths.io"),
+
+      # LiveView Metrics
+      summary("phoenix.live_view.mount.stop.duration",
+        tags: [:view],
+        tag_values: fn metadata ->
+          Map.put(metadata, :view, "#{inspect(metadata.socket.view)}")
+        end,
+        unit: {:native, :millisecond}
+      ),
+      summary("phoenix.live_view.handle_params.stop.duration",
+        tags: [:view],
+        tag_values: fn metadata ->
+          Map.put(metadata, :view, "#{inspect(metadata.socket.view)}")
+        end,
+        unit: {:native, :millisecond}
+      ),
+      summary("phoenix.live_view.handle_event.stop.duration",
+        tags: [:view, :event],
+        tag_values: fn metadata ->
+          Map.put(metadata, :view, "#{inspect(metadata.socket.view)}")
+        end,
+        unit: {:native, :millisecond}
+      )
     ]
   end
 

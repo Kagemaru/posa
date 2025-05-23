@@ -7,20 +7,24 @@ defmodule Posa.Application do
 
   @impl true
   def start(_type, _args) do
-    children = [
-      # Start github stuff
-      Posa.Github,
-      PosaWeb.Telemetry,
-      # Posa.Repo,
-      {DNSCluster, query: Application.get_env(:posa, :dns_cluster_query) || :ignore},
-      {Phoenix.PubSub, name: Posa.PubSub},
-      # Start the Finch HTTP client for sending emails
-      {Finch, name: Posa.Finch},
-      # Start a worker by calling: Posa.Worker.start_link(arg)
-      # {Posa.Worker, arg},
-      # Start to serve requests, typically the last entry
-      PosaWeb.Endpoint
-    ]
+    children =
+      [
+        # Start github stuff
+        PosaWeb.Telemetry,
+        # Posa.Repo,
+        {DNSCluster, query: Application.get_env(:posa, :dns_cluster_query) || :ignore},
+        {Phoenix.PubSub, name: Posa.PubSub},
+        # Start the Finch HTTP client for sending emails
+        {Finch, name: Posa.Finch},
+        # Start a worker by calling: Posa.Worker.start_link(arg)
+        # {Posa.Worker, arg},
+        # Start to serve requests, typically the last entry
+        PosaWeb.Endpoint,
+
+        # Start the Sync process
+        sync_children(sync?())
+      ]
+      |> List.flatten()
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
@@ -35,4 +39,9 @@ defmodule Posa.Application do
     PosaWeb.Endpoint.config_change(changed, removed)
     :ok
   end
+
+  defp sync_children(true), do: [Posa.Sync]
+  defp sync_children(_), do: []
+
+  defp sync?, do: Application.fetch_env!(:posa, :start_sync)
 end

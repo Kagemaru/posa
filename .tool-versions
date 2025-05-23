@@ -1,5 +1,5 @@
-elixir 1.16.2-otp-26
-erlang 26.2.3
-nodejs 16.4.1
-kustomize 5.0.1
-oc 4.14.12
+elixir    1.18.4-otp-27
+erlang    27.3.4
+nodejs    23.9.0
+kustomize 5.4.3
+oc        stable-4.18
